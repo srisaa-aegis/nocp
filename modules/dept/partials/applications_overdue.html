@@ -1,0 +1,101 @@
+﻿<div ng-controller="applicationController">
+    <style type="text/css">
+        @media print {
+            #printbtn {
+                display: none;
+            }
+        }
+
+        .withzero {
+            color: #000000;
+        }
+
+        .withvalue {
+            color: #003cff;
+            cursor: pointer;
+        }
+    </style>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-container="body" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Applications Overdue List
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" data-container="body">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#search">Search</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#pendency">Pendency Report</a></li>
+            <li><a href="#statistics">Statistics Report</a></li>
+            <li><a href="#conslidated">Consolidated Status Report</a></li>
+            <li><a href="#applications">Applications Report</a></li>
+            <li><a href="#overdue">OverDue Applications</a></li>
+            <li><a href="#sms">SMS Report</a></li>
+            <li><a href="#feedback">Feedback Rating Report</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#chpwd">Change Password</a></li>
+        </ul>
+    </div>
+    <div class="panel panel-primary" ng-controller="reportController">
+        <div class="panel-heading">
+            <h3 class="panel-title">Applications Overdue List</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 text-right">
+                <button id="printbtn" type="button" class="btn-success" onclick='window.print()'> <span class="glyphicon glyphicon-print"></span> Print </button>
+                <button id="backbtn" type="button" class="btn-success" onclick='location.href="#dashboard"'><span class="glyphicon glyphicon-arrow-left"></span> Back </button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class='col-md-12 col-lg-12 col-sm-12' style='padding-bottom: 20px'>
+                <div class='col-md-3 col-lg-3'>
+                    <div class="input-group">
+                        <div class="input-group-addon">Level of Application: </div>
+                        <select ng-model="rpt_parms.rpt_scope" class="form-control">
+                            <option value="MSB">DGFS/DFS</option>
+                            <option value="RFO">RFO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='col-md-3 col-lg-3' ng-if="rpt_parms.rpt_scope == 'RFO'">
+                    <div class="input-group">
+                        <div class="input-group-addon">Region: </div>
+                        <select class="form-control" ng-model="rpt_parms.region">
+                            <option value="0">-- Select -- </option>
+                            <option value="17">ER</option>
+                            <option value="16">SR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='col-md-3 col-lg-3 text-right'>
+                    <div class="input-group">
+                        <button ng-click="FetchData()" class="btn btn-md btn-success">Get Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <h4 style="text-align:center" class="panel-heading"><b><u> Applications Overdue List</u></b></h4>
+            <h4 class="panel-heading" style="align-content:flex-start">Generated on :{{CurrentDate|date:'MMM d, y h:mm:ss a'}} </h4>
+            <table class="table table-bordered table-striped" datatable="ng" dt-options="dtOptions">
+                <thead>
+                    <tr>
+                        <th>Sl.</th>
+                        <th>District</th>
+                        <th>Provisional</th>
+                        <th>Occupancy</th>
+                        <th>Renewal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="application in applicationdata.distwise">
+                        <td>{{$index + 1}}</td>
+                        <td>{{application.loc_name}}</td>
+                        <td onclick="location.href='process.html#/overdue'" ng-class="{withvalue: application.Provisional != 0, withzero: application.Provisional === 0}">{{application.Provisional}}</td>
+                        <td onclick="location.href='process.html#/overdue'" ng-class="{withvalue: application.Occupancy != 0, withzero: application.Occupancy === 0}">{{application.Occupancy}}</td>
+                        <td onclick="location.href='process.html#/overdue'" ng-class="{withvalue: application.Renewal != 0, withzero: application.Renewal === 0}">{{application.Renewal}}</td>                <
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

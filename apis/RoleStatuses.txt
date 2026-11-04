@@ -1,0 +1,108 @@
+{
+	"1": [{
+			"status": "Reviewed by DFS",
+			"status_id": 6,
+			"NextAction": "Issue/Reject"
+		},
+		{
+			"status": "Reviewed by DFS-CD",
+			"status_id": 5,
+			"NextAction": "View"
+		},
+		{
+			"status": "Reviewed by ADFS",
+			"status_id": 4,
+			"NextAction": "View"
+		},
+		{
+			"status": "Reviewed by RFO",
+			"status_id": 31,
+			"NextAction": "View"
+		},
+		{
+			"status": "Inspected",
+			"status_id": 3,
+			"NextAction": "View"
+		},
+		{
+			"status": "Submitted",
+			"status_id": 2,
+			"NextAction": "View"
+		}
+	],
+	"2": [{
+			"status": "Final Approval",
+			"status_id": 6,
+			"NextAction": "Issue/Reject"
+		},
+		{
+			"status": "Reviewed by DFS-CD",
+			"status_id": 5,
+			"NextAction": "Review"
+		},
+		{
+			"status": "Reviewed by ADFS",
+			"status_id": 4,
+			"NextAction": "Review"
+		},
+		{
+			"status": "Reviewed by RFO/Renewal Inspected",
+			"status_id": 31,
+			"NextAction": "View"
+		},
+		{
+			"status": "Verified by Section",
+			"status_id": 3,
+			"NextAction": "View"
+		},
+		{
+			"status": "Submitted",
+			"status_id": 2,
+			"NextAction": "View"
+		}
+	],
+	"6": [{
+		"status": "Final Approval",
+		"status_id": 6,
+		"NextAction": "Issue/Reject"
+	}, {
+		"status": "Verified by Section",
+		"status_id": 3,
+		"NextAction": "Submit Report"
+	}, {
+		"status": "Submitted",
+		"status_id": 2,
+		"NextAction": "Review"
+	}],
+	"9": [{
+		"status": "Submitted",
+		"status_id": 2,
+		"NextAction": "Submit Report"
+	}, {
+		"status": "Submitted(Non-MSB)",
+		"status_id": 3,
+		"NextAction": "Submit Report"
+	}],
+	"7": [{
+		"status": "Final Approval",
+		"status_id": 6,
+		"NextAction": "Issue/Reject"
+	}, {
+		"status": "Inspected(MSB - Renewal)",
+		"status_id": 4,
+		"NextAction": "Review"
+	}, {
+		"status": "Inspected",
+		"status_id": 3,
+		"NextAction": "Review"
+	}, {
+		"status": "Submitted",
+		"status_id": 2,
+		"NextAction": "Submit Report"
+	}],
+	"5": [{
+		"status": "Submitted",
+		"status_id": 2,
+		"NextAction": "Submit Note"
+	}]
+}

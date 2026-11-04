@@ -1,0 +1,585 @@
+<div class="row h100">
+    <div class="col-md-10 col-md-offset-1 h100">
+        <h2>
+            <small class="glyphicon glyphicon-log-in"></small> Occupancy Certificate - Means of Escape (Staircases)
+        </h2>
+        <form name="userLogin" class="form__provisional well bg-white" ng-submit="SaveEscapes()">
+            <div ng-include="'modules/citizen/partials/innerheader.html'"></div>
+            <div class="col-md-12 col-sm-12">
+                <h3>
+                    Means of Escape (Staircases) Required / Provided:
+                    <button ng-if="application.status_id == 1 && application.appl_mode != 'O'" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddEscape()" ;> <span class="glyphicon glyphicon-plus"></span> Add Escape</button>
+                </h3>
+                <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info" style="height: 210px">
+                    <b>Means of Escape:</b> Please provide details of the Means of Escape provided. Please note that atleast one Internal Staircase and one External Staircase are mandatory for all Multi-Storey Buildings. Note that for Institutional Buildings, a Ramp above the Ground is Mandatory.<br />
+                    Please specify Internal Staircases, External Staircases, Ramps Above Ground and Basement Ramps that are being proposed. <br />
+                    For a maximum Floor Area between 500-1000 Sq Meters, One Internal and 1 External Staircase are required.<br />
+                    Beyond 100 Sq Mtrs, it shall be ensured that one staircase if provided for every 30m (or otherwise as specified in the Table 5) of Travel Distance.<br />
+                    However, for dead-end corridors, the travel distance shall not exceed 6 meters from the dead-end in case of Institutional and Assembly Buildings.<br />
+                    For other buildings, it shll anot exceed 15 meters.<br />
+                    IN case of buildings which are fully sprinkled, the maximum distance shall be 1.5 times of limits specified above.
+                    <div class="clearfix" />
+                    <a class="badge pull-right" data-toggle="modal" data-target="#stairs"><span class="glyphicon glyphicon-sort-by-attributes-alt"> Clauses on Staircases</span></a>&nbsp;
+                    <a class="badge pull-right" data-toggle="modal" data-target="#table22"><span class="glyphicon glyphicon-transfer"> Table 5 - Travel Distance to Staircases</span></a>&nbsp;
+                    <a class="badge pull-right" data-toggle="modal" data-target="#table21"><span class="glyphicon glyphicon-align-justify"> Table 4 - Aggregate Staircase width</span></a>&nbsp;
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='1%'>Sl</th>
+                            <th width='15%'>Escape Type</th>
+                            <th width='15%'>Description</th>
+                            <th width='15%'>From Floor</th>
+                            <th width='15%'>To Floor</th>
+                            <th width='8%' ng-if="application.appl_mode =='N'">Required</th>
+                            <th width='8%' ng-if="application.appl_mode !='N'">Proposed</th>
+                            <th width='8%'>Provided</th>
+                            <th width="1%"></th>
+                            <th width='20%'>Location</th>
+                            <th width='20%'>Image</th>
+                            <th width='1%'>...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="exape in block.escapes">
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <select ng-disabled="CannotEdit('B')" ng-model="exape.etype" id="etype" name="etype" class="form-control">
+                                    <option value="I">Internal Staircase</option>
+                                    <option value="E">External Staircase</option>
+                                    <option value="R">Ramp (above Ground)</option>
+                                    <option value="C">Basement Ramp</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input ng-disabled="CannotEdit('A')" type='text' ng-model="exape.desc" id="desc" name="desc" placeholder="Description" class="form-control" />
+                            </td>
+                            <td>
+                                <select ng-disabled="CannotEdit('A')" ng-model="exape.from_floor" id="from_floor" name="from_floor" class="form-control">
+                                    <option ng-selected="{{floor.floor_id == exape.from_floor}}" ng:repeat="floor in block.floors" value="{{floor.floor_id}}">
+                                        {{floor.flr_name}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-disabled="CannotEdit('A')" ng-model="exape.to_floor" id="to_floor" name="to_floor" class="form-control">
+                                    <option ng-selected="{{floor.floor_id == exape.to_floor}}" ng:repeat="floor in block.floors" value="{{floor.floor_id}}">
+                                        {{floor.flr_name}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td width='8%' ng-if="application.appl_mode =='N'">{{reqd_escape_width(exape)}}</td>
+                            <td width='8%' ng-if="application.appl_mode !='N'">
+                                <input ss-format="decimal" ng-disabled="CannotEdit('A')" type='text' ng-model="exape.parent_width" id="parent_width" name="parent_width" placeholder="Width" class="form-control" />
+                            </td>
+                            <td>
+                                <input ss-format="decimal" ng-disabled="CannotEdit('A')" type='text' ng-model="exape.width" id="width" name="width" placeholder="Width" class="form-control" />
+                            </td>
+                            <td ng-if="application.appl_mode == 'N'">
+                                <button type="button" class="btn btn-success btn-circle" ng-if="reqd_escape_width(exape) <= exape.width"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button type="button" class="btn btn-danger btn-circle" ng-if="reqd_escape_width(exape) > exape.width"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td ng-if="application.appl_mode != 'N'">
+                                <button type="button" class="btn btn-success btn-circle" ng-if="exape.parent_width <= exape.width"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button type="button" class="btn btn-danger btn-circle" ng-if="exape.parent_width > exape.width"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>
+                                <select ng-disabled="CannotEdit('B')" ng-model="exape.location" id="location" name="location" class="form-control" ng-change="onStairDirectionChange(block,exape)">
+                                    <option value="E">East</option>
+                                    <option value="W">West</option>
+                                    <option value="N">North</option>
+                                    <option value="S">South</option>
+                                    <option value="NE">North East</option>
+                                    <option value="NW">North West</option>
+                                    <option value="SE">South East</option>
+                                    <option value="SW">South West</option>
+                                    <option value="C">Center</option>
+                                </select>
+                            </td>
+                            <td>
+                                <label for="{{ 'limgMescpSC_' + $index }}" id="{{ 'limgMescpSC_' + $index }}" ng-show="false"> MEcpStc {{ exape.desc }} </label>
+                                <div class="input-group">
+                                    <input ng-disabled="application.status_id != 1" type="file" id="{{ 'imgMescpSC_' + $index }}" name="{{ 'imgMescpSC' + $index }}" class="form-control" file-model="{{ 'imgMescpSC_' + $index }}" accept="application/jpg" />
+                                    <div class="input-group-addon"> <a ng-if="FileExists_Image('MEcpStc'+ exape.desc.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_Image('MEcpStc'+ exape.desc.split(' ').join(''))"></a> </div>
+                                </div>
+                            </td>
+                            <td>
+                                <button ng-if="application.status_id == 1 && application.appl_mode != 'O'" type="button" class="btn btn-sm btn-danger" ng-click="DeleteEscape($index)"> <span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-md-12 col-sm-12" ng-if="application.appl_mode == 'M'">
+                    <input ng-disabled="application.status_id != 1" type='checkbox' ng-model="block.external_stair"> As per Provisional NOC External staircase or Ramp is not applicable.Please Check if "Yes".<br />
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <h4>Travel Distance</h4>
+                <div class="col-md-6 col-sm-6">
+                    Distance from the Farthest Point:
+                    <div class="col-md-11">
+                        <div class="input-group">
+                            <div class="input-group" ng-if="application.appl_mode != 'N'">
+                                <div class="input-group-addon">Proposed:</div>
+                                <input ng-disabled="CannotEdit('B')" type='text' ng-model="block.parent_ta_dist" id="ewidth" name="ewidth" placeholder="Distance" class="form-control" />
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-addon">Provided:</div>
+                                <input ng-disabled="CannotEdit('A')" type='text' ng-model="block.ta_dist" id="ewidth" name="ewidth" placeholder="As Built" class="form-control" />
+                            </div>
+                            <div class="input-group-addon">Mtrs</div>
+                            <div class="input-group-addon">Maximum: {{block.td_dist_reqd}} Mtrs</div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-success btn-circle" ng-if="block.ta_dist <= block.td_dist_reqd"><i class="glyphicon glyphicon-ok"></i></button>
+                        <button type="button" class="btn btn-danger btn-circle" ng-if="block.ta_dist > block.td_dist_reqd"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    Distance from dead-end of the corridor to the staircases:
+                    <div class="col-md-11">
+                        <div class="input-group">
+                            <div class="input-group" ng-if="application.appl_mode != 'N'">
+                                <div class="input-group-addon">Proposed:</div>
+                                <input ng-disabled="CannotEdit('B')" type='text' ng-model="block.parent_ta_dead" id="ewidth" name="ewidth" placeholder="Distance" class="form-control" />
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-addon">Provided:</div>
+                                <input ng-disabled="CannotEdit('A')" type='text' ng-model="block.ta_dead" id="ewidth" name="ewidth" placeholder="As Built" class="form-control" />
+                            </div>
+                            <div class="input-group-addon">Mtrs</div>
+                            <div class="input-group-addon">Maximum: {{block.td_dist_de_reqd}} Mtrs</div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-success btn-circle" ng-if="block.ta_dead <= block.td_dist_de_reqd"><i class="glyphicon glyphicon-ok"></i></button>
+                        <button type="button" class="btn btn-danger btn-circle" ng-if="block.ta_dead > block.td_dist_de_reqd"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <h4>
+                    <br />
+                    Doorways / Level Components
+                    <button ng-if="application.status_id == 1" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddDoor()" ;> <span class="glyphicon glyphicon-plus"></span> Add Door</button>
+                </h4>
+                <p>Please specify the doorways at the Ground Level. Minimum width of the doorways should be {{min_doorway()}} meter(s) and minimum height shall be 2 meters.</p>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='5%'>Sl.</th>
+                            <th width='25%'>Description</th>
+                            <th width='15%'>Width (Mtrs)</th>
+                            <th width='20%'>Location</th>
+                            <th width='5%'>...</th>
+                            <th width='30%'>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="door in block.doors">
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <input ng-disabled="application.status_id != 1" type='text' ng-model="door.desc" id="desc" name="desc" placeholder="Description" class="form-control" />
+                            </td>
+                            <td>
+                                <input ss-format="decimal" ng-disabled="application.status_id != 1" type='text' ng-model="door.width" id="width" name="width" placeholder="Width" class="form-control" />
+                            </td>
+                            <td>
+                                <select ng-disabled="application.status_id != 1" ng-model="door.location" id="location" name="location" class="form-control">
+                                    <option value="E">East</option>
+                                    <option value="W">West</option>
+                                    <option value="N">North</option>
+                                    <option value="S">South</option>
+                                    <option value="NE">North East</option>
+                                    <option value="NW">North West</option>
+                                    <option value="SE">South East</option>
+                                    <option value="SW">South West</option>
+                                    <option value="C">Center</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button ng-if="application.status_id == 1" type="button" class="btn btn-sm btn-danger" ng-click="DeleteDoor($index)"> <span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-circle" ng-if="min_doorway() <= door.width"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button type="button" class="btn btn-danger btn-circle" ng-if="min_doorway() > door.width"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <h4>
+                    Total Means of Escape:
+                </h4>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='5%'>Sl</th>
+                            <th width='15%'>Floor Type</th>
+                            <th width='15%'>Floor</th>
+                            <th width='15%'>Total Builtup Area (Sq Mtrs)</th>
+                            <th width='25%'>Occupancy Type</th>
+                            <th width='10%'>No of Occupants (as per Table 20)</th>
+                            <th width='10%'>No. of Occupants as declared by the builder</th>
+                            <th width='10%'>Aggregate Width of Escapes Required (Mtrs)</th>
+                            <th width='10%'>Aggregate Width of Escapes Proposed (Mtrs)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="floor in block.floors">
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                {{floor_type_description(floor)}}
+                            </td>
+                            <td>
+                                {{floor.flr_name}}
+                            </td>
+                            <td>
+                                {{floor.built_area}}
+                            </td>
+                            <td>
+                                {{occu_typ_description(floor)}}
+                                <div class="input-group" ng-if="floor.occ_type == 'ASM1'">
+                                    <div class="input-group-addon">Seats:</div>
+                                    <input ss-format="decimal" ng-disabled="CannotEdit('A')" type='text' ng-model="floor.seats_num" id="seats_num" name="seats_num" placeholder="Count" class="form-control" />
+                                </div>
+                            </td>
+                            <td>
+                                {{floor.occu_count_reqd}}
+                            </td>
+                            <td>
+                                {{floor.occ_c_app}}
+                            </td>
+                            <td>
+                                {{floor.stair_load_reqd}}
+                            </td>
+                            <td>
+                                {{floor.esc_width}}
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-circle" ng-if="floor.stair_load_reqd <= floor.esc_width"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button type="button" class="btn btn-danger btn-circle" ng-if="floor.stair_load_reqd > floor.esc_width"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="application.dlevel!='DFO'">
+                <div class="col-md-12 col-sm-12">
+                    <h3>
+                        Entrances / Exits
+                        <button ng-if="application.status_id == 1" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddExit()" ;> <span class="glyphicon glyphicon-plus"></span> Add Entrance/Exit</button>
+                    </h3>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info">
+                    <b>Note:</b> Minimum width should be 4.5 Meters , Abutting Road Width should be minimum 12.0 meters and head room clearance should be minimum 5.0 meters.
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th width='1%'>Sl.</th>
+                                <th width='20%'>Description</th>
+                                <th width='15%'>Width</th>
+                                <th width="5%"></th>
+                                <th width='15%'>Abutting Road Width</th>
+                                <th width="5%"></th>
+                                <th width='24%'>Side</th>
+                                <th width='30%'>Image</th>
+                                <th width='10%'>...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng_repeat="exit in block.exits">
+                                <td>{{$index + 1}}</td>
+                                <td>
+                                    <input ng-disabled="CannotEdit('A')" type='text' ng-model="exit.ename" id="ename" name="ename" placeholder="Name" class="form-control" />
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input ng-disabled="CannotEdit('A')" type='text' ng-model="exit.width" id="ewidth" name="ewidth" placeholder="Width" class="form-control" />
+                                        <div class="input-group-addon">Mtrs</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-success btn-circle" ng-if="exit.width >= 4.5"><i class="glyphicon glyphicon-ok"></i></button>
+                                        <button type="button" class="btn btn-danger btn-circle" ng-if="exit.width < 4.5"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input ss-format="numeric" ng-disabled="CannotEdit('A')" type='text' ng-model="exit.awidth" id="awidth" name="awidth" placeholder="Road Width" class="form-control" />
+                                        <div class="input-group-addon">Mtrs</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-success btn-circle" ng-if="exit.awidth >= 12"><i class="glyphicon glyphicon-ok"></i></button>
+                                        <button type="button" class="btn btn-danger btn-circle" ng-if="exit.awidth < 12"><i class="glyphicon glyphicon-remove"></i></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select ng-disabled="CannotEdit('A')" ng-model="exit.direc" id="direc" name="direc" class="form-control">
+                                        <option value="E">East</option>
+                                        <option value="W">West</option>
+                                        <option value="N">North</option>
+                                        <option value="S">South</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label for="{{ 'imgMescpExit_' + $index }}"  id="{{ 'limgMescpExit_' + $index }}" n ng-show="false"> MEcpEnEx {{ exit.ename }} </label>
+                                    <div class="input-group">
+                                        <input ng-disabled="application.status_id != 1" type="file" id="{{ 'imgMescpExit_' + $index }}" n name="{{ 'imgMescpExit_' + $index }}" c class="form-control" file-model="{{ 'imgMescpExit_' + $index }}" accept="application/jpg" />
+                                        <div class="input-group-addon"> <a ng-if="FileExists_Image('MEcpEnEx'+ exit.ename.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_Image('MEcpEnEx'+ exit.ename.split(' ').join(''))"></a> </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button ng-if="application.status_id == 1" type="button" class="btn btn-sm btn-danger" ng-click="DeleteExit($index)"> <span class="glyphicon glyphicon-trash"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                Head Room Clearance: (Mtrs)
+                <div class="input-group">
+                    <div class="input-group" ng-if="application.appl_mode != 'N'">
+                        <div class="input-group-addon">Proposed:</div>
+                        <input ng-disabled="CannotEdit('B')" type='text' ng-model="block.parent_hrclear" id="hrclear" name="hrclear" placeholder="Clearance" class="form-control" />
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-addon">Provided:</div>
+                        <input ng-disabled="CannotEdit('A')" type='text' ng-model="block.hrclear" id="hrclear" name="hrclear" placeholder="As Built" class="form-control" />
+                    </div>
+                    <div class="input-group-addon">Mtrs</div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-success btn-circle" ng-if="block.hrclear >= 5"><i class="glyphicon glyphicon-ok"></i></button>
+                        <button type="button" class="btn btn-danger btn-circle" ng-if="block.hrclear < 5"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix" />
+            <div class="col-md-12 col-sm-12" ng-if="block.refuge_area < 0 && block.height > 24 || application.dlevel!='DFO'">
+                <h3>
+                    Refuge area:
+                </h3>
+                <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info">
+                    Refuge Area: Refuge area is mandatory for buildings higher than 24 meters. Please specify the total Refuge area being provided. <br />
+                    <a class="badge pull-right" data-toggle="modal" data-target="#refuge"><span class="glyphicon glyphicon-modal-window"> Refuge Area Reqt</span></a>&nbsp;
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th width='5%'>Sl.</th>
+                                <th width='25%'>Floor</th>
+                                <th ng-if="application.appl_mode != 'N'" width='20%'>Proposed Area (Sq. Mtrs)</th>
+                                <th ng-if="application.appl_mode == 'N'" width='20%'>Reqd Area (Sq. Mtrs)</th>
+                                <th width='20%'>Provided Area (Sq. Mtrs)</th>
+                                <th width='30%'>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="refuge in block.refuges">
+                                <td>{{$index + 1}}</td>
+                                <td>
+                                    {{get_floor_name(refuge.floor_id)}}
+                                </td>
+                                <td ng-if="application.appl_mode != 'N'">
+                                    <input ss-format="decimal" ng-disabled="application.status_id != 1" type='text' ng-model="refuge.parent_area" id="area" name="area" placeholder="Area" class="form-control" />
+                                    <!--{{refuge.parent_area}}-->
+                                </td>
+                                <td ng-if="application.appl_mode == 'N'">
+                                    {{refuge.reqd_area}}
+                                </td>
+                                <td>
+                                    <input ss-format="decimal" ng-disabled="application.status_id != 1" type='text' ng-model="refuge.area" id="area" name="area" placeholder="Area" class="form-control" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-circle" ng-if="refuge.reqd_area <= refuge.area"><i class="glyphicon glyphicon-ok"></i></button>
+                                    <button type="button" class="btn btn-danger btn-circle" ng-if="refuge.reqd_area > refuge.area"><i class="glyphicon glyphicon-remove"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12" ng-if="application.host_name!='SDP'">
+                <h3>
+                    Fire Lifts
+                    <button ng-if="application.status_id == 1" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddLift()" ;> <span class="glyphicon glyphicon-plus"></span> Add Lift</button>
+                </h3>
+            </div>
+            <div ng-if="application.host_name!='SDP'" class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info">
+                <b>Note:</b>  A minimum of one Fire Lift (with Capacity not less than 545 kgs / 8 persons) is required as per NBC 2016 Part 4.
+            </div>
+            <div class="col-md-12 col-sm-12" ng-if="application.host_name!='SDP'">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='1%'>Sl.</th>
+                            <th width='20%'>Lift Type</th>
+                            <th width='20%'>Lift Number</th>
+                            <th width='24%'>Capacity</th>
+                            <th width='35%'>Image</th>
+                            <th width='1%'>...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng_repeat="lift in block.lifts">
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <select ng-disabled="CannotEdit('A')" ng-model="lift.ltype" id="ltype" name="ltype" class="form-control">
+                                    <option value="F" selected="selected">Fire </option>
+                                </select>
+                            </td>
+                            <td>
+                                <input ng-disabled="CannotEdit('A')" type='text' ng-model="lift.lname" id="lname" name="lname" placeholder="Number" class="form-control" />
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input ss-format="numeric" ng-disabled="CannotEdit('A')" type='text' ng-model="lift.capacity" id="capacity" name="capacity" placeholder="Capacity" class="form-control" />
+                                    <div class="input-group-addon">Kgs</div>
+                                </div>
+                            </td>
+                            <td>
+                                <label for="{{ 'limgMescpFL_' + $index }}" id="{{ 'limgMescpFL_' + $index }}" ng- ng-show="false"> MEcpFrL {{ lift.lname }} </label>
+                                <div class="input-group">
+                                    <input ng-disabled="application.status_id != 1" type="file" id="{{ 'imgMescpFL_' + $index }}" nam name="{{ 'imgMescpFL_' + $index }}" cla class="form-control" file-model="{{ 'imgMescpFL_' + $index }}" accept="application/jpg" />
+                                    <div class="input-group-addon"> <a ng-if="FileExists_Image('MEcpFrL'+ lift.lname.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_Image('MEcpFrL'+ lift.lname.split(' ').join(''))"></a> </div>
+                                </div>
+                            </td>
+                            <td>
+                                <button ng-if="application.status_id == 1" type="button" class="btn btn-sm btn-danger" ng-click="DeleteLift($index)"> <span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                Total Fire Lifts:
+                <table width="200px" border="1">
+                    <tr>
+                        <td width="70%">Required</td>
+                        <td>{{fire_lifts_reqd()}}</td>
+                    </tr>
+                    <!--<tr>
+                        <td>Proposed</td>
+                        <td>{{block.lifts.length}}</td>
+                    </tr>-->
+                    <tr>
+                        <td>Provided</td>
+                        <td>{{block.lifts.length}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-12 col-sm-12" ng-if="false">
+                <h3>
+                    Car Parking:
+                    <button ng-if="application.status_id == 1" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddCPark()" ;> <span class="glyphicon glyphicon-plus"></span> Add Parking</button>
+                </h3>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info" ng-if="false">
+                &nbsp;
+            </div>
+            <div class="col-md-6 col-sm-12" ng-if="false">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='5%'>Sl.</th>
+                            <th width='35%'>Floor</th>
+                            <th width='30%'>Capacity</th>
+                            <th width='5%'>...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng_repeat="cpark in block.cparks">
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <input ng-disabled="CannotEdit('B')" type='text' ng-model="cpark.floor" id="cfloor" name="cfloor" placeholder="Floor" class="form-control" />
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input ss-format="numeric" ng-disabled="CannotEdit('B')" type='text' ng-model="cpark.capacity" id="capacity" name="capacity" placeholder="Count" class="form-control" />
+                                    <div class="input-group-addon">Nos.</div>
+                                </div>
+                            </td>
+                            <td>
+                                <button ng-if="application.status_id == 1" type="button" class="btn btn-sm btn-danger" ng-click="DeleteCPark($index)"> <span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <section class="row">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="btn btn-primary" style='float: left;' ng-click="GotoDetails()"> <span class="glyphicon glyphicon-arrow-left"></span> Previous </button>
+                    <button type="submit" class="btn btn-primary"> Next <span class="glyphicon glyphicon-arrow-right"></span></button>
+                    <button type="reset" class="btn btn-danger" ng-click="ViewApplication()"> <span class="glyphicon glyphicon-remove"></span> Close </button>
+                </div>
+            </section>
+        </form>
+    </div>
+
+    <div id="table21" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Table 4 - Aggregate width of Staircase by Occupant Load</h4>
+                    <div ng-include="'modules/common/partials/table21.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="table22" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Table 5 - Travel Distance Considerations</h4>
+                    <div ng-include="'modules/common/partials/table22.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stairs" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Clauses on Internal & External Staircases</h4>
+                    <div ng-include="'modules/common/partials/internal.html'"></div>
+                    <div ng-include="'modules/common/partials/external.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

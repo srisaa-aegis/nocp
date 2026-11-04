@@ -1,0 +1,30 @@
+{
+	"start" : [
+		{"action":"sms_citizen"},
+		{"action":"sms_officers"}
+		],
+	"sms_citizen" : {
+		"action" : "sms",
+		"language":"en",
+		"body" : "Your application $$APPL_NUMBER$$ has been successfully submitted online. It will be inspected by $$OFFICER_NAME$$($$OFFICER_MOBILE$$). You can find the status of your application by logging into the Portal from time to time.",
+		"body_query" : "select A.APPL_NUMBER, U.USER_NAME OFFICER_NAME, U.MOBILE OFFICER_MOBILE from noc_applications A inner join noc_process P on P.APPL_ID = A.APPL_ID and P.DELETED = 0 and P.END_DATE is null and P.ACTION_ like '%Inspection%' inner join noc_users U on U.DELETED = 0 and U.USER_ID = P.USER_ID where A.DELETED  = 0 and A.APPL_ID = @OBJECT_ID",
+		"body_keys" : [
+			{"key":"APPL_NUMBER"},
+			{"key":"OFFICER_NAME"},
+			{"key":"OFFICER_MOBILE"}
+		],
+		"to_query" : "select C.MOBILE from noc_applications A inner join noc_citizens C on C.CITIZEN_ID = A.CITIZEN_ID and C.DELETED = 0 where A.DELETED  = 0 and A.APPL_ID = @OBJECT_ID",
+		"to_field" : "MOBILE"
+	},
+	"sms_officers" : {
+		"action" : "sms",
+		"body" : "Application : $$APPL_NUMBER$$ for $$SITE_NAME$$ has been submitted.\n Please review, inspect and submit remarks",
+		"body_query" : "select A.APPL_NUMBER, A.SITE_NAME from noc_applications A where A.DELETED  = 0 and A.APPL_ID = @OBJECT_ID",
+		"body_keys" : [
+			{"key":"APPL_NUMBER"},
+			{"key":"SITE_NAME"}
+		],
+		"to_query" : "select MOBILE from noc_process P inner join noc_users U on U.USER_ID = P.USER_ID and U.DELETED = 0 where P.APPL_ID = @OBJECT_ID and P.DELETED = 0",
+		"to_field" : "MOBILE"
+	}
+}

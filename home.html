@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A.P. State Disaster Response and Fire Services Department</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/loader.css" />
+    <link rel="stylesheet" href="css/angular-lightbox.css" />
+    <link rel="stylesheet" href="css/jquery.rateyo.min.css" />
+    <link rel="stylesheet" href="css/accordion.css" />
+    <link rel="stylesheet" href="css/timeline.css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <style>
+        .boxed {
+            border-bottom: 1px solid green;
+        }
+
+        @media print {
+            p {
+                page-break-inside: avoid;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body ng-app="citizen">
+
+    <!-- Navigation -->
+    <div ng-include="'modules/citizen/partials/navigation.html'"></div>
+
+    <div class="container-fluid main__view dashboard">
+        <div ng-view></div>
+    </div>
+
+    <script type="text/ng-template" id="dashboard.htm">
+        <div class="row h100">
+            <div class="col-md-12 h100">
+                <div class="row h100">
+                    <div class="col-md-4">
+                        <div ng-include="'modules/citizen/partials/topbuttons.html'"></div>
+                    </div>
+                    <div class="col-md-8 h100">
+                        <div ng-include="'modules/citizen/partials/citizenlist.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editpnoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editpnoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="coverletter.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/coverletter.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="acknowledge.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/acknowledge.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="challan.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/payment_receipt.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editpnoc_2.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editpnoc_2.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editpnoc_1.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editpnoc_1.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editpnoc_3.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editpnoc_3.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editpnoc_4.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editpnoc_4.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="declaration.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/declarationbyowner.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="final_noc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/final_noc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="final_noc_16.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/final_noc_16.html'"></div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="final_noc_g.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/final_noc_g.html'"></div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="occcert.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/OccCert.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="rejection.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/rejection.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="final_noc_ic.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/final_noc_ic.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="confirmpnoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/confirmpnoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="confirmoenoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/confirmoenoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="confirmonoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/confirmonoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="confirmrnoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/confirmrnoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="confirmdnoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/confirmdnoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="changepass.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/register/partials/changepwd.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="invalid.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/common/partials/invalidaccess.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editonoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editonoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editdnoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editdnoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editonoc_1.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editonoc_1.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editonoc_2.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editonoc_2.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editonoc_3.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editonoc_3.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editonoc_4.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editonoc_4.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editrnoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editrnoc.html'"></div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="editronoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editronoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editronoc_1.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editronoc_1.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editronoc_2.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editronoc_2.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editronoc_3.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editronoc_3.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editronoc_4.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editronoc_4.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="pnocconditions.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/confirmpconditions.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="allplans.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/allplans.html'"></div>
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="final_noc_o.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/final_noc_o.html'"></div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="final_noc_o_e.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/final_noc_o_e.html'"></div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="final_noc_r.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/final_noc_r.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editrnoc_1.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editrnoc_1.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editoenoc.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editoenoc.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editoenoc_1.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editoenoc_1.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editoenoc_2.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editoenoc_2.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editoenoc_3.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editoenoc_3.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editoenoc_4.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/citizen/partials/editoenoc_4.html'"></div>
+        </div>
+    </script>
+
+    <!-- <div ng-include = "'modules/citizen/partials/footer.html'"></div> -->
+
+    <div ng-include="'modules/common/partials/loader.html'"></div>
+    <!-- jQuery -->
+    <script src="script/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="script/bootstrap.min.js"></script>
+
+    <script src="script/angular.min.js"></script>
+    <script src="script/angular-route.min.js"></script>
+    <script src="script/angular-lightbox.js" type="text/javascript"></script>
+    <script src="script/constants.js"></script>
+    <script src="script/commonrules.js"></script>
+    <script src="script/servercaller.js"></script>
+    <script src="app/fireApp.js"></script>
+    <script src="modules/citizen/directives/directives.js"></script>
+    <script src="modules/citizen/services/services.js"></script>
+    <script src="modules/citizen/controllers/applicationController.js"></script>
+    <script src="modules/citizen/controllers/blockController.js"></script>
+    <script src="modules/citizen/controllers/confirmController.js"></script>
+    <script src="modules/citizen/controllers/finalController.js"></script>
+    <script src="script/loader.js"></script>
+    <!-- Fusioncharts JavaScript -->
+    <script src="script/angular-fusioncharts.min.js"></script>
+    <!-- charts JavaScript -->
+    <script src="script/angular-chart.min.js"></script>
+    <!--PDF-->
+    <script src="script/jspdf.min.js"></script>
+    <script src="script/html2canvas.js"></script>
+    <script src="script/pdf.js"></script>
+    <script src="script/jquery.rateyo.js"></script>
+    <script src="script/jquery.rateyo.min.js"></script>
+
+    <script type="text/javascript">
+        function sessionKeepAlive() {
+            $.post("modules/register/SessionKeepAlive.aspx");
+            setInterval(sessionKeepAlive, 600000); //10 min
+        }
+        sessionKeepAlive();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+{
+"rules":
+[
+{"field":"block_name", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Block Name"},
+{"field":"site_type", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Occupany Type"},
+{"field":"site_stype", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Sub Type"},
+{"field":"height", "mandatory":"Y", "datatype":"F", "min":"", "max":"", "label":"Height"},
+{"field":"front_dir", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Front Direction"}
+]
+}

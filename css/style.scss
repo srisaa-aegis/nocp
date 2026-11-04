@@ -1,0 +1,193 @@
+@import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "_bootswatch";
+html,
+body {
+    height: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+body {
+    background-color: $gray-dark;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-direction: column;
+    &:after,
+    &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+    }
+    &:after {
+        background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));
+    }
+    &:before {
+        background: url("../images/main_bg.jpg") no-repeat center / cover;
+    }
+    .main__view {
+        height: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding-top: 3em;
+        padding-bottom: 3em;
+        overflow: hidden;
+        overflow-y: auto;
+        &.dashboard {
+            background: lighten($gray-base, 95%);
+            width: 100%;
+            padding-top: 0em;
+            margin-top: 0;
+        }
+        /* Intro Content */
+        .intro {
+            .logo__department {
+                color: white;
+                img {
+                    width: 150px;
+                }
+            }
+            .title {
+                color: white;
+                font-weight: 700;
+            }
+            p {
+                color: lighten($gray-base, 60%);
+            }
+        }
+    }
+}
+
+
+/*------ Main Footer ------*/
+
+#main__footer {
+    background: $gray-dark;
+    padding: 15px 0;
+    /*position: fixed;*/
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    .menu__footer {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0;
+        padding: 0;
+    }
+}
+
+
+/* ------------- dashoard__menu -------------*/
+
+.dashoard__menu {
+    margin-top: 10px;
+    li {
+        margin-bottom: 15px;
+    }
+    a {
+        background: white;
+        -webkit-box-shadow: 0 2px 3px rgba(black, .2);
+        box-shadow: 0 2px 3px rgba(black, .2);
+        display: block;
+        padding: 25px 0;
+        font-size: 20px;
+        &:hover {
+            text-decoration: none;
+        }
+        span.icon {
+            display: block;
+            font-size: 48px;
+            margin: 0 auto 15px;
+        }
+    }
+}
+
+
+/* ------------- list__applications -------------*/
+
+.list__applications {
+    .application {
+        .application__basic_info,
+        .application__menu {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            justify-content: space-between;
+            margin: 2px 0;
+        }
+    }
+}
+
+
+/*---- Panels------*/
+
+.panel__application {
+    margin-top: 10px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-direction: column;
+    .panel-body {
+        overflow-y: auto;
+    }
+}
+
+
+/* Forms */
+
+.form__user {
+    background: white;
+    legend {
+        background: $brand-primary;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+    }
+    .form_fields {
+        padding: 2rem;
+    }
+}
+
+
+/*---------------- Helper Class ----------------*/
+
+.radio,
+.checkbox {
+	margin-top: 0;
+    label:not(:first-child) {
+        margin-left: 15px;
+    }
+}
+
+.h100 {
+    height: 100%;
+}
+
+.bg-white {
+    background: white !important;
+}
+
+.divider {
+    display: block;
+    width: 50%;
+    margin: 3em auto;
+    height: 1px;
+    background: $gray-light;
+}

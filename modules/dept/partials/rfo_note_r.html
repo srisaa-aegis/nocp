@@ -1,0 +1,92 @@
+﻿<!--<div ng-include="'modules/dept/partials/rfo_note_o.html'"></div>-->
+<style>
+    td {
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+</style>
+<div>
+    <table width='100%'>
+        <tr><th style="text-align: left" colspan='2'>1)Relavant applicable rules in the NBC / others (if applicable) guidelines</th></tr>
+        <tr>
+            <td colspan="2">
+                <input type="text" class="form-control" ng-model="form_to.rfo_nbc_rules" ng-disabled="disabledform">&nbsp;</input>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: left" colspan='2'>2) Any other action to be taken by the owner/applicant?</th>
+
+        </tr>
+        <tr>
+            <td>
+                <textarea class="form-control" ng-model="form_to.rfo_ffe_oth" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: left" colspan='2'>3) Any other rules applicable to the occupancy other than NBC? (Like for Diesel and Petroleum storages, Oil and Natural gas storages, etc;Chemical industries etc)</th>
+        </tr>
+        <tr>
+            <td>Applicable Sections/ACT/Rules </td>
+            <td>
+                <input type='text' class="form-control" ng-model="form_to.rfo_act_rules" ng-disabled="disabledform" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>Minimum required as per the ACT/Rule</td>
+            <td>
+                <textarea class="form-control" ng-model="form_to.rfo_min_act" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>Deficits in the provided plan as per the ACT/rules</td>
+            <td>
+                <textarea class="form-control" ng-model="form_to.rfo_def_act" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: left" colspan='2'>4) Any other points related to this NOC, which the officer wants to bring to the knowledge of DFS?</th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <textarea class="form-control" ng-model="form_to.any_other" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+        <tr><th style="text-align: left" colspan="2">5)Do you agree with the Report Submitted by the Chairman of the Inspection Committee</th></tr>
+        <tr>
+            <td colspan="2">
+                <select class="form-control" ng-model="form_to.inspection_remark" ng-disabled="disabledform"><option value="1">Yes</option><option value="0">No</option></select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <textarea ng-disabled="disabledform" ng-model="form_to.remark_not" class="FormControl" cols="100" rows="5"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: left" colspan="2">6) Opinion of the officer regarding approval of NOC?</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <select class="form-control" ng-model="form_to.rfo_recommend" ng-disabled="disabledform">
+                    <option value="1">Recommended</option>
+                    <option value="2">Return for Corrections</option>
+                    <option value="0">Not Recommended</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Specify the reasons.
+            </td>
+            <td>
+                <textarea class="form-control" ng-model="form_to.remark" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+    </table>
+</div>

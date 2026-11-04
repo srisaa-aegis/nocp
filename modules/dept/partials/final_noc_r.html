@@ -1,0 +1,173 @@
+﻿<style type="text/css">
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    * {
+        font-family: "Times New Roman", Times, serif;
+    }
+</style>
+<div ng-app='citizen' ng-controller='confirmController' style="Font-Family: 'Times New Roman'">
+    <h4 style='text-align: center'><b>Government of Andhra Pradesh</b></h4>
+    <h4 style='text-align: center'><b>A.P. State Disaster Response and Fire Services Department</b></h4>
+    <h3 style='text-align: center;'><b><u>Annual Periodical Renewal Fire Certificate</u></b></h3>
+    <div class="row">
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: left; word-wrap: break-word" ng-if="application.dlevel=='MSB'">
+            From: <br />
+            Director<br />
+            State Disaster Response & Fire Services<br />
+            Andhra Pradesh, Vijayawada.
+        </div>
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: left; word-wrap: break-word" ng-if="application.dlevel=='DFO'">
+            From: <br />
+            District Fire Officer<br />
+            Andhra Pradesh, {{district_desc(application.district)}}
+        </div>
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: left; word-wrap: break-word" ng-if="application.dlevel=='RFO'">
+            From: <br />
+            Regional Fire Officer<br />
+            Andhra Pradesh, Vijayawada
+        </div>
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: right; word-wrap: break-word">
+            To:<br />
+            {{application.lic_auth}}, <br />
+            {{application.lic_addr}}<br />
+        </div>
+    </div>
+    <div class="row" style="text-align:center">
+        <b><u>File No: {{application.appl_number}}, Date:{{CurrentDate| date : 'dd/MM/yyyy'}}</u></b><br />
+        <b><u>Occupancy NoC RC Number: {{application.ref_no}}</u></b>
+    </div>
+    <br />
+    <div style='padding-left: 20px'>
+        <table border='0'>
+            <tr>
+                <td style='vertical-align: text-top; text-align:justify'>Sub:&nbsp;&nbsp;</td>
+                <td>Andhra Pradesh State Disaster Response and Fire Services Department - Annual Periodical Fire Certificate to the constructed <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building of <b>{{application.site_name}}, represented by {{application.build_name}}, {{application.site_addr}}</b> - Regarding. </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: text-top; text-align:justify'>Ref:&nbsp;&nbsp;</td>
+                <td>
+                    <ol>
+                        <li>G.O.Ms.NO.71 Home (Prisons-A) Department, Dated.01-04-2010 & G.O.Ms.NO.140 Home(Prison & Fire Services) Department, Dt.04-09-2015.</li>
+                        <li>This Office Delegation of Powers Rc.No.3350/Audit/NOC/2012, Dated.09-03-2017.</li>
+                        <li>This Office NOC for Occupancy Rc No. {{application.ref_no}}, Dt.{{application.oc_date}}</li>
+                        <li>Renewal NOC For Occupancy {{application.ref_no}}, Dt.{{application.last_renewal_date}}<!--required Renewal rc no--></li>
+                        <li>Online Application for Renewal NOC of {{application.build_name}}, {{application.site_addr}} - Inspection report called for Regarding.</li>
+                        <li>Online Inspection Report submitted by Officers of this Department on {{application.forward_date}}. </li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="text-align:center"><< 0 >></div>
+    <div style='padding-left: 20px; text-align:justify'>
+        <p style="text-indent: 50px;">
+            The Management of {{application.site_name}}, represented by {{application.build_name}}, {{application.site_addr}} has requested to issue Annual Periodical Fire Certificate for period 2017-2018 duly remitting the Fire Precautionary fee for Rs.{{application.challan_amt}}/- vide challan No. {{application.challan_num}}, Dated {{application.challan_date}} at {{application.challan_bnk}}, {{application.challan_brch}}.
+            <br />
+    </div>
+
+    <div ng-repeat="block in blocks" class="row">
+        <h3 align="center"> <span ng-if="$index!=0">,</span>{{block.block_name}}</h3>
+    </div>
+
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        1. This certificate is being issued as per G.O.Ms.No 140 Home (prisons & Fire Services) Department, Dt: 04.09.2015.<br />
+        2. The No Objection Certificate for Occupancy was issued vide reference cited (3) and the Management has also obtained Annual Periodical Renewal Fire Certificate for vide reference 4th cited to the constructed <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building.<br />
+        3. The Officers of the department have recommended to issue The
+        Annual Periodical Renewal Fire Certificate <b>{{application.build_name}}</b>
+        <b>{{application.site_addr}}</b>, subject to the following conditions.
+    </div>
+
+    <div class="col-md-12 col-sm-12" style="margin-top: 30px; text-align:justify">
+        <div ng-include="'modules/dept/partials/noc_terms_r.html'"></div><br />
+    </div>
+    <div class="clearfix"></div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        4. This Annual Periodical Renewal Fire Certificate is valid from {{valid_from| date : 'dd/MM/yyyy'}} to {{valid_to| date : 'dd/MM/yyyy'}}. <br />
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        5. The Responsibility/liability of the owner/occupier or both to maintain Fire safety measures in good condition in all times, in accordance with AP Fire safety Act 1999 and Rules, 2006. <br />
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        The following deficiencies are identified by the officers of the department and needs to be attended to by the management.<br />
+        <pre style="white-space: pre-wrap; word-break: keep-all">{{step_info.r}}</pre>
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%' class="clearfix">
+
+    </div>
+    <br />
+    <div class="col-md-12 col-sm-12">
+        <div style='float: left'>
+            <img src='http://202.83.28.165/barcode.php?text={{application.appl_number}}&print=true&codetype=Code39&size=60' alt='PNOC{{application.appl_number}}' />
+            <br /><input type='button' onclick='window.print()' value='Print' />&nbsp;&nbsp;&nbsp;<input type='button' onclick='location.href="#dashboard";' value='Back' />
+        </div>
+        <div style='float: right'>
+            <div style='text-align: center' ng-if="application.dlevel=='MSB'">
+                Your Sincerely,<br />
+                <br />
+                <br />
+                <br />
+                Director<br />
+                State Disaster Response & Fire Services<br />
+                Andhra Pradesh, Vijayawada.
+            </div>
+            <div style='text-align: center' ng-if="application.dlevel=='DFO'">
+                Your Sincerely,<br />
+                <br />
+                <br />
+                <br />
+                District Fire Officer<br />
+                Andhra Pradesh, {{district_desc(application.district)}}
+            </div>
+            <div style='text-align: center' ng-if="application.dlevel=='RFO'">
+                Your Sincerely,<br />
+                <br />
+                <br />
+                <br />
+                Regional Fire Officer<br />
+                Andhra Pradesh, Vijayawada
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="col-md-12 col-sm-12" ng-if="application.dlevel=='MSB'">
+        <br />
+        Copy to {{application.build_name}}, {{application.corr_addr}} <br />
+        Copy to Chief Office for Record Purpose <br />
+        Copy to Regional Fire Officer Concerned <br />
+        Copy to District Fire Officer Concerned<br />
+        Copy to Assistant District Fire Officer Concerned<br />
+        <span ng-if="addcc.length>0">Copy to {{addcc}}</span>
+    </div>
+    <div class="col-md-12 col-sm-12" ng-if="application.dlevel=='DFO'">
+        <br />
+        Copy to Management {{application.build_name}}, {{application.corr_addr}} <br />
+        Copy to Assistant District Fire Officer Concerned<br />
+        Copy to Station Fire Officer Concerned<br />
+        <span ng-if="addcc.length>0">Copy to {{addcc}}</span>
+    </div>
+    <div class="col-md-12 col-sm-12" ng-if="application.dlevel=='RFO'">
+        <br />
+        Copy to {{application.build_name}}, {{application.corr_addr}} <br />
+        Copy to Chief Office for Record Purpose <br />
+        Copy to District Fire Officer Concerned<br />
+        Copy to Assistant District Fire Officer Concerned<br />
+        Copy to Station Fire Officer Concerned<br />
+        <span ng-if="addcc.length>0">Copy to {{addcc}}</span>
+    </div>
+</div>

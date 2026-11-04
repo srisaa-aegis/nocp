@@ -1,0 +1,516 @@
+<div class="row h100">
+    <div class="col-md-10 col-md-offset-1 h100">
+        <h2>
+            <small class="glyphicon glyphicon-log-in"></small> Occupancy Certificate - Building Details
+        </h2>
+
+        <form name="userLogin" class="form__provisional well bg-white" ng-submit="SaveDetails()">
+            <div ng-include="'modules/citizen/partials/innerheader.html'"></div>
+            <h3>Surroundings Details of the Building</h3>
+            <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info">
+                Please provide the details of the properties/roads around the building on all the four sides. In case of abutting road, please specify the width of the road in meters.
+            </div>
+            <div class="col-md-9 col-sm-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='1%'>&nbsp;</th>
+                            <th width='5%'>Side</th>
+                            <th width='20%'>Type of Property</th>
+                            <th width='25%'>Name</th>
+                            <th width='25%'>Width of Abutting Road</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="bside in block.sides">
+                            <td>{{ bside.sl_no }}</td>
+                            <td>{{direction_name(bside.direc)}}</td>
+                            <td>
+                                <select ng-disabled="CannotEdit('A')" ng-model="bside.ptype" class="form-control" required>
+                                    <option value="R">Street / Road</option>
+                                    <option value="B">Building</option>
+                                    <option value="S">Open Space</option>
+                                    <option value="O">Others</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input ng-disabled="CannotEdit('A')" type="text" class="form-control" placeholder="Name" ng-model="bside.pname" />
+                                <!--<input ng-disabled="application.status_id != 1 && application.form16type != 'O'" type="text" class="form-control" placeholder="Name" ng-model = "bside.pname"/>-->
+                            </td>
+                            <td>
+                                <div class="input-group" ng-if="bside.ptype=='R'">
+                                    <input ss-format="numeric" ng-disabled="CannotEdit('A')" type="text" class="form-control" placeholder="Width" ng-model="bside.width" />
+                                    <div class="input-group-addon">Meters</div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+                <h3>Open Spaces provided around the building</h3>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info" style="height:250px">
+                Please provide the Provided Open Spaces around the block. Based on the height of the building, the system provides the minimum open spaces
+                in the front and the other sides. <br />
+                In case you have surrrendered land for road-widening, you can claim relaxation in the setbacks. Please check the "Whether land has been surrendered for road-widening." checkbox and attach the proof of road widening.
+                <br />
+                In case you wish to avail Transfer of Setbacks. Please check the "Transfer of Setbacks".<br />
+                Note: <br />
+                <button type="button" class="btn btn-success btn-circle"><i class="glyphicon glyphicon-ok"></i></button> - Indicate the open spaces provided by you are acceptable.<br />
+                <button type="button" class="btn btn-danger btn-circle"><i class="glyphicon glyphicon-remove"></i></button> - Indicate the open spaces provided by you are not acceptable.
+                <div class="clearfix" />
+                <a class="badge pull-right" data-toggle="modal" data-target="#rw_msb"><span class="glyphicon glyphicon-road"> Roadwidening Concessions</span></a>&nbsp;
+                <a class="badge pull-right" data-toggle="modal" data-target="#table4"><span class="glyphicon glyphicon-sound-dolby"> Open Spaces - Table 18</span></a>
+                <a class="badge pull-right" data-toggle="modal" data-target="#table5"><span class="glyphicon glyphicon-sound-dolby"> Open Spaces - Table 17</span></a>
+                <a class="badge pull-right" data-toggle="modal" data-target="#note_os"><span class="glyphicon glyphicon-list-alt"> Note on Open Spaces</span></a>&nbsp;
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-6 col-sm-12">
+                    <!--<span ng-if="block.height>=18 && block.height<=30"><input ng-disabled="application.status_id != 1" type='checkbox' ng-model="block.xfer_sbak" id="xfer_sbak" name="xfer_sbak"> Is Transfer of Setback applicable?</span>--><br />
+                    <span ng-if="application.plot_area>=300"><input ng-disabled="application.status_id != 1" type='checkbox' ng-model="block.xfer_sbak" id="xfer_sbak" name="xfer_sbak"> Is Transfer of Setback applicable?</span><br />
+                    <input ng-disabled="application.status_id != 1" type='checkbox' ng-model="block.road_wide" id="road_wide" name="road_wide" data-toggle="modal" data-target="#infoPopup"> Whether land has been surrendered for road-widening.<br />
+                    <label class="label-warning" ng-if="block.road_wide"> Please Submit proof that Land has been surredered for road widening.</label>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    Front Direction:
+                    <select ng-disabled="CannotEdit('B')" ng-model="block.front_dir" class="form-control" required>
+                        <option value="E">East</option>
+                        <option value="W">West</option>
+                        <option value="N">North</option>
+                        <option value="S">South</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    &nbsp;
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='10%'>Direction</th>
+                            <th width='15%' ng-if="application.appl_mode == 'N'">Required (Meters)</th>
+                            <th width='15%' ng-if="application.appl_mode != 'N'">Required as Per PNOC(Meters)</th>
+                            <th width='15%' ng-if="application.appl_mode != 'N'">Proposed (Meters)</th>
+                            <th width='15%'>Provided (Meters)</th>
+                            <th width="20%">Image</th>
+                            <th width='5%'>... </th>
+                            <th width='25%'>&nbsp; </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng_repeat="ospace in block.ospaces">
+                            <td>{{direction_name(ospace.direc)}}</td>
+                            <td ng-if="application.appl_mode == 'N'">{{reqd_open_space(ospace)}} Meters</td>
+                            <td ng-if="application.appl_mode != 'N'">
+                                <input ss-format="numeric" ng-disabled="CannotEdit('B')" type='text' ng-model="ospace.os_preqd" id="prequired" name="prequired" placeholder="Open Space" class="form-control" />
+                            </td>
+                            <td ng-if="application.appl_mode != 'N'">
+                                <input ss-format="numeric" ng-disabled="CannotEdit('B')" type='text' ng-model="ospace.parent_proposed" id="proposed" name="proposed" placeholder="Open Space" class="form-control" />
+                            </td>
+                            <td>
+                                <input ss-format="numeric" ng-disabled="CannotEdit('A')" type='text' ng-model="ospace.proposed" id="asbuilt" name="asbuilt" placeholder="As Built" class="form-control" />
+                            </td>
+                            <td>
+                                <label for="{{ 'limgOpenspace_' + $index }}" id="{{ 'limgOpenspace_' + $index }}" ng-show="false">OS {{ ospace.direc }} </label>
+                                <div class="input-group">
+                                    <input ng-disabled="application.status_id != 1" type="file" id="{{ 'imgOpenspace_' + $index }}" name="{{ 'imgOpenspace_' + $index }}" class="form-control" file-model="{{ 'imgOpenspace_' + $index }}" accept="application/jpg" />
+                                    <div class="input-group-addon"> <a ng-if="FileExists_Image('OS' + ospace.direc.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_Image('OS' + ospace.direc.split(' ').join(''))"></a> </div>
+                                </div>
+                            </td>
+                            <td ng-if="application.appl_mode == 'N'">
+                                <button type="button" class="btn btn-success btn-circle" ng-if="reqd_open_space(ospace) <= ospace.proposed"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button type="button" class="btn btn-danger btn-circle" ng-if="reqd_open_space(ospace) > ospace.proposed"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td ng-if="application.appl_mode != 'N'">
+                                <button type="button" class="btn btn-success btn-circle" ng-if="check_open_space(ospace)"><i class="glyphicon glyphicon-ok"></i></button>
+                                <button type="button" class="btn btn-danger btn-circle" ng-if="!check_open_space(ospace)"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                            <td>
+                                <span ng-if="application.appl_mode == 'N' && reqd_open_space(ospace) > ospace.proposed">
+                                    The Provided Open Space should not be less than the Required Open Space.
+                                </span>
+                                <span ng-if="application.appl_mode != 'N' && !check_open_space(ospace)">
+                                    The Provided Open Space should not be less than the Proposed / Required Open Space.
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="application.dlevel!='DFO'">
+                <div class="col-md-12 col-sm-12">
+                    <h3>Projections into Open Spaces</h3>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info" style="height:80px">
+                    Note: Every interior or exterior open space shall be kept free from any erection thereon and shall be open to the sky. Nothing except Cornice, Chajjas/weather shades only of width not exceeding 75cm shall be allowed in the mandatory setbacks. Such projections shall not be allowed at a height less than 2.20m from the corresponding finished floor level.
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th width='10%'>Direction</th>
+                                <th width='25%' ng-if="application.appl_mode != 'N'"> Proposed (Meters)</th>
+                                <th width='25%'>Provided (Meters)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng_repeat="ospace in block.ospaces">
+                                <td>{{direction_name(ospace.direc)}}</td>
+                                <td ng-if="application.appl_mode != 'N'">
+                                    <input ss-format="numeric" ng-disabled="CannotEdit('B')" type='text' ng-model="ospace.parent_projection" id="projection" name="projection" placeholder="Projection" class="form-control" />
+                                </td>
+                                <td>
+                                    <input ss-format="numeric" ng-disabled="CannotEdit('A')" type='text' ng-model="ospace.projection" id="projection" name="projection" placeholder="As Built" class="form-control" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <h3>
+                    Floors:
+                    <button ng-if="application.status_id == 1 && application.appl_mode != 'O'" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddFloor()" ;> <span class="glyphicon glyphicon-plus"></span> Add Floor</button>
+                </h3>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-12 col-lg-12 col-sm-12 panel panel-heading panel-info">
+                    Note: Total built up area should include area should include stilt and the common areas also.<br />
+                    The Occupant Load declared by the builder cannt be greater than the Occupant Load permitted as per Table 3 of NBC.
+                    <a class="badge pull-right" data-toggle="modal" data-target="#table20"><span class="glyphicon glyphicon-user"> Table 3 - Occupant Load</span></a>&nbsp;
+                    <a class="badge pull-right" data-toggle="modal" data-target="#multiplextable" id="opensubfloor"></a>&nbsp;
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th width='2%'>Sl</th>
+                            <th width='10%'>Floor Type</th>
+                            <th width='10%'>Floor</th>
+                            <th width='25%'>Total Builtup Area (Sq Mtrs)</th>
+                            <th width='15%'>Occupancy Type</th>
+                            <th width='10%'>No of Occupants (as per Table 3)</th>
+                            <th width='20%'>No. of Occupants as declared by the builder</th>
+                            <th width='1%'>...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="floor in block.floors">
+                            <td>{{$index + 1}}</td>
+                            <td>
+                                <select ng-disabled="CannotEdit('B')" ng-model="floor.flr_type" id="flr_type" name="flr_type" class="form-control">
+                                    <option value="B">Basement / Cellar</option>
+                                    <option value="S">Stilt</option>
+                                    <option value="G">Ground</option>
+                                    <option value="F">Floors</option>
+                                    <option value="T">Terrace</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input ng-disabled="CannotEdit('B')" type='text' ng-model="floor.flr_name" id="flr_name" name="flr_name" placeholder="Name" class="form-control" />
+                            </td>
+                            <td>
+                                <div class="input-group" ng-if="application.appl_mode != 'N'">
+                                    <div class="input-group-addon">Proposed:</div>
+                                    <input ss-format="decimal" ng-disabled="CannotEdit('B')" type='text' ng-model="floor.parent_built_area" id="built_area" name="built_area" placeholder="Total Built Area" class="form-control" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Provided:</div>
+                                    <input ss-format="decimal" ng-disabled="CannotEdit('A')" type='text' ng-model="floor.built_area" id="built_area" name="built_area" placeholder="As Built" class="form-control" />
+                                </div>
+                            </td>
+                            <td>
+                                <select ng-disabled="CannotEdit('B')" ng-model="floor.occ_type" id="occ_type" name="occ_type" class="form-control">
+                                    <option value="PAR">Parking</option>
+                                    <option value="RES">Residential</option>
+                                    <option value="EDU1">Educational</option>
+                                    <option value="EDU2">Educational - Engineering and Technology</option>
+                                    <option value="INS1">Institutional - Outdoor Patients Area</option>
+                                    <option value="INS2">Institutional - Indoor Patients Area</option>
+                                    <option value="ASM1">Assembly with fixed seats</option>
+                                    <option value="ASM3">Assembly - Concentrated use without fixed seating</option>
+                                    <option value="ASM4">Assembly - Less concentrated use without fixed seating</option>
+                                    <option value="ASM5">Assembly - Dining areas & restaurants with seating & table</option>
+                                    <option value="ASM6">Assembly - Mixed</option>
+                                    <option value="MER1">Mercantile - Street floor and Sale Basement</option>
+                                    <option value="MER2">Mercantile - Upper sale floors</option>
+                                    <option value="MER3">Mercantile - Storage / Warehouse</option>
+                                    <option value="BIZ">Business</option>
+                                    <option value="IND">Industrial</option>
+                                    <option value="STO">Storage</option>
+                                    <option value="MLCP">Multilevel Car parking</option>
+                                    <option value="HAZ">Hazardous</option>
+                                    <option value="OTH">Other Non-Occupancies</option>
+                                </select>
+                                <div class="input-group" ng-if="floor.occ_type == 'ASM1'">
+                                    <div class="input-group-addon">Seats:</div>
+                                    <input ss-format="decimal" ng-disabled="CannotEdit('A')" type='text' ng-model="floor.seats_num" id="seats_num" name="seats_num" placeholder="Count" class="form-control" />
+                                </div>
+                                <div class="input-group" ng-if="floor.occ_type == 'ASM6'">
+                                    <button type="button" class="badge pull-right" ng-click="OpenSubFloors(floor)"><span class="glyphicons glyphicon-check"></span>Sub Floors</button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group" ng-if="application.appl_mode != 'N'">
+                                    <div class="input-group-addon">Proposed:</div>
+                                    {{t20OccCount_O(floor)}}
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Provided:</div>
+                                    {{t20OccCount(floor)}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group" ng-if="application.appl_mode != 'N'">
+                                    <div class="input-group-addon">Proposed:</div>
+                                    <input ss-format="numeric" ng-disabled="CannotEdit('B')" type='number' ng-model="floor.parent_occ_c_app" id="occ_c_app" name="occ_c_app" class="form-control" required />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon">Provided:</div>
+                                    <input ss-format="numeric" ng-disabled="CannotEdit('A')" type='number' ng-model="floor.occ_c_app" id="occ_c_app_1" name="occ_c_app_1" class="form-control" required />
+                                </div>
+                            </td>
+                            <td>
+                                <button ng-if="application.status_id == 1 && application.appl_mode != 'O'" type="button" class="btn btn-sm btn-danger" ng-click="DeleteFloor($index)"> <span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <section class="row">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="btn btn-primary" style='float: left;' ng-click='ViewApplication()'> <span class="glyphicon glyphicon-arrow-left"></span> Previous </button>
+                    <button type="submit" class="btn btn-primary"> Next <span class="glyphicon glyphicon-arrow-right"></span></button>
+                    <button type="reset" class="btn btn-danger" ng-click='ViewApplication()'> <span class="glyphicon glyphicon-remove"></span> Close </button>
+                </div>
+            </section>
+        </form>
+    </div>
+
+    <div id="table4" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Calculation Open Spaces based on Table 18 of AP Fire Services Act:</h4>
+                    <div ng-include="'modules/common/partials/table4.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="table5" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Calculation Open Spaces based on Table 17 of AP Building Rules 2016:</h4>
+                    <div ng-include="'modules/common/partials/table5.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="rw_msb" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Concession in Road Widening Cases as per GO 168</h4>
+                    <div ng-include="'modules/common/partials/rw_msb.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="note_os" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Notes on Calculating Open Spaces</h4>
+                    <div ng-include="'modules/common/partials/note_os.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="refuge" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Refuge Area - NBC Part 4 - 4.12.3</h4>
+                    <pre style="white-space: pre-wrap;">
+NBC Part 4 - 4.12.3
+For buidings more than 24 meters in height, refuge area of 15 sq. mtrs. or an area equivalent to 0.3 sq mtrs per person to accommodate the occupants of two consecutive floors, which ever is higher, shall be provided as under:
+Refuge area shall be provided on the periphery of the floor or preferably on a cantilever projection and open to air at least on one side, protected with suitable railings
+a) For floors above 24m and upto 39m - One refuge area on the floor immediately above the 24m.
+b) For floors above 39m - One refuge area on floor immediately above 39m and so on after every 15m. refuge area provided in excess of the requirements shall be counted towards FAR.
+NOTE: Residential Flats in multi-stored building with balcony, need not be provided with refuge area, however flats without balcony shall provide refuge area as given above.                    
+                </pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="table20" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Table 3 - Occupant Load</h4>
+                    <div ng-include="'modules/common/partials/table20.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="multiplextable" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-md-12 col-sm-12">
+                        <h3>
+                            Sub Floors:
+                            <button ng-if="application.status_id == 1" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddSubFloor()" ;> <span class="glyphicon glyphicon-plus"></span> Add SubFloor</button>
+                        </h3>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th width='5%'>Sl</th>
+                                <th width='15%'>Floor</th>
+                                <th width='15%'>Total Builtup Area (Sq Mtrs)</th>
+                                <th width='25%'>Occupancy Type</th>
+                                <th width='10%'>No of Occupants (as per Table 3)</th>
+                                <th width='25%'>No. of Occupants as declared by the builder</th>
+                                <th width="5%">...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="sfloor in editfloor.subfloors">
+                                <td>{{$index + 1}}</td>
+                                <td>
+                                    <input ng-disabled="application.status_id != 1" type='text' ng-model="sfloor.flr_name" id="sflr_name" name="sflr_name" placeholder="Name" class="form-control" />
+                                </td>
+                                <td>
+                                    <input ss-format="decimal" ng-disabled="application.status_id != 1" type='text' ng-model="sfloor.built_area" id="sbuilt_area" name="sbuilt_area" placeholder="Total Built Area" class="form-control" />
+                                </td>
+                                <td>
+                                    <select ng-disabled="application.status_id != 1" ng-model="sfloor.occ_type" id="socc_type" name="socc_type" class="form-control">
+                                        <!--<option value="PAR">Parking</option>-->
+                                        <option value="RES">Residential</option>
+                                        <option value="EDU1">Educational</option>
+                                        <option value="EDU2">Educational - Engineering and Technology</option>
+                                        <option value="INS1">Institutional - Outdoor Patients Area</option>
+                                        <option value="INS2">Institutional - Indoor Patients Area</option>
+                                        <option value="ASM1">Assembly with fixed seats</option>
+                                        <option value="ASM3">Assembly - Concentrated use without fixed seating</option>
+                                        <option value="ASM4">Assembly - Less concentrated use without fixed seating</option>
+                                        <option value="ASM5">Assembly - Dining areas & restaurants with seating & table</option>
+                                        <!--<option value="ASM6">Assembly - Mixed</option>-->
+                                        <option value="MER1">Mercantile - Street floor and Sale Basement</option>
+                                        <option value="MER2">Mercantile - Upper sale floors</option>
+                                        <option value="MER3">Mercantile - Storage / Warehouse</option>
+                                        <option value="BIZ">Business</option>
+                                        <option value="IND">Industrial</option>
+                                        <option value="STO">Storage</option>
+                                        <option value="MLCP">Multilevel Car parking</option>
+                                        <option value="HAZ">Hazardous</option>
+                                        <option value="OTH">Other Non-Occupanices</option>
+                                    </select>
+                                    <div class="input-group" ng-if="sfloor.occ_type == 'ASM1'">
+                                        <div class="input-group-addon">Seats:</div>
+                                        <input ss-format="decimal" ng-disabled="CannotEdit('A')" type='text' ng-model="sfloor.seats_num" id="sseats_num" name="sseats_num" placeholder="Count" class="form-control" />
+                                    </div>
+                                </td>
+                                <td>
+                                    {{t20OccCount(sfloor)}}
+                                </td>
+                                <td>
+                                    <input ss-format="numeric" ng-disabled="application.status_id != 1" type='number' ng-model="sfloor.occ_c_app" id="socc_c_app" name="socc_c_app" class="form-control" required />
+                                </td>
+                                <td>
+                                    <button ng-if="application.status_id == 1" type="button" class="btn btn-sm btn-danger" ng-click="DeleteSFloor($index)"> <span class="glyphicon glyphicon-trash"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="submit" class="btn btn-success" data-dismiss="modal" ng-submit="SaveSubFloor()">Save</button>-->
+                    <button type="submit" class="btn btn-success" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="infoPopup" class="modal fade" role="dialog" ng-if="block.road_wide == true">
+    <div class="modal-dialog" style="width:500px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Road Widening</h4>
+                <label class="text-center"> Please Submit proof that Land has been surredered for road widening.</label>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th width='10%'>Direction</th>
+                            <th width='25%'>Proposed values from Municipality License Authority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng_repeat="rw in block.roadwidening">
+                            <td>{{direction_name(rw.rw_direc)}}</td>
+                            <td>
+                                <div class="input-group">
+                                    <input ss-format="numeric" ng-disabled="application.status_id != 1" type='text' ng-model="rw.rw_reqd" id="rw_reqd" name="rw_reqd" placeholder="Open Space" class="form-control" />
+                                    <div class="input-group-addon">Meters</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="SaveRoadWidening()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

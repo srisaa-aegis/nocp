@@ -1,0 +1,119 @@
+﻿<style type="text/css">
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    * {
+        font-family: "Times New Roman", Times, serif;
+    }
+</style>
+<div ng-app='citizen' ng-controller='confirmController' style="Font-Family: 'Times New Roman'">
+    <h4 style='text-align: center'><b>Government of Goa</b></h4>
+    <h4 style='text-align: center'><b>Directorate of Fire & Emergency Services</b></h4>
+    <h5 style='text-align: center'>St. Inez, Panaji,</h5>
+    <h5 style='text-align: center'>Goa - 403 001 - India</h5>
+    <hr style="display: block;
+        height: 1px;
+        background: transparent;
+        width :100%;
+        border: none;
+        border-top: solid 1px #aaa;color:#333;background-color:#333; " />
+    <div class="row" style="height:6px">
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: left; text-align: left;">
+            <b>File No: {{application.appl_number}}</b>
+        </div>
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: right; text-align: right;">
+            <b>Date: {{CurrentDate| date : 'dd/MM/yyyy'}}</b>
+        </div>
+    </div>
+    <hr style="display: block;
+        height: 1px;
+        background: transparent;
+        width :100%;
+        border: none;
+        border-top: solid 1px #aaa;color:#333;background-color:#333; " />
+    <div style='padding-left: 20px'>
+        <table border='0'>
+            <tr>
+                <td style='vertical-align: text-top; text-align:justify'>Sub:&nbsp;&nbsp;</td>
+                <td>Uses of places and trades for purpose involving risk from fires. Regarding issue of Initial No Objection Certificate for the proposed Commercial Building for ({{application.site_name}})&nbsp;{{application.build_name}} situated at {{application.site_addr}}
+            </tr>
+            <tr>
+                <td style='vertical-align: text-top; text-align:justify'>Ref:&nbsp;&nbsp;</td>
+                <td>
+                    <ol>
+                        <li>This office letter No. {{application.appl_number}}, dated {{application.applied_date}}</li>
+                        <li>Your undertaking dated {{application.final_date}}. </li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style='padding-left: 20px; text-align:justify'>
+        <p style="text-indent: 50px;">
+            With reference to the above, this office has no objection to the said proposal for the construction of the proposed Commercial Building subject to compliance of the conditions as agreed by you vide undertaking dated; {{application.final_date}}.
+        </p>
+        <p style="text-indent: 50px;">
+            The No Objection given is specific to the plan submitted to this department. Any changes other than as per the plans submitted and the recommendation given by this office, will need prior approval of this Directorate.
+        </p>
+        <p style="text-indent: 50px;">
+            The Formal No Objection Certificate be obtained from this office on satisfactory compliance of fire safety requirements as stipulated in the Annexure on completion of the building before it is occupied.
+        </p>
+    </div>
+    <div class="col-md-12 col-sm-12" style="margin-top: 30px; text-align:justify">
+        <div ng-include="'modules/dept/partials/noc_terms_16.html'"></div>
+    </div>
+
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        9. The following deficiencies are identified by the officers of the department and needs to be attended to by the management.<br />
+        <pre style="white-space: pre-wrap; word-break: keep-all">{{step_info.r}}</pre>
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        10. This Provisional No Objection Certificate is issued with the advice that the <span ng-if="application.dlevel=='MSB'">Multi Storeyed Building</span><span ng-if="application.dlevel!='MSB'">Non Multi Storeyed Building</span> should not be occupied and the operations shall not be commenced without
+        obtaining No Objection Certificate for Occupancy from this Department about the satisfactory installation of above fire safety measures.
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%' ng-if="application.site_name.toLowerCase().indexOf('revised') > -1">
+        11. The Provisional No Objection Certificate is issued vide reference 1st cited is hereby cancelled.
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12">
+        <div style='float: left'>
+            <img src='http://202.83.28.165/barcode.php?text={{application.appl_number}}&print=true&codetype=Code39&size=60' alt='PNOC{{application.appl_number}}' />
+            <br /><input type='button' onclick='window.print()' value='Print' />&nbsp;&nbsp;&nbsp;<input type='button' onclick='location.href="#dashboard";' value='Back' />
+        </div>
+        <div style='float: right'>
+            <div style='text-align: center'>
+
+                <br />
+                <br />
+                <b>
+                    (ASHOK MENON)<br />
+                    DIRECTOR<br />
+                    FIRE & EMERGENCY SERVICES
+                </b>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <b>Encl: Annexure "A", "B" & "C"</b>
+        <br />
+        To,<br />
+        {{application.build_name}},<br />
+        {{application.corr_addr}}
+    </div>
+</div>

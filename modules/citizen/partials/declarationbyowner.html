@@ -1,0 +1,178 @@
+﻿<style type="text/css" media="print">
+    @page {
+        size: auto; /* auto is the initial value */
+        margin: 5mm; /* this affects the margin in the printer settings */
+    }
+</style>
+
+<div class="background" ng-controller="confirmController" style="Font-Family: 'Times New Roman';font-size:large">
+    <table width="100%" border="0">
+        <tr>
+            <td colspan="5" align="center">
+                <h3 style='text-align: center'><b>DECLARATION BY OWNER / OCCUPIER</b></h3>
+                <h4 style='text-align: center; margin-bottom: 0px;'><b>[Clause 4 II(b) of GO MS No. 169 HOME(Fire &amp; Prisions) Department Dt 19.12.2019]</b></h4>
+                <h4 style='text-align: center; margin-top: 0px;'><b>(to be uploaded in http://202.83.28.165/noc portal)</b></h4>
+            </td>
+        </tr>
+    </table></br>
+
+    <table width="100%" border="0">
+        <tr>
+            <td colspan="5" style="padding-left: 20px; padding-right: 20px">
+                <p style="text-align:justify; line-height: 1.8;">
+                    1) This is to Certify that, I am the owner / occupier of the building / premises (name of the building or premises)<b>
+                        {{application.build_name}}
+                    </b>
+                    situated at <b>{{application.site_addr}}</b> (address)
+                </p>
+            </td>
+        </tr>
+    </table>
+    <div ng-repeat="block in application.blocks">
+        <h3 align="center"><b>{{block.block_name}}</b></h3>
+        <div style='padding-left: 20px; text-align:justify'>
+            The builder has proposed to construct a Multi Storeyed  Building with {{FloorDisplay(block)}} with a height of {{block.height}} Mtrs for {{block.is_mixed ? "Mixed (" + type_name(block.site_type) + ")" : type_name(block.site_type)}} Occupancy  (Category - {{block.site_stype}}) in a total plot area of {{application.plot_area}} sq. meters.
+        </div>
+        <div style='padding-left: 20px; padding-top: 20px'>
+            The builder has proposed to provide Occupant Load as per unit Exit width:
+            <table width="100%" border="1" style="text-align:center">
+                <thead>
+                    <tr>
+                        <th width='5%'>Sl</th>
+                        <th width='10%'>Floor</th>
+                        <th width='10%'>Built up area (Sq Mtrs)</th>
+                        <th width='10%'>Occupancy Type</th>
+                        <th width='10%'>No of Occupants as declared by the builder</th>
+                        <th width='10%'>No of Occupants as per NBC</th>
+                        <th width='12%'>Aggregate width of Staircases Required (Meters)</th>
+                        <th width='12%'>Aggregate width of Staircases Proposed(Meters)</th>
+                        <th width='5%'>Fire Doors</th>
+                        <th width='5%'>Fire Lift</th>
+                        <th width='10%'>Deficit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="floor in block.floors">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{floor.flr_name}}
+                        </td>
+                        <td>
+                            {{floor.built_area}}
+                        </td>
+                        <td>
+                            {{floor_occu_name(floor.occ_type)}}
+                        </td>
+                        <td>
+                            {{floor.occ_c_app}}
+                        </td>
+                        <td>
+                            {{t20OccCount(floor) == ''? '--' : t20OccCount(floor)}}
+                        </td>
+                        <td>
+                            {{floor.stair_load_reqd == ''? '--': floor.stair_load_reqd}}
+                        </td>
+                        <td>
+                            {{floor.built_area > 0 ? aggregate_staircase(block): '--'}}
+                        </td>
+                        <td>
+                            {{ floor.built_area > 0 ? reqd_escape_count(block, 'I') + reqd_escape_count(block, 'E') : '--' }}
+                        </td>
+                        <td>
+                            {{ floor.built_area > 0 ? get_fire_lifts(block) : '--' }}
+                        </td>
+                        <td>
+                            -Nil-
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            {{block_built_up(block)}}
+                        </td>
+                        <td></td>
+                        <td>
+                            {{block_TotalOccLoad(block)}}
+                        </td>
+                        <td>
+                            {{block_TotalNBCOccLoad(block)}}
+                        </td>
+                        <td colspan="5"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> <br />
+    <table width="100%" border="0">
+        <tr>
+            <td colspan="5" style="padding-left: 20px; padding-right: 20px">
+                <p style="text-align:justify; line-height: 1.8;">
+                    2) This is to further certify that, I have checked the fire prevention and fire safety requirements in accordance with clause 4 of GO MS No.169 HOME (Fire & Prisions) Department Dt 19-12-2019 on Dt
+                    {{application.last_inspect_date | date: 'MM-dd-yyyy'}}
+                    and found them in good working condition as per Occupancy Fire No Objection Certificate issued vide <b> Rc.No {{application.appl_number}} </b>on Dt <b> {{application.applied_date | date: 'MM-dd-yyyy'}}</b>
+                    valid from <b> {{application.final_date | date: 'MM-dd-yyyy'}} </b> to {{application.validity_date | date: 'MM-dd-yyyy'}}
+                </p>
+                <br />
+            </td>
+        </tr>
+    </table>
+    <table width="100%" border="0">
+        <tr>
+            <td colspan="5" style="padding-left: 20px; padding-right: 20px">
+                <p style="text-align:justify; line-height: 1.8;">
+                    3) It is futher declared that no additions or alternations have been made in the building / premises affecting the fire prevention and fire safety measures including the means of escape and all exits,
+                    passages & open spaces are free from any obstruction.
+                </p>
+                <br />
+            </td>
+        </tr>
+    </table>
+    <table border="1">
+        <tr>
+            <td>Name in Block Letters</td>
+            <td>{{application.build_name}}</td>
+        </tr>
+        <tr>
+            <td>Address_(Office)</td>
+            <td>{{application.corr_addr}}</td>
+        </tr>
+        <tr>
+            <td>Telephone Number</td>
+            <td>{{application.build_mobile}} </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{application.build_email}}</td>
+        </tr>
+        <tr>
+            <td> Aadhar Number</td>
+            <td>{{application.build_aadhar}}</td>
+        </tr>
+    </table>  <br />
+    <table width="100%" border="0">
+        <tr>
+            <td colspan="5" style="padding-left: 20px; padding-right: 20px">
+                <p style="text-align:justify; line-height: 1.8;">
+                    In the view of above, as per the recommendations of the NOC committee, this declaration is hereby submitted for renewal of application.
+                </p>
+            </td>
+        </tr>
+    </table>  <br />  <br />
+    <div class="col-md-12 col-sm-12">
+        <div style='float: right;text-align:center'>
+            (Signature of Owner / Occupier)<br />
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12">
+        <div style='float: left'>
+            <img src='http://202.83.28.165/barcode.php?text={{application.appl_number}}&print=true&codetype=Code39&size=60' alt='PNOC{{application.appl_number}}' />
+            <br /><input type='button' onclick='window.print()' value='Print' />&nbsp;&nbsp;&nbsp;<input type='button' onclick='location.href="#dashboard";' value='Back' />
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

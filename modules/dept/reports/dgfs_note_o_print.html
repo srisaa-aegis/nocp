@@ -1,0 +1,52 @@
+﻿<div class="col-lg-12">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="text-navy" width="60%">1) What is the final decision of the Issuing Authority?</th>
+                            <th>
+                                <span ng-if="form_to.dg_final == 7">Approved</span>
+                                <span ng-if="form_to.dg_final == 8">Returned with Remarks</span>
+                                <span ng-if="form_to.dg_final == 9">Rejected</span>
+                                <span ng-if="form_to.dg_final == 3"> Inspection</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span ng-if="form_to.dg_final == 8">Please specify the remarks with which to return the application.</span>
+                                <span ng-if="form_to.dg_final == 9">Please specify the reasons for rejecting the application.</span>
+                                <span ng-if="form_to.dg_final == 7">Please specify the any additional comments.</span>
+                                <p>These remarks will be part of the communications sent to the Applicant. Please specify them as bulleted points.</p>
+                            </td>
+                            <th>{{form_to.remark}}</th>
+                        </tr>
+                        <tr>
+                            <td>Remarks about Committee Report:</td>
+                            <th>{{form_to.rem_comm}}</th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">Add Additional Copies to</th>
+                            <td ng-if="form_to.addcc != undefined">{{form_to.addcc}}</td>
+                            <td ng-if="form_to.addcc == undefined">--</td>
+                        </tr>
+                        <tr ng-if="(application.appl_type=='R' || application.appl_type=='RO')  && form_to.dg_final == 7">
+                            <th>
+                                Please specify Renewal Date:
+                            </th>
+                            <td>{{form_to.valid_from}}</td>
+                        </tr>
+                        <tr ng-if="(application.appl_type=='R' || application.appl_type=='RO') && form_to.dg_final == 7">
+                            <th>
+                                Please specify Renewal Valid Date:
+                            </th>
+                            <td>
+                            <td>{{form_to.valid_to}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

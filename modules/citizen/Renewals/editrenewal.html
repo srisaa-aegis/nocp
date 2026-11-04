@@ -1,0 +1,317 @@
+﻿<div class="row h100" ng-controller="renewalController">
+    <div class="col-md-10 col-md-offset-1 h100">
+        <h2>
+            <small class="glyphicon glyphicon-list"></small> NOC Renewal - General Information
+        </h2>
+        <form name="applLogin" class="form__provisional well bg-white" ng-submit="SaveRenewal()" novalidate="true">
+            <section class="form_fields row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="site_name">Building Name</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="site_name" name="site_name" placeholder="Building Name" class="form-control" ng-model="application.site_name" required>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-6">
+                    <div class="form-group">
+                        <label for="siteaddr">Site Address (with survey number)</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="siteaddr" name="siteaddr" placeholder="Site Address" class="form-control" ng-model="application.site_addr" required>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">District</label>
+                        <select ng-disabled="application.status_id != 1" id="district" name="district" class="form-control" placeholder="District" ng-model="application.district" required>
+                            <option ng:repeat="dist in districts" value="{{dist.id}}">
+                                {{dist.desc}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-sm-6">
+                    <div class="form-group">
+                        <label for="siteaddr">Address for Correspondence</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="corraddr" name="corraddr" placeholder="Correspondence Address" class="form-control" ng-model="application.corr_addr" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Licensing Authority</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="auth_name" name="auth_name" placeholder="Licensing Authority" class="form-control" ng-model="application.lic_auth" required>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-sm-6">
+                    <div class="form-group">
+                        <label for="siteaddr">Address of Licensing Authority</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="authaddr" name="authaddr" placeholder="Address of Licensing Authority" class="form-control" ng-model="application.lic_addr" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="plot_area">Plot Area</label>
+                        <div class="input-group">
+                            <input ss-format="decimal" ng-disabled="application.status_id != 1" type="number" id="plot_area" name="plot_area" placeholder="Plot Area" class="form-control" ng-model="application.plot_area" required>
+                            <div class="input-group-addon">Sq Mtrs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Site - Latitude</label>
+                        <input ss-format="latlng" ng-disabled="application.status_id != 1" type="text" id="loc_lat" name="loc_lat" placeholder="Latitude" class="form-control" ng-model="application.loc_lat" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Site - Longitude</label>
+                        <input ss-format="latlng" ng-disabled="application.status_id != 1" type="text" id="loc_lng" name="loc_lng" placeholder="Longitude" class="form-control" ng-model="application.loc_lng" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Builder/Owner/Developer</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="build_name" name="build_name" placeholder="Builder / Owner / Developer" class="form-control" ng-model="application.build_name" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Builder Contact Number</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="build_landline" name="build_landline" placeholder="Builder Contact Number" class="form-control" ng-model="application.build_landline" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Builder Mobile</label>
+                        <input ss-format="mobile" ng-disabled="application.status_id != 1" type="text" id="build_mobile" name="build_mobile" placeholder="Builder Mobile" class="form-control" ng-model="application.build_mobile" required>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Builder Email</label>
+                        <input ng-disabled="application.status_id != 1" type="email" id="build_email" name="build_email" placeholder="Builder Email" class="form-control" ng-model="application.build_email" required>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Challana Paid</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="challan_paid" name="challan_paid" placeholder="challan paid" class="form-control" ng-model="application.challan_paid" required>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="build_height">Occupancy Noc Refnumber</label>
+                        <input ng-disabled="application.status_id != 1" type="text" id="occupancy_noc_number" name="occupancy_noc_number" placeholder="occupancy noc number" class="form-control" ng-model="application.occupancy_noc_number" required>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                    <h3>Challan Information</h3>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="build_name">Challan Number</label>
+                            <input  ng-disabled="application.status_id != 1" type="text" id="challan_no" name="challan_no" placeholder="Challan Number" class="form-control" ng-model="application.challan_num" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="build_height">Amount Paid</label>
+                            <div class="input-group">
+                                <input ss-format="decimal" ng-disabled="application.status_id != 1" type="text" class="form-control" placeholder="Challan Paid" ng-model="application.challan_amt" required />
+                                <div class="input-group-addon">To Pay: {{reqd_challan()}}</div>
+                                <div class="input-group-addon">
+                                    &nbsp;
+                                    <span class="glyphicon glyphicon-ok green" ng-if="reqd_challan() <= application.challan_amt"></span>
+                                    <span class="glyphicon glyphicon-remove red" ng-if="reqd_challan() > application.challan_amt"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="build_name">Challan Date</label>
+                            <input ss-format="date" ng-disabled="application.status_id != 1" type="text" id="challan_date" name="challan_date" placeholder="dd/mm/yyyy" class="form-control" ng-model="application.challan_date" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="siteaddr">Bank</label>
+                            <input ng-disabled="application.status_id != 1" type="text" id="bank" name="bank" placeholder="Bank" class="form-control" ng-model="application.challan_bnk" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="build_landline">Branch</label>
+                            <input ng-disabled="application.status_id != 1" type="text" id="branch" name="branch" placeholder="Bank Branch" class="form-control" ng-model="application.challan_brch" required>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 col-sm-12">
+                    <h3>
+                        Blocks
+                        <button ng-if="application.status_id == 1" type="button" class="btn btn-primary btn-sm" style='float: right;' ng-click="AddBlock()" ;> <span class="glyphicon glyphicon-plus"></span> Add Block</button>
+                    </h3>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th width='3%'>&nbsp;</th>
+                                <th>Name</th>
+                                <th>Occupancy Type</th>
+                                <th>Sub Type</th>
+                                <th width='18%'>Height</th>
+                                <th width='8%'>No of Floors</th>
+                                <th width='13%'>Total Builtup Area (Sq Mtrs)</th>
+                                <th width='10%' ng-if="false">Data Ok?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="block in application.blocks">
+                                <td>{{ $index + 1 }}</td>
+                                <td>
+                                    <input ng-disabled="application.status_id != 1" type="text" class="form-control" placeholder="Name" ng-model="block.renewalblock_name" required />
+                                 
+                                </td>
+                                <td>
+                                    <select ng-disabled="application.status_id != 1" id="site_type" name="site_type" class="form-control" placeholder="Occupancy Type" ng-model="block.site_type" required>
+                                        <option ng:repeat="btype in buildTypes" value="{{btype.code}}">
+                                            {{btype.name}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select ng-disabled="application.status_id != 1" id="site_stype" name="site_stype" class="form-control" placeholder="Sub Type" ng-model="block.site_stype" required>
+                                        <option ng:repeat="stype in get_sub_types(block.site_type)" value="{{stype.code}}">
+                                            {{stype.name}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <input ss-format="numeric" ng-disabled="application.status_id != 1" type="number" ng-min="18" id="build_height" name="build_height" placeholder="Building Height" class="form-control" ng-model="block.height" required>
+                                        <div class="input-group-addon">Meters</div>
+                                    </div>
+                                  
+                                </td>
+                                <td>
+                                    <input type="text" id="flr_count" name="flr_count" placeholder="floor count" class="form-control" ng-model="block.flr_count" required>
+                                </td>
+                                <td>
+                                    <input type="text" id="built_area" name="built_area" placeholder="Built Up Area" class="form-control" ng-model="block.built_area" required>
+                                    <div ng-if="application.status_id == 1" class="col-md-12 text-center" style='margin-top: 10px;'> <button type="button" class="btn btn-sm btn-danger" ng-click="DeleteBlock($index)"> Delete Block </button> </div>
+                                </td>
+                                <td ng-if="false">
+                                    <button type="button" class="btn btn-success btn-circle btn-lg" ng-if="block.all_ok"><i class="glyphicon glyphicon-ok"></i></button>
+                                    <button type="button" class="btn btn-danger btn-circle btn-lg" ng-if="!block.all_ok"><i class="glyphicon glyphicon-remove"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td> <label>Total</label> </td>
+                                <td>
+                                    <input type="text" id="built_area" name="built_area" placeholder="Built Up Area" class="form-control" ng-model="total_built_up()" ng-disabled="true">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                    <h3>Documents</h3>
+                    <div class="col-md-6 col-sm-6">
+                        <label id="lfileChallan" fname="ChallanCopy">Scanned Copy of Challan</label>
+                        <div class="input-group">
+                            <input ng-disabled="application.status_id != 1" type="file" id="fileChallan" name="fileChallan" class="form-control" file-model="fileChallan" accept=".pdf">
+                            <div class="input-group-addon"> <a ng-if="FileExists('ChallanCopy')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('ChallanCopy')"></a></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <label id="lfilepnoc" fname="pnoc">Scanned Copy of Provisional NOC</label>
+                        <div class="input-group">
+                            <input ng-disabled="application.status_id != 1" type="file" id="filepnoc" name="filepnoc" class="form-control" file-model="filepnoc" accept=".pdf">
+                            <div class="input-group-addon"> <a ng-if="FileExists('pnoc')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('pnoc')"></a> </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <label id="lfileOccupancy" fname="Occupancy">Scanned Copy of Occupancy Certificate</label>
+                        <div class="input-group">
+                            <input ng-disabled="application.status_id != 1" type="file" id="fileOccupancy" name="fileOccupancy" class="form-control" file-model="fileOccupancy" accept=".pdf">
+                            <div class="input-group-addon"> <a ng-if="FileExists('Occupancy')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('Occupancy')"></a> </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <!--<label id="lfileDeclaration" fname="SelfDeclaration">Self Declaration</label>
+                        <div class="input-group">
+                            <input ng-disabled="application.status_id != 1" type="file" id="fileDeclaration" name="fileDeclaration" class="form-control" file-model="fileDeclaration" accept=".pdf">
+                            <div class="input-group-addon"> <a ng-if="FileExists('SelfDeclaration')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('SelfDeclaration')"></a> </div>
+                        </div>-->
+                    </div>
+
+
+
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <h3>&nbsp;</h3>
+                </div>
+                <div class="col-md-9">
+                    <input ng-disabled="application.status_id != 1" type='checkbox' ng-model="checklist.agreed" /> I have verified all the information provided in this application. By checking this box I confirm that information provided here is correct to the best of my knowledge.
+                </div>
+                <div class="col-md-3 text-right">
+                    &nbsp;
+                </div>
+
+                <div class="col-md-9">
+                    <button ng-if="application.status_id == 1" type="button" class="btn btn-primary" ng-disabled="!checklist.agreed" ng-click="ConfirmDoc()"> <span class="glyphicon glyphicon-download"></span> Submit </button>
+                    <a id="openmodalbutton" data-toggle="modal" data-target="#errorList" style="width:0px" />
+                </div>
+                <div class="col-md-3 text-right">
+                    <button  ng-if="application.status_id == 1" type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-save"></span> Save </button>
+                    <button type="button" class="btn btn-danger" onclick='javascript: location.href="#dashboard";'> <span class="glyphicon glyphicon-remove"></span> Cancel </button>
+                </div>
+            </section>
+        </form>
+    </div>
+    <!-- Modal -->
+    <div id="errorList" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Please fix the following errors:</h4>
+                </div>
+                <div class="modal-body">
+                    <ol>
+                        <li ng-repeat="eerror in errorlist">{{eerror.error}}</li>
+                    </ol>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

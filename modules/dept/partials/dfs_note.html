@@ -1,0 +1,52 @@
+<style>
+    td {
+        text-align: left;
+        vertical-align: top;
+    }
+    th {
+        background-color: lightgray;
+    }
+</style>
+<div style="text-align:center">
+	<table width='100%'>
+		<tr><th style="text-align: left" colspan='2'>1) Have you crosschecked the proposed plans and relavant rules of the NBC and ACT and all other guidelines applicable?</th></tr>
+		<tr>
+			<td>Are the plans fulfilling the requirements of the safety norms as prescribed in NBC?</td>
+			<td width="40%"><select ng-model="form_to.dfs_plans_ok" class="form-control" ng-disabled="disabledform"><option value="1">Yes</option><option value="0">No</option></select></td>
+		</tr>
+		<tr>
+			<td>Do you find any deficiences in the Proposal, Implemantation, Committee's report or any where in the entire file?</td>
+			<td><select ng-model="form_to.dfs_any_found" class="form-control" ng-disabled="disabledform"><option value="1">Yes</option><option value="0">No</option></select></td>
+		</tr>
+		<tr ng-if="form_to.dfs_any_found == 1">
+			<td>Please elaborate the deficiencies found.</td>
+			<td><textarea class="form-control" ng-model="form_to.dfs_deficits" ng-disabled="disabledform">&nbsp;</textarea></td>
+		</tr>
+
+
+		<tr>
+			<th style="text-align: left">2) Do you agree with the recommandation of the Committee, RFO and DFS-CD? If no, please specify your reasons?</th>
+			<td><select ng-model="form_to.dfs_agree_or" class="form-control" ng-disabled="disabledform"><option value="1">Yes, I agree</option><option value="0">No, I do not agree.</option></select></td>
+		</tr>
+		<tr ng-if="form_to.dfs_agree_or == 0">
+			<td>Please elaborate why you do not agree..</td>
+			<td><textarea class="form-control" ng-model="form_to.dfs_no_agree" ng-disabled="disabledform"`>&nbsp;</textarea></td>
+		</tr>
+
+		<tr>
+			<th style="text-align: left">3) Have you crosschecked the section remarks? Whether all the requirements of the section fulfilled?</th>
+			<td><select ng-model="form_to.dfs_section_ok" class="form-control" ng-disabled="disabledform"><option value="1">Yes</option><option value="0">No</option></select></td>
+		</tr>
+		<tr ng-if="form_to.dfs_section_ok == 0">
+			<td>Please elaborate the shortcomings..</td>
+			<td><textarea class="form-control" ng-model="form_to.dfs_section_nok" ng-disabled="disabledform">&nbsp;</textarea></td>
+		</tr>
+
+        <tr><th style="text-align: left" colspan='2'>4) Please Specify your clear opinion with reasons?</th></tr>
+        <tr>
+            <td colspan="2">
+                <textarea class="form-control" ng-model="form_to.remark" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+		</table>
+</div>

@@ -1,0 +1,85 @@
+{
+	"appl_id": 0,
+	"appl_number": "",
+	"site_name": "",
+	"site_addr": "",
+	"district": 0,
+	"corr_addr": "",
+	"plot_area": 0,
+	"perimeter": 0,
+	"lic_auth": "",
+	"lic_addr": "",
+	"build_name": "",
+	"build_landline": "",
+	"build_mobile": "",
+	"build_email": "",
+	"build_aadhar": "",
+	"challan_num": "",
+	"challan_amt": 0,
+	"challan_date": "",
+	"challan_bnk": "",
+	"challan_brch": "",
+	"applied_date": "",
+	"status_id": "1",
+	"loc_lat": 0,
+	"loc_lng": 0,
+	"firestation": "",
+	"parties": [{
+			"party_id": 0,
+			"role_name": "Builder",
+			"party_name": "",
+			"phone_number": "",
+			"email": "",
+			"license_no": ""
+		},
+		{
+			"party_id": 0,
+			"role_name": "Architect",
+			"party_name": "",
+			"phone_number": "",
+			"email": "",
+			"license_no": ""
+		},
+		{
+			"party_id": 0,
+			"role_name": "Structural Engineer",
+			"party_name": "",
+			"phone_number": "",
+			"email": "",
+			"license_no": ""
+		},
+		{
+			"party_id": 0,
+			"role_name": "Electrical Contractor",
+			"party_name": "",
+			"phone_number": "",
+			"email": "",
+			"license_no": ""
+		},
+		{
+			"party_id": 0,
+			"role_name": "Fire Safety Consultant",
+			"party_name": "",
+			"phone_number": "",
+			"email": "",
+			"license_no": ""
+		}
+	],
+	"blocks": [{
+		"block_id": 0,
+		"block_name": "",
+		"site_type": "",
+		"site_stype": "",
+		"is_mixed": 0,
+		"is_multiplex": 0,
+		"is_miniplex": 0,
+		"height":0,
+		"permissible_height":0,
+		"parent_height":0,
+		"block_type":"N",
+		"trade": "",
+		"floors": {
+			"subfloors": {}
+		}
+	}]
+}

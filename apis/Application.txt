@@ -1,0 +1,86 @@
+{
+	"appl_id":234,
+	"appl_number": "2016080001",
+	"site_name": "Padma Rekha Apartments",
+	"site_addr": "Plot 1, 2 & 3, Rajeevnagar, Hyderabad",
+	"district": 1,
+	"site_type": "res",
+	"sity_stype": "apt",
+	"plot_area": 2345,
+	"build_name": "So & So Constructions",
+	"build_landline": "040-989889",
+	"build_mobile": "9985002676",
+	"build_email": "satak@srisaa.com",
+	"challan_amt": 23450,
+	"applied_date": "",
+	"status": "DRF",
+	"parties" :
+	[
+		{
+		"sl_no" : 1,
+		"role_name": "Builder",
+		"party_name": "Mantri Constructions",
+		"phone_number" : "0802345676",
+		"email": "ravi@mantri.in",
+		"license_no": "2001/12/BLR/2014"
+		},
+		{
+		"sl_no" : 2,
+		"role_name": "Architect",
+		"party_name": "Mantri Constructions",
+		"phone_number" : "0802345676",
+		"email": "ravi@mantri.in",
+		"license_no": "2001/12/BLR/2014"
+		},
+		{
+		"sl_no" : 3,
+		"role_name": "Structural Engineer",
+		"party_name": "Mantri Constructions",
+		"phone_number" : "0802345676",
+		"email": "ravi@mantri.in",
+		"license_no": "2001/12/BLR/2014"
+		},
+		{
+		"sl_no" : 4,
+		"role_name": "Electrical Contractor",
+		"party_name": "Mantri Constructions",
+		"phone_number" : "0802345676",
+		"email": "ravi@mantri.in",
+		"license_no": "2001/12/BLR/2014"
+		},
+		{
+		"sl_no" : 5,
+		"role_name": "Fire Safety Systems Contractor",
+		"party_name": "Mantri Constructions",
+		"phone_number" : "0802345676",
+		"email": "ravi@mantri.in",
+		"license_no": "2001/12/BLR/2014"
+		}
+	],
+	"blocks" :
+	[
+		{
+		"sl_no" : 1,
+		"block_id" : 1,
+		"block_name": "Block A",
+		"site_type": "res",
+		"site_stype" : "apt",
+		"height": 18.05,
+		"flr_count": 6,
+		"built_area": 2275,
+		"all_ok": true
+		},
+		{
+		"sl_no" : 2,
+		"block_id" : 2,
+		"block_name": "Club House",
+		"site_type": "asm",
+		"site_stype" : "fnh",
+		"height": 6,
+		"flr_count": 2,
+		"built_area": 15000,
+		"all_ok": false
+		}
+		
+	]	
+}

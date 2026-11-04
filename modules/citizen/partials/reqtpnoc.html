@@ -1,0 +1,139 @@
+<div class="row h100">
+	<div class="col-md-10 col-md-offset-1 h100">
+		<h2><small class="glyphicon glyphicon-list"></small> Provisional NOC
+			<span style="float:right;">
+				<button type="button" class="btn btn-info btn-circle btn-lg"><i class="glyphicon glyphicon-ok"></i></button>
+				<i class="glyphicon glyphicon-arrow-right"></i>
+				<button type="button" class="btn btn-default btn-circle btn-lg"><i class="glyphicon glyphicon-list"></i></button>
+				<i class="glyphicon glyphicon-arrow-right icon-success"></i>
+				<button type="button" class="btn btn-default btn-circle btn-lg" disabled='true'><i class="glyphicon glyphicon-paperclip"></i></button>
+				<i class="glyphicon glyphicon-arrow-right"></i>
+				<button type="button" class="btn btn-default btn-circle btn-lg" disabled='true'><i class="glyphicon glyphicon-ok"></i></button>
+			</span>
+		</h2>
+		<form name="userLogin" class="form__provisional well bg-white" ng-submit="SaveApplication()" no-validate>
+			<section class="form_fields row">
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="site_name">Building Name</label>
+						<input type="text" id="site_name" name="site_name" placeholder="Building Name" class="form-control" ng-model="application.site_name" required>
+					</div>
+				</div>
+				<div class="col-md-8 col-sm-6">
+					<div class="form-group">
+						<label for="siteaddr">Site Address</label>
+						<input type="text" id="siteaddr" name="siteaddr" placeholder="Site Address" class="form-control" ng-model="application.site_addr" required>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="district">District</label>
+						<div class="input-group">
+							<select id="district" name="district" class="form-control" placeholder="District" ng-model="application.district" required>
+								<option ng:repeat="dist in districts" value="{{dist.id}}">
+									{{dist.desc}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8 col-sm-6">
+					<div class="form-group">
+						<label for="site_type">Type of Occupancy</label>
+						<div class="input-group">
+							<select id="site_type" name="site_type" class="form-control" placeholder="Site Type" ng-model="application.site_type" required>
+								<option ng:repeat="btype in buildTypes" value="{{btype.code}}">
+									{{btype.name}}
+								</option>
+							</select>
+							<div class="input-group-addon">{{type_description(application.site_type)}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="build_height">Height of Building</label>
+						<div class="input-group">
+							<input type="text" id="build_height" name="build_height" placeholder="Building Height" class="form-control" ng-model="application.height" required>
+							<div class="input-group-addon">Meters</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="flr_count">No of Floors</label>
+						<input type="text" id="flr_count" name="flr_count" placeholder="Total Floors" class="form-control" ng-model="application.flr_count" required>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="built_area">Total Built-up Area</label>
+						<input type="text" id="built_area" name="built_area" placeholder="Built Up Area" class="form-control" ng-model="application.built_area" required>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="build_name">Builder Name</label>
+						<input type="text" id="build_name" name="build_name" placeholder="Name of Builder" class="form-control" ng-model="application.build_name" required>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="build_landline">Contact Number</label>
+						<input type="text" id="build_landline" name="build_landline" placeholder="Contact Number" class="form-control" ng-model="application.build_landline" required>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="build_mobile">Mobile</label>
+						<input type="text" id="build_mobile" name="build_mobile" placeholder="Mobile Number" class="form-control" ng-model="application.build_mobile" required>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="form-group">
+						<label for="build_email">Email Id</label>
+						<input type="email" id="build_email" name="build_email" placeholder="Email Address" class="form-control" ng-model="application.build_email" required>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>List of Mandatory Documents Enclosed</label>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="checklist.challan_paid"> Challan Paid
+							</label>
+							<label>
+								To Pay: {{reqd_challan()}}
+							</label>
+							<label>
+								Amount Paid:
+							</label>
+							<label>
+								<input type="text" class="form-control" placeholder="Challan Paid" ng-model = "application.challan_amt" required/>
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="checklist.bank_guarantee"> Bank Guarantee
+							</label>
+							<label>
+								<input type="checkbox" ng-model="checklist.undertaking"> Undertaking Letter
+							</label>
+							<label>
+								<input type="checkbox" ng-model="checklist.form16"> Form 16
+							</label>
+							<label>
+								<input type="checkbox" ng-model="checklist.fire_draw_5"> 5 Sets of Fire Drawings&nbsp;
+								<button type='button' class='btn btn-success btn-sm' aria-label='Left Align' style='float: right;' data-toggle="modal" data-target="#myModal"><span class='badge'>i</span></button>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-right">
+					<button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-download"></span> Submit </button>
+					<button type="reset" class="btn btn-danger" onclick='javascript: location.href="#dashboard";'> <span class="glyphicon glyphicon-remove"></span> Cancel </button>
+				</div>
+			</section>
+		</form>
+	</div>
+</div>

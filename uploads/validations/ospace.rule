@@ -1,0 +1,6 @@
+{
+"rules":
+[
+{"field":"ptype", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Property Type"}
+]
+}

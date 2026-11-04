@@ -1,0 +1,117 @@
+﻿<div class="row white-bg" ng-controller="reportController">
+    <div class="col-lg-12">
+        <div class="ibox" id="printPageButton">
+            <div class="ibox-title">
+                <h5>Online NOC's Application Report</h5>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <select id="dlevel" name="dlevel" class="form-control" placeholder="Deligation" ng-model="rpt_parms.dlevel">
+                            <option value="0">Select Level of Application</option>
+                            <option value="MSB">DGFS / DFS</option>
+                            <option value="RFO">RFO</option>
+                            <option value="DFO">DFO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3" ng-if="rpt_parms.dlevel == 'RFO'">
+                    <div class="form-group">
+                        <select id="region" name="region" class="form-control" placeholder="region" ng-model="rpt_parms.region">
+                            <option value="0">Select Region</option>
+                            <option value="17">ER</option>
+                            <option value="16">SR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <select id="status" name="status" class="form-control" placeholder="Status" ng-model="rpt_parms.status">
+                            <option value="0">Select Status</option>
+                            <option value="7">Approved</option>
+                            <option value="6">Pending</option>
+                            <option value="8">Return With Comments</option>
+                            <option value="9">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <select id="host" name="host" class="form-control" placeholder="Host Name" ng-model="rpt_parms.host">
+                            <option value="0">Select Host Name</option>
+                            <option value="">Fire Portal</option>
+                            <option value="SDP">SDP</option>
+                            <option value="MAUD">MAUD</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group" id="data_1">
+                        <div class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" id="datepicker_from" class="form-control" placeholder="From" ng-model="rpt_parms.from_date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="data_1">
+                        <div class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" id="datepicker_to" class="form-control" placeholder="To" ng-model="rpt_parms.to_date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <a class="btn btn-primary text-white" id="toggleSpinners" ng-click="FetchData()"><i class="fa fa-search"></i> Search </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="reportdata.districtcount">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h4 class="text-navy"><strong ng-if="rpt_parms.dlevel != '0'">{{rpt_parms.dlevel}}</strong> Online NOC's <strong ng-if="rpt_parms.status != 0">{{status_description(rpt_parms.status)}}</strong> <strong ng-if="rpt_parms.from_date != '01/01/1900' && rpt_parms.to_date != '01/01/1900'"> from {{rpt_parms.from_date | date:'dd-MM-yyyy'}} to {{rpt_parms.to_date | date:'dd-MM-yyyy'}} </strong></h4>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Districts</th>
+                        <th>Provisional</th>
+                        <th>Occupancy</th>
+                        <th>Renewal</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="count in reportdata.districtcount">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            <div><strong>{{count.loc_name}}</strong></div>
+                        </td>
+                        <td>{{count.pnoc}}</td>
+                        <td>{{count.onoc}}</td>
+                        <td>{{count.rnoc}}</td>
+                        <td><strong>{{count.total}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            <strong>Total</strong>
+                        </td>
+                        <td><strong>{{getTotal(reportdata.districtcount, 'P')}}</strong></td>
+                        <td><strong>{{getTotal(reportdata.districtcount, 'O')}}</strong></td>
+                        <td><strong>{{getTotal(reportdata.districtcount, 'R')}}</strong></td>
+                        <td><strong>{{getTotal(reportdata.districtcount, 'T')}}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 class="text-danger"><strong>Note: If Some districts are missing means, the count of Provisional, Occupancy and Renewal NOC application is zero.</strong></h5>
+            <div class="text-right">
+                <button class="btn btn-primary" id="printPageButton" ng-click="Print()"><i class="fa fa-print"></i> Print</button>
+            </div>
+        </div>
+    </div>
+</div>

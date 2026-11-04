@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A.P. State Disaster Response and Fire Services Department</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link href="assets/css/bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/captcha.css">
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!--JS-->
+    <script src="script/angular.min.js"></script>
+    <script src="script/angular-route.min.js"></script>
+</head>
+<body ng-app="registers" ng-controller="registerController">
+    <div class="row pt-3 mr-0 ml-0">
+        <div class="col-lg-1 my-auto">
+            <img src="assets/img/logo_department.png" style="height:80px; width:80px;" alt="logo" class="logo">
+        </div>
+        <div class="col-lg-1">
+            <img src="images/cm.jpg" class="float-right rounded" style="height:100px; width:100px;" alt="Chief Minister">
+        </div>
+        <div class="col-lg-8 my-auto">
+            <h1 class="text-white">ANDHRA PRADESH STATE DISASTER RESPONSE AND FIRE SERVICES DEPARTMENT</h1>
+        </div>
+        <div class="col-lg-1">
+            <img src="images/hm.jpg" class="float-left rounded" style="height:100px; width:100px;" alt="Home Minister">
+        </div>
+        <div class="col-lg-1 my-auto">
+            <img src="assets/img/firelogo.png" style="height:80px; width:80px;" alt="logo" class="logo">
+        </div>
+    </div>
+    <main class="d-flex align-items-center min-vh-100  pb-2 pt-2">
+        <div class="container">
+            <div class="card login-card">
+                <marquee behavior="scroll" direction="left" class="text-danger mt-2 font-weight-bold" style="font-size: 14px;" onmouseover="this.stop();" onmouseout="this.start();">
+                    Contact <a href="uploads/docs/contacts.pdf" target="_blank" title="Contact's" class="text-danger"><i><u> District Fire Officer </u></i></a>
+                    or our NOC Portal customer support team who are happy to help! Call (+91 8662570101) or email (ho.apfire@gmail.com) us from Monday - Saturday: 10:00 AM - 08:00 PM
+                </marquee>
+                <div class="row mb-2">
+                    <div class="col-lg-7">
+                        <img src="assets/img/bg/noc.svg" alt="login" class="login-card-img">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card-body">
+                            <h1 class="text-center mb-2">NOC PORTAL</h1>
+                            <div ng-view>
+                            </div>
+                            <nav class="login-card-footer-nav mb-4 text-center">
+                                <a href="http://24x7smart.in/" target="_blank">© Copyright 2023 - 24x7 Smart Systems</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mb-2">
+                    <a href="uploads/docs/Flow.pdf" type="button" class="btn btn-outline-danger btn-sm" target="_blank" title="Process to obtain Online NOC's">
+                        <i class="fa fa-file-pdf-o"> Process to obtain Online NOC's</i>
+                    </a>
+                    <a href="uploads/docs/Documents.pdf" type="button" class="btn btn-outline-danger btn-sm" target="_blank" title="Instructions - How to fill Application Online">
+                        <i class="fa fa-info-circle"> Instructions - How to fill Application Online</i>
+                    </a>
+                    <a href="static.html#/pricing" type="button" class="btn btn-outline-danger btn-sm" target="_blank" title="Portal Charges">
+                        <i class="fa fa-rupee"> Portal Charges</i>
+                    </a>
+                    <a href="uploads/docs/contacts.pdf" type="button" class="btn btn-outline-danger btn-sm" target="_blank" title="Contact's">
+                        <i class="fa fa-address-book"> Contact's</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="text/ng-template" id="login.htm">
+        <div ng-include="'modules/register/partials/login.html'"></div>
+    </script>
+    <script type="text/ng-template" id="register.htm">
+        <div ng-include="'modules/register/partials/register.html'"></div>
+    </script>
+    <script type="text/ng-template" id="forgotpwd.htm">
+        <div ng-include="'modules/register/partials/forgotpwd.html'"></div>
+    </script>
+    <script type="text/ng-template" id="logout.htm">
+        <div ng-include="'modules/register/partials/logout.html'"></div>
+    </script>
+    <div ng-include="'modules/common/partials/loader.html'"></div>
+
+    <!-- jQuery -->
+    <script src="script/jquery.min.js"></script>
+    <!--Module JS-->
+    <script src="script/constants.js"></script>
+    <script src="app/fireApp.js"></script>
+    <script src="modules/register/controllers/registerController.js"></script>
+    <script src="modules/register/services/services.js"></script>
+    <script src="script/loader.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿{
+	"renewal_id":0,
+	"renewal_number": "",
+	"site_name": "",
+	"site_addr": "",
+	"district": 0,
+	"corr_addr": "",
+	"plot_area": 0,
+	"lic_auth": "",
+	"lic_addr": "",
+	"build_name": "",
+	"build_landline": "",
+	"build_mobile": "",
+	"build_email": "",
+	"challan_num": "",
+	"challan_amt": 0,
+	"challan_date": "",
+	"challan_bnk": "",
+	"challan_brch": "",
+	"challan_paid": 0,
+	"applied_date": "",
+	"status_id": "1",
+	"occupancy_noc_number":"",
+	"blocks" :
+	[
+	]	
+
+
+}

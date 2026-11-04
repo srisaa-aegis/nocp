@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body ng-app = "dept">
+
+    <!-- Navigation -->
+	<div ng-include = "'modules/dept/partials/navigation.html'"></div>
+
+    <div class="container-fluid main__view dashboard">
+    	<div ng-view></div>
+    </div>
+
+	 <script type = "text/ng-template" id = "dashboard.htm">
+		<div class="row h100">
+			<div class="col-md-10 col-md-offset-1 h100">
+				<div ng-include = "'modules/dept/partials/inwardlist.html'"></div>
+			</div>
+		</div>
+	 </script>
+
+	 <script type = "text/ng-template" id = "receive.htm">
+		<div class="row h100">
+			<div class="col-md-10 col-md-offset-1 h100">
+				<div ng-include = "'modules/dept/partials/receive.html'"></div>
+			</div>
+		</div>
+	 </script>
+	<!-- <div ng-include = "'modules/citizen/partials/footer.html'"></div> -->
+
+    <!-- jQuery -->
+    <script src="script/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="script/bootstrap.min.js"></script>
+
+<!--
+    	<script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+		<script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+		<script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-cookies.js"></script>
+-->
+    <script src="script/angular.min.js"></script>
+    <script src="script/angular-route.min.js"></script>    
+	<script src = "app/fireApp.js"></script>
+	<script src = "modules/dept/controllers/applicationController.js"></script>
+    <!-- Fusioncharts JavaScript -->
+    <script src="script/angular-fusioncharts.min.js"></script>
+    <!-- charts JavaScript -->
+    <script src="script/angular-chart.min.js"></script>
+</body>
+
+</html>

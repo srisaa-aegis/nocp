@@ -1,0 +1,239 @@
+﻿<div class="text-navy text-center mb-5">
+    <h2><u><strong>Fire Equipment Compliance Certificate</strong></u></h2>
+</div>
+<div ng-repeat="block in form_to.blocks">
+    <div class="text-navy text-center mb-5">
+        <h3><u><strong>{{block.block_name}}</strong></u></h3>
+    </div>
+    <h5 class="mb-3">
+        The builder has constructed a <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building Storeyed Building ({{block.block_name}}) with {{FloorDisplay(block)}} with a height of {{block.height}} Mtrs for {{type_name(block.site_type)}} Occupancy  (Category - {{block.site_stype}}) in a total plot area of {{application.plot_area}} sq. meters.<br />
+        <h4>Please specify if any descripencies found in this information?</h4>
+        <label class="form-control text-danger"><dt>{{block.initial}}</dt></label>
+    </h5>
+    <h3>Open Spaces</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="10%">Side</th>
+                <th width="10%">Required  as per NBC</th>
+                <th width="15%">Open Space Provided by the Builder</th>
+                <th width="10%">Deficit</th>
+                <th width="55%" class="text-danger">Remarks by Inspection Officer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng_repeat="ospace in block.ospaces">
+                <td>{{direction_name(ospace.direc)}}</td>
+                <td>{{ reqd_open_space(block, ospace) }} Meters</td>
+                <td>{{ ospace.proposed.toFixed(2) }} Meters</td>
+                <td>
+                    {{reqd_open_space(block, ospace)-ospace.proposed > 0  ?  (reqd_open_space(block, ospace)-ospace.proposed).toFixed(2) : "-" }}
+                </td>
+                <td class="text-danger">
+                    {{ospace.remark}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Means of Escape</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="5%">Sl</th>
+                <th width="10%">Escape Type</th>
+                <th width="10%">Description</th>
+                <th width="5%">From Floor</th>
+                <th width="5%">To Floor</th>
+                <th width="10%">Min. Width (Mtrs)</th>
+                <th width="10%">Width (Mtrs)</th>
+                <th width="10%">Location</th>
+                <th width="35%" class="text-danger">Remarks by Inspection Officer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="exape in block.escapes">
+                <td>{{$index + 1}}</td>
+                <td>
+                    {{StairTypeDesc(exape.etype)}}
+                </td>
+                <td>
+                    {{exape.desc}}
+                </td>
+                <td>
+                    {{FloorNameDesc(block,exape.from_floor)}}
+                </td>
+                <td>
+                    {{FloorNameDesc(block,exape.to_floor)}}
+                </td>
+                <td>{{reqd_escape_width(exape)}}</td>
+                <td>
+                    {{exape.width}}
+                </td>
+                <td>
+                    {{direction_name(exape.location)}}
+                </td>
+                <td class="text-danger">
+                    {{exape.T_Escape_R}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Floors</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width='5%'>Sl</th>
+                <th width='5%'>Floor</th>
+                <th width='10%'>Occupancy Type</th>
+                <th width='5%'>Built up area (Sq Mtrs) Provided</th>
+                <th width='10%'>No of Occupants as declared by the builder</th>
+                <th width='10%'>No of Occupants as per NBC</th>
+                <th width='10%'>Aggregate width of Staircases Required (Meters)</th>
+                <th width='10%'>Aggregate width of Staircases Provided (Meters)</th>
+                <th width="35%" class="text-danger">Remark by Inspection Officer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="floor in block.floors">
+                <td>{{$index + 1}}</td>
+                <td>
+                    {{floor.flr_name}}
+                </td>
+                <td>
+                    {{floor_occu_name(floor.occ_type)}}
+                </td>
+                <td>
+                    {{floor.built_area}}
+                </td>
+                <td>
+                    {{floor.occ_c_app}}
+                </td>
+                <td>
+                    {{t20OccCount(floor)== ''? '0' : t20OccCount(floor)}}
+                </td>
+                <td>
+                    {{floor.stair_load_reqd == ''? '0': floor.stair_load_reqd}}
+                </td>
+                <td>
+                    {{floor.esc_width == ''? '0': floor.esc_width}}
+                </td>
+                <td class="text-danger">
+                    {{floor.remark}}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    Total
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    {{block_built_up(block)}}
+                </td>
+                <td>
+                    {{block_TotalOccLoad(block)}}
+                </td>
+                <td>
+                    {{block_TotalNBCOccLoad(block)}}
+                </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Fire Fighting Equipment</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="5%">Sl</th>
+                <th width="10%">Fire Safety System</th>
+                <th width="10%" ng-if="application.appl_mode =='E'">Minimum Required</th>
+                <th width="10%">Provided</th>
+                <th width="35%" class="text-danger">Remark by Inspection Officer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="equip in block.equipment">
+                <td>{{$index + 1}}</td>
+                <td>
+                    {{equipment_desc(equip.qtype)}}
+                </td>
+                <td ng-if="application.appl_mode =='E'">
+                    {{equip.count}} {{equip.count.indexOf("YH_") > -1 ?"": equipment_suffix(equip.qtype)}}
+                </td>
+                <td>
+                    {{equip.ocount}} {{equip.count.indexOf("YH_") > -1 ?"": equipment_suffix(equip.qtype)}}
+                </td>
+                <td class="text-danger">
+                    {{equip.remark}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Floorwise Fire Fighting Installations - <i ng-if="appl_mode == 'E'">Required / Provided</i></h3>
+    <table class="table table-bordered" ng-repeat="ffe in form_to.floorwise | filter: {block_id: block.block_id}">
+        <thead>
+            <tr>
+                <th width="5%">Sl.</th>
+                <th width="10%">Floor</th>
+                <th ng-repeat="col in ffe.cols" style="word-wrap:inherit">{{equipment_short(col["name"])}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="drow in ffe.data">
+                <td>{{$index + 1}}</td>
+                <td>{{drow.fname}}</td>
+                <td ng-repeat="col in ffe.cols">
+                    <span ng-repeat="valtype in appl_type_ffe(appl_type, appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                        {{drow[col["name"]][valtype.tag] == ''? '--' : drow[col["name"]][valtype.tag]}}/
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>{{ffe.total.fname}}</td>
+                <td ng-repeat="col in ffe.cols">
+                    <span ng-repeat="valtype in appl_type_ffe(appl_type, appl_mode)" ng-if="equipment_level(col['name']) == 'B'">
+                        {{ffe.total[col["name"]][valtype.tag] == ''? '--' : ffe.total[col["name"]][valtype.tag] + ' ' + equipment_suffix(col['name'])}}
+                    </span>
+                    <span ng-repeat="valtype in appl_type_ffe(appl_type, appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                        <span ng-if="$index!=0">/</span>{{GetFFETotal(col["name"], valtype.tag,block.block_id)}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <ul>
+            <li ng-repeat="ntrow in block.note"><span><b>{{ntrow.NOTE_DESC}}</b></span><br /></li>
+        </ul>
+    </div>
+    <h4>Any comments about the Floor Wise Distribution of Fire Fighting Equipment</h4>
+    <label class="form-control text-danger"><dt>{{block.floorwisereco}}</dt></label>
+
+    <h4>Comments / Observations on images uploaded by the applicant</h4>
+    <label class="form-control text-danger"><dt>{{block.img_remarks}}</dt></label>
+
+    <h4>Any other action to be taken by the owner/applicant?</h4>
+    <label class="form-control text-danger"><dt>{{block.any_other}}</dt></label>
+
+    <h4>Do you recommend issue of Final NoC?</h4>
+    <label class="form-control text-danger" ng-if="form_to.final_reco == 'Y'"><dt>Recommended</dt></label>
+    <label class="form-control text-danger" ng-if="form_to.final_reco == 'N'"><dt>Not Recommend</dt></label>
+
+    <label class="form-control text-danger"><dt>{{form_to.remark}}</dt></label>
+
+    <h4 class="mb-5">Inspection Date: {{form_to.inspection_date}}</h4>
+
+    <div class="form-group row" style="margin-top: 7rem!important">
+        <label class="col-sm-3 text-center font-bold">Signature of </br>Station Fire Officer</label>
+        <label class="col-sm-3 text-center font-bold">Signature of </br>Asst. District Fire Officer</label>
+        <label class="col-sm-3 text-center font-bold">Signature of </br>District Fire Officer</label>
+        <label class="col-sm-3 text-center font-bold">Signature of </br>Regional Fire Officer</label>
+    </div>
+</div>

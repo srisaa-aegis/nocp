@@ -1,0 +1,75 @@
+﻿<div class="col-lg-12">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="text-navy" width="60%">1)Relavant applicable rules in the NBC / others (if applicable) guidelines</th>
+                            <th>
+                                {{form_to.rfo_nbc_rules}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy" width="60%">2) Any other action to be taken by the owner/applicant?</th>
+                            <th>
+                                {{form_to.rfo_ffe_oth}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">3) Any other rules applicable to the occupancy other than NBC? (Like for Diesel and Petroleum storages, Oil and Natural gas storages, etc;Chemical industries etc)</th>
+                        </tr>
+                        <tr>
+                            <td>Applicable Sections/ACT/Rules</td>
+                            <th>{{form_to.rfo_act_rules}}</th>
+                        </tr>
+                        <tr>
+                            <td> Minimum required as per the ACT/Rule</td>
+                            <th>{{form_to.rfo_min_act}}</th>
+                        </tr>
+                        <tr>
+                            <td>Deficits in the provided plan as per the ACT/rules</td>
+                            <th>{{form_to.rfo_def_act}}</th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">4) Any other points related to this NOC, which the officer wants to bring to the knowledge of DFS?</th>
+                            <th>
+                                {{form_to.any_other}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">5)Do you agree with the Report Submitted by the Chairman of the Inspection Committee</th>
+                            <th ng-if="form_to.inspection_remark === '1'">
+                                Yes
+                            </th>
+                            <th ng-if="form_to.inspection_remark === '0'">
+                                No
+                            </th>
+                        </tr>
+                        <tr ng-if="inspection_remark==2">
+                            <th>
+                                {{form_to.remark_not}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">6) Opinion of the officer regarding approval of NOC?</th>
+                            <th ng-if="form_to.rfo_recommend === '1'">
+                                Recommended
+                            </th>
+                            <th ng-if="form_to.rfo_recommend === '2'">
+                                Return for Corrections
+                            </th>
+                            <th ng-if="form_to.rfo_recommend === '0'">
+                                Not Recommended
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Specify the reasons</td>
+                            <th>{{form_to.remark}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

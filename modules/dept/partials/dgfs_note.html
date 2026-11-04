@@ -1,0 +1,111 @@
+<style>
+    td {
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+</style>
+<div style="text-align:center">
+    <table width='100%'>
+        <tr>
+            <th style="text-align: left">
+                1) What is the final decision of the Issuing Authority?
+            </th>
+            <td width="40%">
+                <select class="form-control" ng-model="form_to.dg_final" ng-disabled="disabledform">
+                    <option value="61" ng-if="appl_type=='O' && appl_mode == 'E'">Approved for Challan Payment</option>
+                    <option value="7">Approved</option>
+                    <option value="8" ng-disabled="application.rtimeout!='false'">Returned with Remarks</option>
+                    <option value="9">Rejected</option>
+                    <option value="3" ng-if="application.type='D'">Inspection</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span ng-if="form_to.dg_final == 8">Please specify the remarks with which to return the application..</span>
+                <span ng-if="form_to.dg_final == 9">Please specify the reasons for rejecting the application..</span>
+                <span ng-if="form_to.dg_final == 7">Please specify the any additional comments..</span>
+                <p>These remarks will be part of the communications sent to the Applicant. Please specify them as bulleted points.</p>
+            </td>
+            <td><textarea class="form-control" ng-model="form_to.remark" ng-disabled="disabledform" rows="6">&nbsp;</textarea></td>
+        </tr>
+        <tr>
+            <td>
+                Remarks about Committee Report:
+            </td>
+            <td><textarea class="form-control" ng-model="form_to.rem_comm" ng-disabled="disabledform">&nbsp;</textarea></td>
+        </tr>
+        <tr>
+            <th style="text-align: left" colspan="2">
+                Add Additional Copies to
+            </th>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="right"><textarea class="form-control" ng-model="form_to.addcc" ng-disabled="disabledform">&nbsp;</textarea></td>
+        </tr>
+        <!-- <tr ng-if="(application.appl_type=='R' || application.appl_type=='RO')  && form_to.dg_final == 7">-->
+        <tr ng-if="(appl_type=='R' || appl_type=='RO')  && form_to.dg_final == 7">
+            <th style="text-align: left">
+                Please specify Renewal Date:
+            </th>
+            <td width="40%">
+                <input class="form-control" type="date" ng-model="form_to.valid_from" ng-disabled="disabledform" />
+            </td>
+        </tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <!--<tr ng-if="(application.appl_type=='R' || application.appl_type=='RO') && form_to.dg_final == 7">-->
+        <tr ng-if="(appl_type=='R' || appl_type=='RO') && form_to.dg_final == 7">
+            <th style="text-align: left">
+                Please specify Renewal Valid Date:
+            </th>
+            <td width="40%">
+                <input class="form-control" type="date" ng-model="form_to.valid_to" ng-disabled="disabledform" />
+            </td>
+        </tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr ng-if="form_to.dg_final == 8 || form_to.dg_final == 9 || form_to.dg_final == 7">
+            <th>Final Approval or Rejection</th>
+            <th>
+                <span ng-if="form_to.dg_final == 7">
+                    <!--<span style="float:right" ng-if="application.appl_type=='P'">-->
+                    <span style="float:right" ng-if="appl_type=='P'">
+                        <a ng-if="application.noc_format=='final_noc'" class="badge" href="{{'home.html#/final_noc/' + modalstep.aid}}" target="_blank">Provisional NOC</a>&nbsp;&nbsp;&nbsp;
+                        <a ng-if="application.noc_format=='final_noc_16'" class="badge" href="{{'home.html#/final_noc_16/' + modalstep.aid}}" target="_blank">Provisional NOC</a>&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <!--<span style="float:right" ng-if="application.appl_type=='R'||application.appl_type=='RO'">-->
+                    <span style="float:right" ng-if="appl_type=='R'||appl_type=='RO'">
+                        <a class="badge" href="{{'home.html#/final_noc_r/' + modalstep.aid}}" target="_blank">Renewal NOC</a>&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <!--<span style="float:right" ng-if="application.appl_type=='O'">-->
+                    <span style="float:right" ng-if="appl_type=='O' && appl_mode != 'E'">
+                        <a class="badge" href="{{'home.html#/final_noc_o/' + modalstep.aid}}" target="_blank">Occupany NOC</a>&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <!--<span style="float:right" ng-if="application.appl_type=='O'">-->
+                    <span style="float:right" ng-if="appl_type=='O' && appl_mode == 'E'">
+                        <a class="badge" href="{{'home.html#/final_noc_o_e/' + modalstep.aid}}" target="_blank">Existing Building NOC</a>&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+                <span style="float:right" ng-if="form_to.dg_final == 8 || form_to.dg_final == 9">
+                    <a class="badge" href="{{'home.html#/rejection/' + modalstep.aid}}" target="_blank">Letter with Reasons</a>&nbsp;&nbsp;&nbsp;
+                </span>
+            </th>
+        </tr>
+        <tr ng-if="form_to.dg_final == 8 || form_to.dg_final == 9 || form_to.dg_final == 7">
+            <td>
+                Upload Scanned Document
+                <p style="color: red">Note: Please save the remarks / comments before you print and sign the NoC / Letter. The Saved Comments will become part of the document only if you save before printing the document. </p>
+            </td>
+            <td>
+                <div class="input-group">
+                    <input type="file" id="fileFinalDoc" name="fileFinalDoc" class="form-control" ng-disabled="disabledform" file-model="fileFinalDoc" required accept="application/pdf">
+                    <div class="input-group-addon"> <i class="glyphicon glyphicon-file"></i> </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

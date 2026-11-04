@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<template>
+  <subject>NOC PORTAL - @STATUS@</subject>
+  <body>
+    <p>Dear @USER_NAME@,</p>
+
+    <p>Application: @APPL_NUMBER@ for @SITE_NAME@ from @BUILD_NAME@ has been forwarded to you for review.\n Please take necessary action.</p>
+
+    <p>Please Login using http://202.83.28.165/noc/#/login link.</p>
+
+    <p>If any queries, Contact District Fire Officer or our NOC Portal customer support team who are happy to help! Call (+91 8662570101) or email (ho.apfire@gmail.com) us from Monday - Saturday: 10:00 AM - 08:00 PM</p>
+
+    
+    
+    <p><b>Thanks and Regards</b></p>
+    <p><b>TEAM - NOC PORTAL</b></p>
+  </body>
+</template>

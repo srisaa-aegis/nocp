@@ -1,0 +1,29 @@
+<marquee behavior="scroll" direction="left" ng-if="application.status_id == 1" onmouseover="this.stop();" onmouseout="this.start();">
+    <b style="font-size:large; color:red">Please ensure that all aspects of the application are accurate and supporting documents are correct before submitting.</b>
+</marquee>
+<div class="col-md-12 col-sm-12 bg-info" style="color: white;">
+    <div class="col-lg-3 col-md-3 col-sm-6" ng-if="block.appl_number != ''">
+        <div class="form-group">
+            <label>Appl. Number</label>
+            <h4>{{block.appl_number}}</h4>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group">
+            <label>Site Name</label>
+            <h4>{{block.site_name}}</h4>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group">
+            <label>Block Name</label>
+            <h4>{{block.block_name}}</h4>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="form-group">
+            <label>Height</label>
+            <h4>{{block.height}} Meters</h4>
+        </div>
+    </div>
+</div>

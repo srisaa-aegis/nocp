@@ -1,0 +1,32 @@
+﻿<div ng-controller="adminController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <button ng-click="DeleteOldFiles()" class="pull-right bg-warning">Delete Files</button>
+        </div>
+        <div class="panel-body">
+            <div class="std">
+                <h4 class="panel-heading">Old Drafts Files</h4>
+                <table class="table table-bordered table-striped" datatable="ng" dt-options="dtOptions">
+                    <thead>
+                        <tr>
+                            <th>Sl.</th>
+                            <th>Site Name</th>
+                            <th>Site Address</th>
+                            <th>Application Type</th>
+                            <th>Date of Filling Appl</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="file in deletedfiles">
+                            <td>{{$index + 1}}</td>
+                            <td>{{file.site_name}}</td>
+                            <td>{{file.site_addr}}</td>
+                            <td>{{file.appl_type == "P"? "Provisional" : file.appl_type == "O"?"Occupancy":"Renewal"}}</td>
+                            <td>{{file.create_date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

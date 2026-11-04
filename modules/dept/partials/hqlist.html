@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+<div ng-controller="applicationController">
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-container="body" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+            {{zession.dn}}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" data-container="body">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#search">Search</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#pendency">Pendency Report</a></li>
+            <li><a href="#statistics">Statistics Report</a></li>
+            <li><a href="#conslidated">Consolidated Status Report</a></li>
+            <li><a href="#applications">Applications Report</a></li>
+            <li><a href="#overdue">OverDue Applications</a></li>
+            <li><a href="#sms">SMS Report</a></li>
+            <li><a href="#feedback">Feedback Rating Report</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#chpwd">Change Password</a></li>
+        </ul>
+        <span class="pull-right hidden-xs" style="padding-top: 10px">
+            <span class="glyphicon glyphicon-list icon">&nbsp;Provisional</span>
+            <span class="glyphicon glyphicon-log-in icon" style="margin-left: 10px">&nbsp;Occupancy</span>
+            <span class="glyphicon glyphicon-repeat icon" style="margin-left: 10px">&nbsp;Renewal</span>
+            <span class="glyphicon glyphicon-equalizer icon" style="margin-left: 10px">&nbsp;ExistingBuilding</span>
+        </span>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Feedback Rating</h3>
+        </div>
+        <div class="panel-body">
+            <div class="card">
+                <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                    <li id="liLastMonth" role="presentation"><a style="cursor: pointer;" ng-click="GetAvgRating(1)">Last Month</a></li>
+                    <li id="liLast3Months" role="presentation"><a style="cursor: pointer;" ng-click="GetAvgRating(3)">Last Three Months</a></li>
+                    <li id="liLast3Months" role="presentation"><a style="cursor: pointer;" ng-click="GetAvgRating(6)">Last Six Months</a></li>
+                    <li id="liOverall" role="presentation"><a style="cursor: pointer;" ng-click="GetAvgRating(0)">Overall</a></li>
+                </ul>
+            </div>
+            <div ng-if="Rating.avg_rating>0">
+                <div style="display:inline-block;" id="rateYo"></div>
+                Average Rating {{Rating.avg_rating}}
+            </div>
+            <div ng-if="Rating.citizens>0">
+                <div style="display:inline-block;" id="user"></div>
+                <span class="glyphicon glyphicon-user"></span>  {{Rating.citizens}}
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary" ng-repeat="status in rolestatuses">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{status.status}}</h3>
+        </div>
+        <div class="panel-body">
+            <!-- Applications table -->
+            <table class="table table-striped table-hover hidden-xs">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Appl.No</th>
+                        <th>Applied Thru</th>
+                        <th>District</th>
+                        <th>Name of Building</th>
+                        <th>Address</th>
+                        <th>Pending With</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="application in applications | filter:{ status_id: status.status_id } | orderBy:'atdate'">
+                        <td>
+                            <span class="glyphicon glyphicon-list icon" ng-if="application.appl_type == 'P'"></span>
+                            <span class="glyphicon glyphicon-log-in icon" ng-if="application.appl_type == 'O' && application.appl_mode != 'E'"></span>
+                            <span class="glyphicon glyphicon-repeat icon" ng-if="application.appl_type == 'R'"></span>
+                            <span class="glyphicon glyphicon-equalizer icon" ng-if="application.appl_type == 'O' && application.appl_mode == 'E'"></span>
+                            {{application.delegation_level}}
+                        </td>
+                        <td>{{application.appl_number}}<label ng-if="application.revision > 1">[{{application.revision}}]</label></td>
+                        <td><span class="badge glyphicon glyphicon-import">{{application.host}}</span></td>
+                        <td>{{application.dist_name}}</td>
+                        <td>{{application.site_name}}</td>
+                        <td style="word-wrap: break-word;">{{application.build_name}}<br />{{application.site_addr}}</td>
+                        <td>{{application.reviewer}}</td>
+                        <td>{{status_description(application.status_id)}} on {{application.at_date}}</td>
+                        <td>
+                            <button class="btn btn-xs btn-success" ng-click="ProcessAppl(application.appl_id)">
+                                <i class="glyphicon glyphicon-edit"></i> {{status.NextAction}}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="container-fluid hidden-lg hidden-md hidden-print hidden-sm">
+                <div class="row panel panel-info" ng-repeat="application in applications | filter:{ status_id: status.status_id } | orderBy:'atdate'">
+                    <div class="col-xs-3 panel-heading">
+                        <span class="glyphicon glyphicon-list icon" ng-if="application.appl_type == 'P'"></span>
+                        <span class="glyphicon glyphicon-log-in icon" ng-if="application.appl_type == 'O' && application.appl_mode != 'E'"></span>
+                        <span class="glyphicon glyphicon-repeat icon" ng-if="application.appl_type == 'R'"></span>
+                        <span class="glyphicon glyphicon-equalizer icon" ng-if="application.appl_type == 'O' && application.appl_mode == 'E'"></span>
+                    </div>
+                    <div class="col-xs-9">{{ application.appl_number }} <label ng-if="application.revision > 1">[{{application.revision}}]</label></div>
+                    <div class="col-xs-12">{{application.site_name}}</div>
+                    <div class="col-xs-12 pull-right">
+                        <button class="btn btn-xs btn-success" ng-click="ProcessAppl(application.appl_id)">
+                            <i class="glyphicon glyphicon-edit"></i> {{status.NextAction}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

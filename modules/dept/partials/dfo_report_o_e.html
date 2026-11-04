@@ -1,0 +1,356 @@
+﻿<style type="text/css">
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    td {
+        text-align: left;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+
+    h5 {
+        font-weight: 700;
+        font-size: 18px;
+        background-color: lightgray;
+        margin-bottom: 1px;
+    }
+</style>
+<div style="Font-Family: 'Times New Roman'">
+    <p class="text-danger font-bold">NOTE: Must fill all fields before Save and Submit the Inspection Report. If any fields are missed to fill, application will send back to the inspection officer again.</p>
+    <div ng-repeat="block in form_to.blocks">
+        <div style='padding-left: 20px; text-align:justify'>
+            The builder has constructed a <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building ({{block.block_name}}) with {{FloorDisplay(block)}} with a height of {{block.height}} Mtrs for {{type_name(block.site_type)}} Occupancy  (Category - {{block.site_stype}}) in a total plot area of {{application.plot_area}} sq. meters.<br />
+            <h5>Please specify if any descripencies found in this information?</h5>
+            <textarea ng-model="block.initial" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div style='padding-left: 20px'>
+            <h5>Existing Building NOC</h5>
+        </div>
+        <div style='padding-left: 20px ; padding-top: 20px'>
+            <h5>Open Spaces</h5>
+            <table width="100%" style="text-align:center" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width="10%">Side</th>
+                        <th width="10%">Required(NBC)</th>
+                        <th width="10%">Provided(Builder)</th>
+                        <th width="10%">Deficit</th>
+                        <th width="10%">Image(Builder)</th>
+                        <th width="10%">Image(Officer)</th>
+                        <th width="40%">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng_repeat="ospace in block.ospaces">
+                        <td>{{direction_name(ospace.direc)}}</td>
+                        <td ng-if="application.appl_mode == 'E'">{{reqd_open_space(block, ospace) }} Meters</td>
+                        <td>{{ ospace.proposed.toFixed(2) }} Meters</td>
+                        <td>
+                            <div ng-if="application.appl_mode == 'E'">
+                                {{reqd_open_space(block, ospace)-ospace.proposed > 0  ?  (reqd_open_space(block, ospace)-ospace.proposed).toFixed(2) : "-" }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <a ng-if="FileExists_Image('OS' + ospace.direc.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_Image('OS' + ospace.direc.split(' ').join(''))"></a> </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label for="{{'limgOpenspace_' + block.block_id + $index }}" id="{{'limgOpenspace_' + block.block_id + $index}}" ng-show="false">{{block.block_id}} OS {{ ospace.direc }} </label>
+                            <div class="input-group">
+                                <input ng-disabled="application.status_id > 3 " type="file" id="{{'imgOpenspace_' + block.block_id + $index}}" name="{{'imgOpenspace_' + block.block_id + $index}}" class="form-control" file-model="{{'imgOpenspace_' + block.block_id + $index}}" accept="application/jpg" />
+                                <div class="input-group-addon"> <a ng-if="FileExists_deptImage(block.block_id +'OS' + ospace.direc.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_deptImage(block.block_id +'OS' + ospace.direc.split(' ').join(''))"></a> </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span> </span>
+                            <textarea ng-model="ospace.remark" class="form-control" id="{{'OSR_'+ospace.direc}}" ng-disabled="disabledform" required>&nbsp;</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style='padding-left: 20px; padding-top: 20px'>
+            <h5>Means of Escape</h5>
+            <table class="table table-striped table-hover" width="100%">
+                <thead>
+                    <tr>
+                        <th>Sl</th>
+                        <th>Escape Type</th>
+                        <th>Description</th>
+                        <th>From Floor</th>
+                        <th>To Floor</th>
+                        <th>Min. Width (Mtrs)</th>
+                        <th>Width (Mtrs)</th>
+                        <th>Location</th>
+                        <th>Image By Applicant</th>
+                        <th>Image By Officer</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="exape in block.escapes">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{StairTypeDesc(exape.etype)}}
+                        </td>
+                        <td>
+                            {{exape.desc}}
+                        </td>
+                        <td>
+                            {{FloorNameDesc(block,exape.from_floor)}}
+                        </td>
+                        <td>
+                            {{FloorNameDesc(block,exape.to_floor)}}
+                        </td>
+                        <td>{{reqd_escape_width(exape)}}</td>
+                        <td>
+                            {{exape.width}}
+                        </td>
+                        <td>
+                            {{direction_name(exape.location)}}
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <a ng-if="FileExists_Image('MEcpStc'+ exape.desc.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_Image('MEcpStc'+ exape.desc.split(' ').join(''))"></a> </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label for="{{'limgMescpSC_' +block.block_id +$index }}" id="{{'limgMescpSC_' + block.block_id + $index }}" ng-show="false">{{block.block_id}} MEcpStc {{ exape.desc }} </label>
+                            <div class="input-group">
+                                <input ng-disabled="application.status_id  > 3 " type="file" id="{{'imgMescpSC_' + block.block_id + $index }}" name="{{'imgMescpSC' + block.block_id + $index }}" class="form-control" file-model="{{'imgMescpSC_' + block.block_id + $index }}" accept="application/jpg" />
+                                <div class="input-group-addon"> <a ng-if="FileExists_deptImage(block.block_id +'MEcpStc'+ exape.desc.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_deptImage(block.block_id +'MEcpStc'+ exape.desc.split(' ').join(''))"></a> </div>
+                            </div>
+                        </td>
+                        <td>
+                            <textarea ng-model="exape.T_Escape_R" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px; padding-top: 20px'>
+            <h5>Floors</h5>
+            <table width="100%" style="text-align:center" class="table table-striped table-hover" cellspacing="1" cellpadding="1">
+                <thead>
+                    <tr>
+                        <th width='1%'>Sl</th>
+                        <th>Floor</th>
+                        <th>Occupancy Type</th>
+                        <th>Built up area (Sq Mtrs)</th>
+                        <th>No of Occupants as declared by the builder</th>
+                        <th>No of Occupants as per NBC</th>
+                        <th>Aggregate width of Staircases Required (Meters)</th>
+                        <th>Aggregate width of Staircases Provided (Meters)</th>
+                        <th width="30%">Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="floor in block.floors">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{floor.flr_name}}
+                        </td>
+                        <td>
+                            {{floor_occu_name(floor.occ_type)}}
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon"><span style="text-align:left">Provided:</span></div>
+                                <div class="input-group-addon"><span style="text-align:center">{{floor.built_area}}</span></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">{{floor.occ_c_app}}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">{{t20OccCount(floor)== ''? '0' : t20OccCount(floor)}}</div>
+                            </div>
+                        </td>
+                        <td>
+                            {{floor.stair_load_reqd == ''? '0': floor.stair_load_reqd}}
+                        </td>
+                        <td>
+                            {{floor.esc_width == ''? '0': floor.esc_width}}
+                        </td>
+                        <td>
+                            <textarea ng-model="floor.remark" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Total
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">Provided:</div>{{block_built_up(block)}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">{{block_TotalOccLoad(block)}}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">{{block_TotalNBCOccLoad(block)}}</div>
+                            </div>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <textarea ng-model="floor.floorsereco" class="form-control" ng-disabled="disabledform" id="{{'FLR_R_'+floor.floor_id}}">&nbsp;</textarea>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px;'>
+            <h5>Fire Fighting Equipment</h5>
+            <table width="100%" style="text-align:center;" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Sl</th>
+                        <th>Fire Safety System</th>
+                        <th ng-if="application.appl_mode =='E'">Minimum Required</th>
+                        <th>Provided</th>
+                        <th>Image By Applicant</th>
+                        <th>Image By Officer</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="equip in block.equipment">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{equipment_desc(equip.qtype)}}
+                        </td>
+                        <td ng-if="application.appl_mode =='E'">
+                            {{equip.count}} {{equip.count.indexOf("YH_") > -1 ?"": equipment_suffix(equip.qtype)}}
+                        </td>
+                        <td>
+                            {{equip.ocount}} {{equip.count.indexOf("YH_") > -1 ?"": equipment_suffix(equip.qtype)}}
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon"> <a ng-if="FileExists_Image('imgFFE'+ equip.qtype.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_Image('imgFFE'+ equip.qtype.split(' ').join(''))"></a> </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label for="{{'limgFFE_' + block.block_id + $index }}" id="{{'limgFFE_' + block.block_id + $index }}" ng-show="false">{{block.block_id}} imgFFE {{ equip.qtype }} </label>
+                            <div class="input-group">
+                                <input ng-disabled="application.status_id  > 3 " type="file" id="{{'imgFFE_' +block.block_id+ $index }}" name="{{'imgFFE_' + block.block_id + $index }}" class="form-control" file-model="{{ 'imgFFE_' +block.block_id + $index }}" accept="application/jpg">
+                                <div class="input-group-addon"> <a ng-if="FileExists_deptImage(block.block_id +'imgFFE'+ equip.qtype.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile_deptImage(block.block_id +'imgFFE'+ equip.qtype.split(' ').join(''))"></a> </div>
+                            </div>
+                        </td>
+                        <td>
+                            <textarea ng-model="equip.remark" class="form-control" ng-disabled="disabledform"
+                                      id="{{'FFE_R_'+equip.qtype}}">
+                                &nbsp;
+                            </textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px'>
+            <h5>
+                Floorwise Fire Fighting Installations -
+                <i ng-if="application.appl_mode == 'E'">Required / Provided</i>
+            </h5>
+            <table width="100%" class="table table-striped table-hover" style="text-align:center;" ng-repeat="ffe in form_to.floorwise | filter: {block_id: block.block_id}">
+                <thead>
+                    <tr>
+                        <th width="5%">Sl.</th>
+                        <th width="10%">Floor</th>
+                        <th ng-repeat="col in ffe.cols" style="word-wrap:inherit">{{equipment_short(col["name"])}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="drow in ffe.data">
+                        <td>{{$index + 1}}</td>
+                        <td>{{drow.fname}}</td>
+                        <td ng-repeat="col in ffe.cols">
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                                {{drow[col["name"]][valtype.tag] == ''? '--' : drow[col["name"]][valtype.tag]}}/
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>{{ffe.total.fname}}</td>
+                        <td ng-repeat="col in ffe.cols">
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'B'">
+                                {{ffe.total[col["name"]][valtype.tag] == ''? '--' : ffe.total[col["name"]][valtype.tag] + ' ' + equipment_suffix(col['name'])}}
+                            </span>
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                                <b ng-if="$index > 0">/</b>{{GetFFETotal(col["name"], valtype.tag,block.block_id)}}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <ul>
+                    <li ng-repeat="ntrow in block.eqnotes"><span><b>{{ffenotes[ntrow.note]}}</b></span><br /></li>
+                </ul>
+            </div>
+            <b>Any comments about the Floor Wise Distribution of Fire Fighting Equipment</b><br />
+            <textarea ng-model="block.floorwisereco" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div style='padding-left: 20px'>
+            <h5>Comments / Observations on images uploaded by the applicant</h5>
+            <textarea ng-model="block.img_remarks" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div style='padding-left: 20px'>
+            <h5>Any other action to be taken by the owner/applicant?</h5>
+            <textarea ng-model="block.any_other" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div style='padding-left: 20px'>
+            <h5>Please ensure that the Conditions have complied by applicant or not which are given at the time of {{ application.appl_type == 'O' ? 'Provisional' : application.appl_type == 'R'? 'Occupancy':''}}?</h5>
+
+            <!--<textarea ng-model="block.specific" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>-->
+        </div>
+        <div style='padding-left: 20px'>
+            <h5>Specific conditions have complied or not which are given at the time of {{ application.appl_type == 'O' ? 'Provisional' : application.appl_type == 'R'? 'Occupancy':''}}?</h5>
+            <textarea ng-model="block.specific" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div style='padding-left: 20px'>
+        <h5>Do you recommend issue of Final NoC?</h5>
+        <select ng-model="form_to.final_reco" class="form-control" ng-disabled="disabledform"><option value="Y">Recommend</option><option value="N">Not Recommend</option></select>
+        <textarea ng-model="form_to.remark" id="remark" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+    </div>
+    <div class="col-md-4 col-lg-4" style='padding-left: 20px'>
+        Inspection Date:
+    </div>
+    <div class="col-md-4 col-lg-4" style='padding-left: 20px'>
+        <input type="text" id="inspection_date" ng-model="form_to.inspection_date" class="form-control" ng-disabled="disabledform" />
+    </div>
+</div>

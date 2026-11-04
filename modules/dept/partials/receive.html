@@ -1,0 +1,18 @@
+<div class="row h100">
+	<div class="col-md-10 col-md-offset-1 h100" ng-controller="applicationController">
+		<h2><small class="glyphicon glyphicon-list"></small>Appliction Receipt</h2>
+		<form name="userLogin" class="form__provisional well bg-white" ng-submit="SaveReceipt()">
+			<section class="form_fields row">
+				<div ng-include = "'modules/dept/partials/appl_header.html'"></div>
+
+				<div class="clearfix"></div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<button type="submit" class="btn btn-sm btn-primary"><h4>Receive Application</h4></button>
+						<button type="button" class="btn btn-sm btn-default" onclick="location.href = '#dashboard';">Close</button>
+					</div>
+				</div>
+			</section>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,33 @@
+﻿<div class="ibox-content p-xl">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="text-danger text-center font-bold"><u>{{modalstep.d}} {{modalstep.uname}}</u></h2>
+        </div>
+    </div>
+    <div ng-include="'modules/dept/reports/section_note_print.html'" ng-if="modalstep.sid == 2 && modalstep.appl_type == 'P' && modalstep.template == 'section_note'"></div>
+    <div ng-include="'modules/dept/reports/section_note_o_print.html'" ng-if="modalstep.sid == 2 && modalstep.appl_type == 'O' && modalstep.template == 'section_note_o'"></div>
+    <div ng-include="'modules/dept/reports/section_note_r_print.html'" ng-if="modalstep.sid == 2 && modalstep.appl_type == 'R'"></div>
+
+    <div ng-include="'modules/dept/reports/dfo_report_print.html'" ng-if="modalstep.sid == 2 && modalstep.appl_type == 'P' && modalstep.template == 'dfo_report'"></div>
+    <div ng-include="'modules/dept/reports/dfo_report_print_o.html'" ng-if="modalstep.sid == 2 && modalstep.appl_type == 'O' && modalstep.template == 'dfo_report_o'"></div>
+    <div ng-include="'modules/dept/reports/dfo_others_print_o.html'" ng-if="modalstep.sid == 2 && modalstep.template == 'dfo_others_o'"></div>
+    <div ng-include="'modules/dept/reports/dfo_report_print_r.html'" ng-if="modalstep.sid == 3 && modalstep.appl_type == 'R' && modalstep.template == 'dfo_report_r'"></div>
+    <div ng-include="'modules/dept/reports/dfo_report_print_o_e.html'" ng-if="modalstep.sid == 2 && modalstep.appl_type == 'O' && modalstep.template == 'dfo_report_o_e'"></div>
+    
+
+    <div ng-include="'modules/dept/reports/rfo_note_print.html'" ng-if="modalstep.sid == 3 && modalstep.appl_type == 'P'"></div>
+    <div ng-include="'modules/dept/reports/rfo_note_print_o.html'" ng-if="modalstep.sid == 4 && modalstep.appl_type == 'O'"></div>
+    <div ng-include="'modules/dept/reports/rfo_note_print_r.html'" ng-if="modalstep.sid == 4 && modalstep.appl_type == 'R'"></div>
+
+    <div ng-include="'modules/dept/reports/adfs_note.html'" ng-if="modalstep.template == 'adfs_note'"></div>
+    <div ng-include="'modules/dept/reports/adfs_note_o.html'" ng-if="modalstep.template == 'adfs_note_o'"></div>
+    <div ng-include="'modules/dept/reports/adfs_note_r.html'" ng-if="modalstep.template == 'adfs_note_r'"></div>
+
+    <div ng-include="'modules/dept/reports/dfs_note_print.html'" ng-if="modalstep.sid == 5 && modalstep.appl_type == 'P'"></div>
+    <div ng-include="'modules/dept/reports/dfs_note_o_print.html'" ng-if="modalstep.sid == 5 && modalstep.appl_type == 'O'"></div>
+    <div ng-include="'modules/dept/reports/dfs_note_r_print.html'" ng-if="modalstep.sid == 5 && modalstep.appl_type == 'R'"></div>
+
+    <div ng-include="'modules/dept/reports/dgfs_note_print.html'" ng-if="modalstep.sid == 6 && modalstep.appl_type == 'P'"></div>
+    <div ng-include="'modules/dept/reports/dgfs_note_o_print.html'" ng-if="modalstep.sid == 6 && modalstep.appl_type == 'O'"></div>
+    <div ng-include="'modules/dept/reports/dgfs_note_r_print.html'" ng-if="modalstep.sid == 6 && modalstep.appl_type == 'R'"></div>
+</div>

@@ -1,0 +1,22 @@
+﻿<div class="row h100">
+    <div class="col-md-10 col-md-offset-1 h100">
+        <form name="userLogin" class="form__provisional well bg-white" ng-submit="UploadFiles()">
+            <div ng-include="'modules/citizen/partials/innerheader.html'"></div>
+            <div class="input-group">
+                <h3>Building Plans</h3>
+                <div class="col-md-12 col-sm-12" ng-disabled="HideControl()">
+                    <div class="col-md-12 col-sm-6 ">
+                        <label for="singleplan" id='lfilesingleplan'>Click here to view Single Plan</label>
+                        <a ng-if="FileExists('singleplan')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('singleplan')"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="form_fields row">
+                <div class="col-md-12 col-sm-12 text-right">
+                    <button type="button" class="btn btn-primary" style='float: left;' ng-click="GotoFFE()"> <span class="glyphicon glyphicon-arrow-left"></span> Previous </button>
+                    <button type="reset" class="btn btn-danger" ng-click="ViewApplication()"> <span class="glyphicon glyphicon-remove"></span> Close </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

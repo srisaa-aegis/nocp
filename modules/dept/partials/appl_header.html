@@ -1,0 +1,204 @@
+<div class="col-md-12 col-sm-12" style='margin-bottom: 20px'>
+    <ul class="nav nav-pills nav-justified">
+        <li role="presentation" ng-class="{active : showdivs.basic}"><a ng-click='ShowDivs("B")'>Application</a></li>
+    </ul>
+</div>
+<div class="col-md-12 col-sm-12" ng-if="showdivs.basic">
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="buildingName">Building Name</label>
+            <h4>{{application.site_name}}</h4>
+        </div>
+    </div>
+    <div class="col-md-8 col-sm-6">
+        <div class="form-group">
+            <label for="occupancy">Site Address</label>
+            <h4>{{application.site_addr}}</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="occupancy">District</label>
+            <h4>{{district_name(application.district)}}</h4>
+        </div>
+    </div>
+    <div class="col-md-8 col-sm-6">
+        <div class="form-group">
+            <label for="buildingHeight">Address for Correspondence</label>
+            <h4>{{application.corr_addr}}</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="noOfFloors">Licensing Authority</label>
+            <h4>{{application.lic_auth}}</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="noOfFloors">Plot Area</label>
+            <h4>{{application.plot_area}} sq. mtrs.</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="builderName">Height</label>
+            <h4>{{application.blocks[0].height}} mtrs</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="builderName">Builder Name</label>
+            <h4>{{application.build_name}}</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="contactNumber">Contact Number</label>
+            <h4>{{application.build_landline}}</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="contactNumber">Mobile</label>
+            <h4>{{application.build_mobile}}</h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="email">Email Id</label>
+            <h4><a href="mailto:{{application.build_email}}">{{application.build_email}}</a></h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="email">Chairman</label>
+            <h4>{{application.chairman}}</h4>
+        </div>
+    </div>
+    <!--<div class="col-md-4 col-sm-6">
+        <button class="btn btn-warning btn-xs" ng-click="CalculateFFE()" ng-if="zession['role'] == '1'"><span class="glyphicon glyphicon-file"></span> Recalculate Equipment</button>
+    </div>-->
+
+    <div class="col-md-4 col-sm-6">
+        <button class="btn btn-warning btn-xs" ng-click="DownloadFinal()" ng-if="(application.status_id >= 7 && application.status_id != 31) || (application.revision>0 && application.status_id==1 && application.appl_number!='')"><span class="glyphicon glyphicon-file"></span> Download</button>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-md-4 col-sm-4 panel panel-success">
+        <div class="form-group">
+            <h4><a ng-click="ViewAppl(application.appl_id,application.appl_type, application.appl_mode)" style="cursor: hand;cursor: pointer;">View Full Application</a></h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 panel panel-success">
+        <div class="form-group">
+            <h4><a href="https://treasury.ap.gov.in/cybertry/index1.php?service=treceipts" target="_blank">Challan Check</a></h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 panel panel-success">
+        <div class="form-group">
+            <h4><a href="http://maps.google.com/maps?z=20&t=k&q=loc:{{application.loc_lat}},{{application.loc_lng}}" target="_blank">View Location on Map</a></h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 panel panel-success">
+        <div class="form-group">
+            <h4><a id="opensms" data-toggle="modal" data-target="#SendSMS" style="cursor: hand;cursor: pointer;">Send SMS</a></h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 panel panel-success">
+        <div class="form-group">
+            <h4><a id="openchfs" data-toggle="modal" data-target="#Change_FireStation" style="cursor: hand;cursor: pointer;">Change FireStation</a></h4>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 panel panel-success" ng-if="application.status_id == 6">
+        <div class="form-group">
+            <h4><a id="openchlic" data-toggle="modal" data-target="#Licensing_Auth" style="cursor: hand;cursor: pointer;">Update Licensing Authority</a></h4>
+        </div>
+    </div>
+</div>
+<div id="SendSMS" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Send SMS</h4>
+            </div>
+            <div class="modal-body">
+                <textarea row='1' cols='10' class="form-control" placeholder="Description" id="NewMessage" ng-model="NewMessage" />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="SendDeptSMS(NewMessage)">Send</button>
+                <button type="button" class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Change_FireStation" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Change Firestaion</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="station">Nearest Fire Station:</label>
+                    <select ng-disabled="application.status_id > 2" id="firestation" name="firestation" class="form-control" placeholder="Fire Station" ng-model="application.firestation" required>
+                        <option ng:repeat="stn in get_fire_stations() | orderBy : 'name'" value="{{stn.id}}">
+                            {{stn.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="updateApplication()">Update Firestation</button>
+                <button type="button" class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Licensing_Auth" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Details of Licensing Authority</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label for="auth_name">Licensing Authority</label>
+                            <input ng-disabled="application.status_id >6" type="text" id="auth_name" name="auth_name" placeholder="Licensing Authority" class="form-control" ng-model="application.lic_auth" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label for="authaddr">Address of Licensing Authority</label>
+                            <input ng-disabled="application.status_id  >6" type="text" id="authaddr" name="authaddr" placeholder="Address of Licensing Authority" class="form-control" ng-model="application.lic_addr" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label for="auth_email">Email ID of Licensing Authority</label>
+                            <input ng-disabled="application.status_id  >6" type="email" id="auth_email" name="auth_email" placeholder="Email ID of Licensing Authority" class="form-control" ng-model="application.lic_email" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="updateApplication()">Update</button>
+                <button type="button" class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

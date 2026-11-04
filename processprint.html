@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.P. State Disaster Response and Fire Services Department</title>
+    <link rel="icon" href="assets/img/firelogo.png" type="image/x-icon">
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <style>
+        @media print {
+            #printPageButton {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="white-bg" ng-app="dept">
+    <div class="col-lg-12 float-right" id="printPageButton">
+        <div class="title-action">
+            <a id="print" class="btn btn-primary text-white"><i class="fa fa-print"></i> Print</a>
+        </div>
+    </div>
+    <div class="p-xl" ng-view>
+    </div>
+    <script type="text/ng-template" id="printprocess.htm">
+        <div ng-include="'modules/dept/partials/printstep.html'"></div>
+    </script>
+    <script src="script/angular.min.js"></script>
+    <script src="script/angular-route.min.js"></script>
+    <script src="script/constants.js"></script>
+    <script src="script/commonrules.js"></script>
+    <script src="app/fireApp.js"></script>
+    <script src="modules/dept/controllers/printpController.js"></script>
+    <script src="modules/dept/controllers/reportController.js"></script>
+    <script src="modules/dept/directives/directives.js"></script>
+
+    <!-- Mainly scripts -->
+    <script src="assets/js/jquery-3.1.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="assets/js/inspinia.js"></script>
+    <script>
+        $(function () {
+            $('#print').on('click', function () {
+                window.print();
+            })
+        })
+    </script>
+</body>
+</html>

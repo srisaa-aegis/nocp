@@ -1,0 +1,394 @@
+<div class="row h100">
+    <div class="col-md-10 col-md-offset-1 h100">
+        <h2>
+            <small class="glyphicon glyphicon-equalizer"></small> Existing Building NOC - Confirmation before Submission
+        </h2>
+        <form name="applLogin" class="form__provisional well bg-white" ng-submit="SubmitAppl()" novalidate="true">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    General Information
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Building Name</label>
+                        <span class="col-md-6">{{application.site_name}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Site Address (with survey number)</label>
+                        <span class="col-md-6">{{application.site_addr}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">District</label>
+                        <span class="col-md-6">{{district_desc(application.district)}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Address for Correspondence</label>
+                        <span class="col-md-6">{{application.corr_addr}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Licensing Authority</label>
+                        <span class="col-md-6">{{application.lic_auth}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Address of Licensing Authority</label>
+                        <span class="col-md-6">{{application.lic_addr}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Plot Area</label>
+                        <span class="col-md-6">{{application.plot_area}} Sq Mtrs</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Total Built Up Area</label>
+                        <span class="col-md-6">{{total_built_up()}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Builder/Owner/Developer</label>
+                        <span class="col-md-6">{{application.build_name}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Contact Number</label>
+                        <span class="col-md-6">{{application.build_landline}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Builder Mobile</label>
+                        <span class="col-md-6">{{application.build_mobile}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Builder Email</label>
+                        <span class="col-md-6">{{application.build_email}}</span>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Technical Staff of the Provided Building
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1 col-sm-1">Sl.</div>
+                        <div class="col-md-2 col-sm-2">Role</div>
+                        <div class="col-md-3 col-sm-3">Name</div>
+                        <div class="col-md-2 col-sm-2">Phone</div>
+                        <div class="col-md-2 col-sm-2">Email</div>
+                        <div class="col-md-2 col-sm-2">License</div>
+                    </div>
+                    <div class="row" ng-repeat="party in application.parties">
+                        <div class="col-md-1 col-sm-1">{{ $index + 1 }}</div>
+                        <div class="col-md-2 col-sm-2">{{party.role_name}}</div>
+                        <div class="col-md-3 col-sm-3">{{party.party_name}}</div>
+                        <div class="col-md-2 col-sm-2">{{party.phone_number}}</div>
+                        <div class="col-md-2 col-sm-2">{{party.email}}</div>
+                        <div class="col-md-2 col-sm-2">{{party.license_no}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary" ng-repeat="block in blocks">
+                <div class="panel-heading">
+                    Block: {{block.block_name}}
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Occupancy Type</label>
+                        <span class="col-md-6">{{type_name(block.site_type)}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Sub Type</label>
+                        <span class="col-md-6">{{block.site_stype}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Height</label>
+                        <span class="col-md-6">{{block.height}} Mtrs</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Floors</label>
+                        <span class="col-md-6">{{block.floors.length}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Total Build Up Area</label>
+                        <span class="col-md-6">{{block_built_up(block)}} Sq Mtrs</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Front Direction</label>
+                        <span class="col-md-6">{{direction_name(block.front_dir)}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <label class="col-md-6 col-sm-12">
+                            Whether land has been surrendered for road-widening.
+                            &nbsp;&nbsp;<b ng-if="block.road_wide">Ok</b> <b ng-if="!block.road_wide">Not Ok</b>
+                        </label>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Surroundings Details of the Building
+                    </div>
+                    <table border="1" style="text-align: center">
+                        <thead>
+                            <tr>
+                                <th width='5%'>&nbsp;</th>
+                                <th width='15%'>Side</th>
+                                <th width='25%'>Type of Property</th>
+                                <th width='30%'>Name</th>
+                                <th width='25%'>Width of Abutting Road</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="bside in block.sides">
+                                <td>{{ $index+1 }}</td>
+                                <td>{{direction_name(bside.direc)}}</td>
+                                <td>
+                                    <select ng-disabled="true" ng-model="bside.ptype" class="form-control" required>
+                                        <option value="R">Street / Road</option>
+                                        <option value="B">Building</option>
+                                        <option value="S">Open Space</option>
+                                        <option value="O">Others</option>
+                                    </select>
+                                </td>
+                                <td>{{bside.pname}}</td>
+                                <td>
+                                    <div ng-if="bside.ptype=='R'">
+                                        {{bside.width}} Meters
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Open Spaces Required & Provided
+                    </div>
+                    <table border="1" style="text-align: center">
+                        <thead>
+                            <tr>
+                                <th width='15%'>Direction</th>
+                                <th width='15%'>Required </th>
+                                <th width='20%'>Provided </th>
+                                <th width='50%'>Specific Remarks </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng_repeat="ospace in block.ospaces">
+                                <td>{{direction_name(ospace.direc)}}</td>
+                                <td>{{reqd_open_space(block, ospace)}} Meters</td>
+                                <td>{{ospace.proposed}} Meters</td>
+                                <td>{{ospace.os_remarks}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Floors
+                    </div>
+                    <table border="1" style="text-align: center">
+                        <thead>
+                            <tr>
+                                <th width='5%'>Sl</th>
+                                <th width='18%'>Floor Type</th>
+                                <th width='20%'>Floor</th>
+                                <th width='10%'>Total Builtup Area (Sq Mtrs)</th>
+                                <th width='15%'>Occupancy Type</th>
+                                <th width='12%'>No of Occupants (as per Table 20)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="floor in block.floors">
+                                <td>{{$index + 1}}</td>
+                                <td>{{floor.flr_type}}</td>
+                                <td>{{floor.flr_name}}</td>
+                                <td>{{floor.built_area}}</td>
+                                <td>{{floor.occ_type}}</td>
+                                <td>{{t20OccCount(floor)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Means of Escape Required & Provided
+                    </div>
+                    <table border="1" style="text-align: center">
+                        <thead>
+                            <tr>
+                                <th width='5%'>Sl</th>
+                                <th width='15%'>Escape Type</th>
+                                <th width='20%'>Description</th>
+                                <th width='10%'>Min. Width (Mtrs)</th>
+                                <th width='10%'>Width (Mtrs)</th>
+                                <th width='20%'>Location</th>
+                                <th width='20%'>Specific Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="exape in block.escapes">
+                                <td>{{$index + 1}}</td>
+                                <td>{{escape_name(exape.etype)}}</td>
+                                <td>{{exape.desc}}</td>
+                                <td>{{reqd_escape_width(block, exape.etype)}}</td>
+                                <td>{{exape.width}}</td>
+                                <td>{{direction_name(exape.location)}}</td>
+                                <td>{{direction_name(exape.remarks)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Minimum required Fire Safety Systems
+                    </div>
+                    <table border="1" style="text-align: center">
+                        <thead>
+                            <tr>
+                                <th width='10%'>Sl</th>
+                                <th width='40%'>Fire Safety System</th>
+                                <th width='15%'>Minimum Required</th>
+                                <th width='35%'>Specific Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="equip in block.equipment">
+                                <td>{{$index + 1}}</td>
+                                <td>
+                                    {{equipment_desc(equip.qtype)}}
+                                </td>
+                                <td>
+                                    {{equip.count}} {{equip.count.indexOf("YH_") > -1 ?"": equipment_suffix(equip.qtype)}}
+                                </td>
+                                <td>
+                                    {{equip.remarks}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <ul>
+                            <li ng-repeat="ntrow in block.eqnotes"><span><b>{{ffenotes[ntrow.note]}}</b></span><br /></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Challan Information
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Challan Number</label>
+                        <span class="col-md-6">{{application.challan_num}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Amount Paid</label>
+                        <span class="col-md-6">{{application.challan_amt}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Date</label>
+                        <span class="col-md-6">{{application.challan_date}}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Bank</label>
+                        <span class="col-md-6">{{application.challan_bnk}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">Branch</label>
+                        <span class="col-md-6">{{application.challan_brch}}</span>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="col-md-6">&nbsp;</label>
+                        <span class="col-md-6">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary" ng-if="false">
+                <div class="panel-heading">
+                    Documents
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="col-md-10">Scanned Copy of Challan</label>
+                    <span class="col-md-2">
+                        <a ng-if="FileExists('ChallanCopy')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('ChallanCopy')"></a>
+                        <a ng-if="!FileExists('ChallanCopy')" class="glyphicon glyphicon-remove"></a>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="col-md-10">Undertaking on Rs. 100 Stamp paper</label>
+                    <span class="col-md-2">
+                        <a ng-if="FileExists('Undertaking')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('Undertaking')"></a>
+                        <a ng-if="!FileExists('Undertaking')" class="glyphicon glyphicon-remove"></a>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="col-md-10">15% Bank Guarantee for 5 years</label>
+                    <span class="col-md-2">
+                        <a ng-if="FileExists('BankGuarantee')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('BankGuarantee')"></a>
+                        <a ng-if="!FileExists('BankGuarantee')" class="glyphicon glyphicon-remove"></a>
+                    </span>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <label class="col-md-10">Self Declaration</label>
+                    <span class="col-md-2">
+                        <a ng-if="FileExists('SelfDeclaration')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('ChallanCopy')"></a>
+                        <a ng-if="!FileExists('SelfDeclaration')" class="glyphicon glyphicon-remove"></a>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="col-md-10">Estimate towards provision of required fire safety systems</label>
+                    <span class="col-md-2">
+                        <a ng-if="FileExists('FFEEstimate')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('Undertaking')"></a>
+                        <a ng-if="!FileExists('FFEEstimate')" class="glyphicon glyphicon-remove"></a>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="col-md-10">Proof of Road Widening</label>
+                    <span class="col-md-2">
+                        <a ng-if="FileExists('ProofSurrender')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('BankGuarantee')"></a>
+                        <a ng-if="!FileExists('ProofSurrender')" class="glyphicon glyphicon-remove"></a>
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="col-md-12 panel panel-primary">
+                <div class="panel-heading">
+                    Undertaking by Applicant
+                </div>
+                <h3><input type="checkbox" ng-modal="checklist.correct" name="correct" id="correct" /> I confirm that all the information furnished above is correct and I understand that if any misinformation is found the Provisional No Objection Certificate will be automatically cancelled.</h3>
+                <h3><input type="checkbox" ng-modal="checklist.nostart" name="nostart" id="nostart" /> I confirm that the construction has not started at the site.</h3>
+                <h3><input type="checkbox" ng-modal="checklist.finalnoc" name="finalnoc" id="finalnoc" /> I understand that, If the final construction doesn't match the plans and information provided here, No Objection Certificate for Occupancy will not be issues.</h3>
+                <h3><input type="checkbox" ng-modal="checklist.nohite" name="nohite" id="nohite" /> I confirm that there are no High Tension Wires passing thru the site or the approach roads.</h3>
+                <h3><input type="checkbox" ng-modal="checklist.onlyfire" name="onlyfire" id="onlyfire" /> I understand that this Provisional No Objection Certificate is being applied for fire safety purposes only and cannot be used for any othr purposes.</h3>
+                <h3><input type="checkbox" ng-modal="checklist.ffequip" name="ffequip" id="ffequip" /> I shall provide the Fire Safety Installation specified by the fire services department as per the NBC Tabe 7 and relavent IS Codes.</h3>
+
+                <div class="text-center">
+                    Click of the "Submit" button will submit the application and you will not be able to modify the information after.<br />
+
+                    <button type="submit" class="btn btn-primary" ng-disabled="false && !allok()"> <span class="glyphicon glyphicon-download"></span> Submit </button>
+                    <button type="button" class="btn btn-danger" onclick='javascript: location.href="#dashboard";'> <span class="glyphicon glyphicon-remove"></span> Cancel </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

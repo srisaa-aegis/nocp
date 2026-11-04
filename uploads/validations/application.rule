@@ -1,0 +1,19 @@
+{
+"rules":
+[
+{"field":"district", "mandatory":"Y", "datatype":"I", "min":"", "max":"", "label":"District"},
+{"field":"site_name", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Site Name"},
+{"field":"site_addr", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Site Address"},
+{"field":"corr_addr", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Correspondence Address"},
+{"field":"plot_area", "mandatory":"Y", "datatype":"F", "min":"", "max":"", "label":"Plot Area"},
+{"field":"lic_auth", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Licensing Authority"},
+{"field":"lic_addr", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Licensing Authority Address"},
+{"field":"build_name", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Builder Name"},
+{"field":"build_mobile", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Builder Mobile"},
+{"field":"challan_num", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":" Challan Number"},
+{"field":"challan_amt", "mandatory":"Y", "datatype":"F", "min":"", "max":"", "label":"Challan Amount"},
+{"field":"challan_date", "mandatory":"Y", "datatype":"D", "min":"", "max":"TODAY", "label":"Challan Date"},
+{"field":"challan_bnk", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Challan - Bank"},
+{"field":"challan_brch", "mandatory":"Y", "datatype":"S", "min":"", "max":"", "label":"Challan Branch"}
+]
+}

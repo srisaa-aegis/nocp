@@ -1,0 +1,359 @@
+<style type="text/css">
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    td {
+        text-align: left;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+
+    h5 {
+        font-weight: 700;
+        font-size: 18px;
+        background-color: lightgray;
+        margin-bottom: 1px;
+    }
+</style>
+<div style="Font-Family: 'Times New Roman'">
+    <p class="text-danger font-bold">NOTE: Must fill all fields before Save and Submit the Inspection Report. If any fields are missed to fill, application will send back to the inspection officer again.</p>
+    <div ng-repeat="block in form_to.blocks">
+        <div style='padding-left: 20px; text-align:justify'>
+            The builder has proposed to construct a <span ng-if="application.dlevel=='MSB'">Multi Storeyed Building</span><span ng-if="application.dlevel!='MSB'">Non Multi Storeyed Building</span> ({{block.block_name}}) with {{FloorDisplay(block)}} with a height of {{block.height}} Mtrs for {{type_name(block.site_type)}} Occupancy  (Category - {{block.site_stype}}) in a total plot area of {{application.plot_area}} sq. meters.<br />
+            <h5>Please specify if any descripencies found in this information?</h5>
+            <textarea ng-model="block.initial" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div style='padding-left: 20px'>
+            <h5>Open Spaces</h5>
+            <table width="100%" style="text-align:center" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width='20%'>Side</th>
+                        <th width='25%'>Open Space Required as per NBC</th>
+                        <th width='25%'>Open Space Proposed by the Builder</th>
+                        <th width='5%'>Observation</th>
+                        <th width='25%'>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng_repeat="ospace in block.ospaces">
+                        <td>{{direction_name(ospace.direc)}}</td>
+                        <td>{{reqd_open_space(block, ospace)}} Meters</td>
+                        <td>{{ ospace.proposed.toFixed(2) }} Meters</td>
+                        <td>
+                            <select ng-model="ospace.ok" id="{{'OS_'+ospace.direc}}" ng-disabled="disabledform" class="form-control">
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea ng-model="ospace.remark" class="form-control" id="{{'OSR_'+ospace.direc}}" ng-disabled="disabledform">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style='padding-left: 20px; padding-top: 20px'>
+            <h5>Means of Escape</h5>
+            <table width="100%" style="text-align:center" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width='5%'>Sl</th>
+                        <th width='15%'>Details of Staircases</th>
+                        <th width='10%'>Required Nos / Meters</th>
+                        <th width='10%'>Proposed Nos / Meters</th>
+                        <th width='5%'>Observation</th>
+                        <th width='15%'>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{$index + 1}}</td>
+                        <td>Internal Staircases</td>
+                        <td>
+                            {{reqd_escape_count(block, 'I')}} {{reqd_escape_count(block, 'I') > 1 ? "Nos." : "No."}} - {{reqd_escape_width(block, 'I')}} Meters {{reqd_escape_count(block, 'I') > 1 ? "Each" : ""}}
+                        </td>
+                        <td>
+                            {{proposed_escape_count(block, 'I')}} {{proposed_escape_count(block, 'I') > 1 ? "Nos." : "No."}} - {{proposed_escape_width(block, 'I')}} Meters {{proposed_escape_count(block, 'I') > 1 ? "Each" : ""}}
+                        </td>
+                        <td>
+                            <select ng-model="block.I_Escape[$index + 1]" ng-disabled="disabledform" class="form-control">
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea ng-model="block.I_Escape_R[$index + 1]" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{$index + 2}}</td>
+                        <td>External Staircases</td>
+                        <td>
+                            {{reqd_escape_count(block, 'E')}} {{reqd_escape_count(block, 'E') > 1 ? "Nos." : "No."}} - {{reqd_escape_width(block, 'E')}} Meters {{reqd_escape_count(block, 'E') > 1 ? "Each" : ""}}
+                        </td>
+                        <td>
+                            {{proposed_escape_count(block, 'E')}} {{proposed_escape_count(block, 'E') > 1 ? "Nos." : "No."}} - {{proposed_escape_width(block, 'E')}} Meters {{proposed_escape_count(block, 'E') > 1 ? "Each" : ""}}
+                        </td>
+                        <td>
+                            <select ng-model="block.E_Escape[$index + 1]" ng-disabled="disabledform" class="form-control">
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea ng-model="block.E_Escape_R[$index + 1]" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>Total</td>
+                        <td>
+                            {{reqd_escape_count(block, 'I') * reqd_escape_width(block, 'I') + reqd_escape_count(block, 'E') * reqd_escape_width(block, 'E')}} Meters
+                        </td>
+                        <td>
+                            {{proposed_escape_count(block, 'I') * proposed_escape_width(block, 'I') + proposed_escape_count(block, 'E') * proposed_escape_width(block, 'E')}} Meters
+                        </td>
+                        <td>
+                            <select ng-model="block.T_Escape[$index + 1]" ng-disabled="disabledform" class="form-control">
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea ng-model="block.T_Escape_R[$index + 1]" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<div style='padding-left: 20px; padding-top: 20px' ng-if="proposed_escape_count(block, 'I')<1 || proposed_escape_count(block, 'E')<1">
+        <table width="100%" style="text-align:center" class="table table-striped table-hover">
+            <h5>Doorways / Level Components</h5>
+            <thead>
+                <tr>
+                    <th width='5%'>Sl.</th>
+                    <th width='25%'>Description</th>
+                    <th width='15%'>Width (Mtrs)</th>
+                    <th width='20%'>Location</th>
+                    <th width='5%'>Observation</th>
+                    <th width='15%'>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="door in block.doors">
+                    <td>{{$index + 1}}</td>
+                    <td>
+                        {{door.desc}}
+                    </td>
+                    <td>
+                        {{door.width}}
+                    </td>
+                    <td>
+                        {{direction_name(door.location)}}
+                    </td>
+                    <td>
+                        <select ng-model="form_to.T_Escape" ng-disabled="disabledform" class="form-control">
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <textarea ng-model="door.T_Escape_R" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>-->
+        <div style='padding-left: 20px; padding-top: 20px'>
+            <h5>Floors</h5>
+            <table width="100%" style="text-align:center" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width='5%'>Sl</th>
+                        <th width='10%'>Floor</th>
+                        <th width='10%'>Built up area (Sq Mtrs)</th>
+                        <th width='10%'>Occupancy Type</th>
+                        <th width='10%'>No of Occupants as declared by the builder</th>
+                        <th width='10%'>No of Occupants as per NBC</th>
+                        <th width='10%'>Aggregate width of Staircases Required (Meters)</th>
+                        <th width='5%'>Observation</th>
+                        <th width='30%'>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="floor in block.floors">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{floor.flr_name}}
+                        </td>
+                        <td>
+                            {{floor.built_area}}
+                        </td>
+                        <td>
+                            {{floor_occu_name(floor.occ_type)}}
+                        </td>
+                        <td>
+                            {{floor.occ_c_app}}
+                        </td>
+                        <td>
+                            {{t20OccCount(floor) == ''? '--' : t20OccCount(floor)}}
+                        </td>
+                        <td>
+                            {{floor.stair_load_reqd == ''? '--': floor.stair_load_reqd}}
+                        </td>
+                        <td>
+                            <select ng-model="floor.ok" ng-disabled="disabledform" class="form-control">
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea ng-model="floor.remark" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            {{block_built_up(block)}}
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            {{block_TotalOccLoad(block)}}
+                        </td>
+                        <td>
+                            {{block_TotalNBCOccLoad(block)}}
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <select ng-model="floor.ok" ng-disabled="disabledform" class="form-control" id="{{'FLR_'+floor.floor_id}}">
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea ng-model="floor.floorsereco" class="form-control" ng-disabled="disabledform" id="{{'FLR_R_'+floor.floor_id}}">&nbsp;</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px;'>
+            <h5>Fire Fighting Equipment</h5>
+            <table width="100%" style="text-align:center;" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width='10%'>Sl</th>
+                        <th width='30%'>Fire Safety System</th>
+                        <th width='15%'>Minimum Required</th>
+                        <th width='15%'>Observation</th>
+                        <th width='30%'>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="equip in block.equipment">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{equipment_desc(equip.qtype)}}
+                        </td>
+                        <td>
+                            {{equip.count}} {{equip.count.indexOf("YH_") > -1 ?"": equipment_suffix(equip.qtype)}}
+                        </td>
+                        <td>
+                            <select ng-model="equip.ok" ng-disabled="disabledform" class="form-control"
+                                    id="{{'FFE_'+equip.qtype}}">
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea ng-model="equip.remark" class="form-control" ng-disabled="disabledform"
+                                      id="{{'FFE_R_'+equip.qtype}}">
+                                &nbsp;
+                            </textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px'>
+            <h5>Floorwise Fire Fighting Installations</h5>
+            <table class="table table-striped table-hover" style="text-align:center;" ng-repeat="ffe in form_to.floorwise | filter: {block_id: block.block_id}">
+                <thead>
+                    <tr>
+                        <th>Sl.</th>
+                        <th>Floor</th>
+                        <th ng-repeat="col in ffe.cols" style="word-wrap: break-word;">{{equipment_short(col["name"])}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="drow in ffe.data">
+                        <td>{{$index + 1}}</td>
+                        <td>{{drow.fname}}</td>
+                        <td ng-repeat="col in ffe.cols">
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                                {{drow[col["name"]][valtype.tag] == ''? '--' : drow[col["name"]][valtype.tag]}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>{{ffe.total.fname}}</td>
+                        <td ng-repeat="col in ffe.cols">
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'B'">
+                                {{ffe.total[col["name"]][valtype.tag] == ''? '--' : ffe.total[col["name"]][valtype.tag] + ' ' + equipment_suffix(col['name'])}}
+                            </span>
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                                {{GetFFETotal(col["name"], valtype.tag)}}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <ul>
+                    <li ng-repeat="ntrow in block.eqnotes"><span><b>{{ffenotes[ntrow.note]}}</b></span><br /></li>
+                </ul>
+            </div>
+            <b>Any comments about the Floor Wise Distribution of Fire Fighting Equipment</b><br />
+            <textarea ng-model="block.floorwisereco" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div style='padding-left: 20px'>
+            <h5>Any other action to be taken by the owner/applicant?</h5>
+            <textarea ng-model="form_to.any_other" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <p class="text-danger font-bold">NOTE: Based on Observations and Remarks, Recommendation Issue of Final NOC automatically selected.</p>
+        <div style='padding-left: 20px'>
+            <h5>Do you recommend issue of Provisional NoC?</h5>
+            <select ng-model="form_to.final_reco" class="form-control" disabled><option value="Y">Recommend</option><option value="N">Not Recommend</option></select>
+            <textarea ng-model="form_to.remark" class="form-control" ng-disabled="disabledform">&nbsp;</textarea>
+        </div>
+        <div class="col-md-4 col-lg-4" style='padding-left: 20px'>
+            Inspection Date:
+        </div>
+        <div class="col-md-4 col-lg-4" style='padding-left: 20px'>
+            <input type="text" ng-model="form_to.inspection_date" class="form-control" ng-disabled="disabledform" />
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

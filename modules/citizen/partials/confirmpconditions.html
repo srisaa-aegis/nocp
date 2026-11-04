@@ -1,0 +1,25 @@
+﻿<div class="row h100">
+    <div class="col-md-10 col-md-offset-1 h100">
+        <h2>
+            <small class="glyphicon glyphicon-list"></small> Provisional NOC - Conditions
+        </h2>
+        <div class="col-md-12 col-sm-12">
+            <h4>Please ensure that the following conditions are complied or not :</h4>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in application.conditions">
+                        <td><input type="checkbox" ng-model="list.selected" id="{{list.item_code}}"></td>
+                        <td><span>{{list.item_desc}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

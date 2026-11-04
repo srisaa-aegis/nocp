@@ -1,0 +1,54 @@
+<div class="row h100" ng-controller="applicationController">
+    <div class="col-md-10 col-md-offset-1 h100">
+        <h2>
+            <!--<small class="glyphicon glyphicon-list"></small>Application : {{application.appl_number}}-->
+            <span class="glyphicon glyphicon-list icon" ng-if="application.appl_type == 'P'"></span>
+            <span class="glyphicon glyphicon-log-in icon" ng-if="application.appl_type == 'O'"></span>
+            <span class="glyphicon glyphicon-repeat icon" ng-if="application.appl_type == 'R'"></span>
+            {{application.appl_number}}
+            <span style='float: right; background-color: gold;'>{{status_description(application.status)}}</span>
+        </h2>
+        <form name="userLogin" class="form__provisional well bg-white" ng-submit="UpdateStatus()">
+            <section class="form_fields row">
+                <div ng-include="'modules/dept/partials/appl_header.html'"></div>
+                <div class="clearfix"></div>
+            </section>
+            <section class="form_fields row" ng-if="NeedForward() || CanShowForward()">
+                <h4 class="panel panel-heading panel-primary">Forward for Review <span ng-if="CanShowForward()" class="badge pull-right">{{application.forward_date}}</span></h4>
+                <div ng-include="'modules/dept/partials/update_forward.html'" ng-if="NeedForward()"></div>
+                <div ng-include="'modules/dept/partials/display_forward.html'" ng-if="CanShowForward()"></div>
+            </section>
+            <section class="form_fields row" ng-if="NeedInspection() || CanShowForward()">
+                <h4 class="panel panel-heading panel-primary">Inspection <span ng-if="CanShowForward()" class="badge pull-right">{{application.forward_date}}</span></h4>
+                <div ng-include="'modules/dept/partials/update_inspected.html'" ng-if="NeedInspection()"></div>
+            </section>
+            <section class="form_fields row" ng-if="CanShowInspection()">
+                <h4 class="panel panel-heading panel-primary">Inspection Report <span ng-if="CanShowPrelim()" class="badge pull-right">{{application.forward_date}}</span></h4>
+                <div ng-include="'modules/dept/partials/display_inspect.html'" ng-if="CanShowInspection()"></div>
+            </section>
+            <section class="form_fields row" ng-if="NeedPrelim() || CanShowPrelim()">
+                <h4 class="panel panel-heading panel-primary">Application Review <span ng-if="CanShowPrelim()" class="badge pull-right">{{application.review_date}}</span></h4>
+                <div ng-include="'modules/dept/partials/update_prelim.html'" ng-if="NeedPrelim()"></div>
+                <div ng-include="'modules/dept/partials/display_prelim.html'" ng-if="CanShowPrelim()"></div>
+            </section>
+            <section class="form_fields row" ng-if="NeedCommittee() || CanShowCommittee()">
+                <h4 class="panel panel-heading panel-primary">Inspection Committee</h4>
+                <div ng-include="'modules/dept/partials/update_comite.html'" ng-if="NeedCommittee()"></div>
+                <div ng-include="'modules/dept/partials/display_comite.html'" ng-if="CanShowCommittee()"></div>
+            </section>
+            <section class="form_fields row" ng-if="NeedFinal() || CanShowFinal()">
+                <h4 class="panel panel-heading panel-primary">Final Approval / Rejection<span ng-if="CanShowFinal()" class="badge pull-right">{{application.final_date}}</span></h4>
+                <div ng-include="'modules/dept/partials/update_final.html'" ng-if="NeedFinal()"></div>
+                <div ng-include="'modules/dept/partials/display_final.html'" ng-if="CanShowFinal()"></div>
+            </section>
+            <section>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-primary" ng-if="NeedUpdate()">Update</button>
+                        <button type="button" class="btn btn-sm btn-default" onclick="location.href = '#dashboard';">Close</button>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>

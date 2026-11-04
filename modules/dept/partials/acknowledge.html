@@ -1,0 +1,50 @@
+<div class="row h100"  ng-controller="applicationController">
+	<h3 style="text-align: center;">A.P. State Disaster Response and Fire Services Department</h3>
+	<h4 style="text-align: center;">
+        Acknowledgement for 
+        <span ng-if="application.appl_type == 'P'">Provisional No Objection Certificate</span>
+        <span ng-if="application.appl_type == 'O'">Final Occupancy Certificate</span>
+        <span ng-if="application.appl_type == 'R'">Periodic Renewal of Occupany Certificate</span>
+    </h4>
+		<table width="100%" border=1>
+		<tr>
+			<td><b>Application Number</b></td><td>{{application.appl_number}}</td><td>Building Name</td><td>{{ application.site_name }}</td>
+		</tr>
+		<tr>
+			<td>Site Address</td><td>{{application.site_addr}}</td><td>District</td><td>{{ district_desc(application.district) }}</td>
+		</tr>
+		<tr>
+			<td>Address for Correspondence</td><td>{{ application.corr_addr }}</td> <td>Licensing Authority</td><td>{{ application.lic_auth }}</td>
+		</tr>
+		<tr>
+			<td>Plot Area</td><td>{{ application.plot_area }} Sq. Mtrs</td> <td>Builder/Owner/Developer</td><td>{{ application.build_name }}</td>
+		</tr>
+		<tr>
+			<td>Contact Number</td><td>{{ application.build_landline }}</td> <td>Mobile</td><td>{{ application.build_mobile }}</td>
+		</tr>
+		<tr>
+			<td>Email</td><td>{{ application.build_email }}</td> <td>Applied On:</td><td>{{ application.applied_date }}</td>
+		</tr>
+		<tr><td colspan='4'>&nbsp;</td></tr>
+		<tr>
+			<td>Challan Number</td><td>{{ application.challan_num }}</td> <td>Amount Paid</td><td>Rs. {{ application.challan_amt }}/-</td>
+		</tr>
+		<tr>
+			<td>Date</td><td>{{ application.challan_date }}</td> <td>Bank / Branch</td><td>{{ application.challan_bnk + " / " + application.challan_brch }}</td>
+		</tr>
+		</table>
+
+		<div style='float: left; margin-top: 20px'>
+			<img src='http://202.83.28.165/barcode.php?text={{application.appl_number}}&print=true&codetype=Code39&size=60' alt='PNOC{{application.appl_number}}'/>
+			<br/><input type='button' onclick='window.print()' value='Print'/>&nbsp;&nbsp;<input type='button' onclick='location.href="#dashboard";' value='Back'/>
+		</div>
+
+		<div ng-if="false"  style='float: right; text-align: center; margin-top: 20px'>
+			<br/>
+			Director General<br/>
+			State Disaster Response & Fire Services<br/>
+			Andhra Pradesh <br/>
+			* Electronic Copy - No Signature Required.
+
+		</div>
+</div>

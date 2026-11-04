@@ -1,0 +1,100 @@
+<div class='panel col-md-12'>
+	<div class='panel-primary col-md-5 col-lg-5'>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'A';">Residential Buildings (A)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'B';">Educational Buildings (B)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'C';">Institutional Buildings (C)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'D';">Assembly Buildings (D)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'E';">Business Buildings (E)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'F';">Mercantils Buildings (F)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'G';">Industrial Buildings (G)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'H';">Storage Buildings (H)</button>
+		<button type='button' class='button btn-success col-md-12' ng-click="showOccu = 'J';">Hazardous Buildings (J)</button>
+	</div>
+	<div class='col-md-7 col-lg-7'>
+		<div ng-if='showOccu == "A"'>
+			<p><b>Residential Buildings</b> shall include any building in which sleeping accommodation is provided for normal residential purposes with or without cooking or dining or both facilities, except any building classified under Group C.</p>
+			<p>Buildings and structures under Group A shall be further sub-division as follows:</p>
+			<ul>
+			<li>Sub-division A-1 Lodging or rooming houses</li>
+			<li>Sub-division A-2 One or two-family private dwellings</li>
+			<li>Sub-division A-3 Dormitories</li>
+			<li>Sub-division A-4 Apartment houses (flats)</li>
+			<li>Sub-division A-5 Hotels</li>
+			<li>Sub-division A-6 Hotels (Starred)</li>
+			</ul>
+		</div>
+		<div ng-if='showOccu == "B"'>
+			<p><b>Educational Buildings</b> shall include any building used for school, college, other training institutions for day-care purposes involving assembly for instruction, education or recreation for not less than 20 students.</p>
+			<p>Buildings and structures under Group B shall be further sub-divided as follows:</p>
+			<ul>
+			<li>Sub-division B-1 Schools up to senior secondary level</li>
+			<li>Sub-division B-2 All others/training institutions</li>
+			</ul>
+		</div>
+		<div ng-if='showOccu == "C"'>
+			<p><b>Institutional Buildings</b> shall include any building or part thereof, which is used for purpose, such as medical or other treatment or care of persons suffering from physical or mental illness, disease or infirmity; care of infants, convalescents or aged persons and for penal or correctional detention in which the liberty of the inmates is restricted. Institutional buildings ordinarily provide sleeping accommodation for the occupants.</p>
+			<p>Buildings and structures under Group C shall be further sub-division as follows:</p>
+			<ul>
+			<li>Sub-division C-1 Hospitals and sanatoria</li>
+			<li>Sub-division C-2 Custodial institutions</li>
+			<li>Sub-division C-3 Penal and mental institutions.</li>
+			</ul>
+		</div>
+		<div ng-if='showOccu == "D"'>
+			<p><b>Assembly Buildings</b> shall include any building or part of a building, where number of persons not less than 50 congregate or gather for amusement, recreation , social, religious, patriotic, civil, travel and similar purpose, for example, theaters, motion picture houses, assembly halls, auditoria, exhibition halls, museums, skating rinks, gymnasiums, restaurants, places of worship, dance halls, club rooms, passenger stations and terminals of air, surface and marine public transportation services, recreation piers and stadia, etc.</p>
+			<p>Buildings under Group D shall be further sub-divided as follows:</p>
+			<ul>
+			<li>Sub-division D-1 Buildings having a theatrical or motion picture or any other stage and fixed seats for over 1000 persons.</li>
+			<li>Sub-division D-2 Buildings having a theatrical or motion picture or any other stage and fixed seats upto 1000 persons</li>
+			<li>Sub-division D-3 Buildings without a permanent stage having accommodation for 300 or more persons but no permanent seating arrangement.</li>
+			<li>Sub-division D-4 Buildings without a permanent stage having accommodation for less than 300 persons with no permanent seating arrangement.</li>
+			<li>Sub-division D-5 All other structures including temporary structures designed for assembly of people not covered by sub-divisions D-1 to D-4, at ground level.</li>
+			<li>Sub-division D-6 Buildings having mixed occupancies Of assembly and mercantile(For example, shopping malls,  providing facilities such as Shopping , cinema theatres, multiplexess  and restaurants/food courts).</li>
+			<li>Sub-division D-7 All other structures, elevates or underground, for assembly of people not covered by sub-division D-1 to D-6. </li>
+			</ul>
+		</div>
+		<div ng-if='showOccu == "E"'>
+			<p><b>Business Buildings</b> shall include any building or part of a building which is used for transaction of business (other than that covered by Group F and part of buildings covered by 3.1.1.1); for keeping of accounts and records and similar purpose, professional establishments, service facilities, etc.City halls, town halls, court houses and libraries shall be classified in this group so far as the principal function of these is transaction of public business and keeping of books and records.</p>
+			<p>Business buildings shall be further sub-divided as follows:</p>
+			<ul>
+			<li>Sub-division E-1 Offices, banks, professional establishments, like offices of architects, engineers, doctors, lawyers, Post offices and police stations.</li>
+			<li>Sub-division E-2  Laboratories,out patient clinics, research establishments, libraries and test houses.</li>
+			<li>Sub-division E-3 Electronic data processing centres Computer installations,information technology park and call centres.</li>
+			<li>Sub-division E-4 Telephone exchanges.</li>
+			<li>Sub-division E-5 Broadcasting station and T.V. stations and air traffic control towers.</li>
+			</ul>
+		</div>
+		<div ng-if='showOccu == "F"'>
+			<p><b>Mercantile Buildings</b> shall include any building or part of a building, which is used a shops, stores, market, for display and sale of merchandise, either wholesale or retail.</p>
+			<p>Mercantile buildings shall be further sub-divided as follows:</p>
+			<ul>
+			<li>Sub-division F-1 Shops, stores, departmental stores markets (any with covered  area up to 500 m2).</li>
+			<li>Sub-division F-2 Shops, stores, departmental stores markets (any with Covered area more than 500 m2.)</li>
+			<li>Sub-division F-3 Underground shopping centres.</li>
+			<p>Storage and service facilities incidental to the sale of merchandise and located in the same building shall be included under this group.</p>
+			</ul>
+		</div>
+		<div ng-if='showOccu == "G"'>
+			<p><b>Industrial Buildings</b> shall include any building or part of a building or structure, in which products or materials of all kinds and properties are fabricated, assembled, manufactured or processed, for example, assembly plants, industrial laboratories, dry cleaning plants, power plants, generating units, pumping stations, fumigation chambers, laundries, buildings or structures in gas plants, refineries, dairies and saw-mills etc. </p>
+			<p>Buildings under Group G shall be further sub-divided as follows:</p>
+			<ul>
+			<li>Sub-division G-1 Buildings used for low hazard industries.</li>
+			<li>Sub-division G-2 Buildings used for moderate hazard industries.</li>
+			<li>Sub-division G-3 Buildings used for high hazard industries.</li>
+			</ul>
+		</div>
+		<div ng-if='showOccu == "H"'>
+			<p><b>Storage Buildings</b> shall include any building or part of a building used primarily for the storage or sheltering (including servicing, processing or repairs incidental to storage) of goods, ware or merchandise (except those that involve highly combustible or explosive products or materials) vehicles or animals, for example, warehouses, cold storage, freight depots, transit sheds, storehouses, truck and marine terminals, garages, hangers, grain elevators, barns and stables. Storage properties are characterized by the presence of relatively small number of persons in proportion to the area. Any new use which increase the number of occupants to a figure comparable with other classes of occupancy shall change the classification of the building to that of the new use, for example, hangers used for assembly purpose, warehouses used for office purposes, garage buildings used for manufacturing.</p>
+		</div>
+		<div ng-if='showOccu == "J"'>
+			<p><b>Hazardous Buildings</b> shall include any building or part of a building which is used for the storage, handling, manufacture or processing of highly combustible or explosive materials or products which are liable to burn with extreme rapidity and or which may be produce poisonous fumes or explosions for storage, handling, manufacturing or processing which involve highly corrosive, toxic or noxious alkalis, acids or other liquids or chemicals producing flame, fumes and explosive, poisonous, irritant or corrosive gases; and for the storage, handling or processing of any material producing explosive mixtures of dust which result in the division of matter into fine particles subject to spontaneous ignition. Examples of buildings in this class are those buildings which are used for:</p>
+			<ul>
+			<li>a) Storage, under pressure of more than 0.1 N/mm2 and in quantities exceeding 70 m3, of acetylene, hydrogen, illuminating and natural gases, ammonia, chlorine, phosgene, sulphur dioxide, carbon dioxide, methyloxide and all gases subject to explosion, fume or toxic hazard, cryogenic gases, tech;</li>
+			<li>b) Storage and handling of hazardous and highly flammable liquids, liquefiable gases like LPG, rocket propellants, etc;</li>
+			<li>c) Storage and handling of hazardous and highly flammable or explosive materials (other than liquids); and</li>
+			<li>d) Manufacture of artificial flowers, synthetic leather, ammunition, explosive and fireworks.</li>
+			</ul>
+			<p>Note: A list of hazardous substances giving quantities, for which or exceeding which owners handling such substances are required to be covered under the Public Liability insurance Act, has been notified under Government of India, Ministry of Environment and forests Notification No. G.S.R. </p>
+		</div>
+	</div>
+</div>

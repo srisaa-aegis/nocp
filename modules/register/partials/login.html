@@ -1,0 +1,43 @@
+<form name="userLogin" class="form__user" ng-submit="LoginUser()">
+    <section class="form_fields">
+        <div class="form-group">
+            <div class="input-group" style="display: block">
+                <div class="input-group-addon"> <span class="glyphicon glyphicon-user text-success" aria-hidden="true"></span> </div>
+                <input type="text" name="username" id="username" ng-model="login.username" class="form-control" placeholder="email / username" required autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group" style="display: block">
+                <div class="input-group-addon"> <span class="glyphicon glyphicon-lock text-success" aria-hidden="true"></span> </div>
+                <input type="password" name="password" id="password" ng-model="login.password" class="form-control" placeholder="password" required autocomplete="off" />
+            </div>
+        </div>
+        <div class="row" id="captcha">
+            <div class="col-md-8 captcha-code">
+                <div class="form-group code">
+                    <div class="dynamic-code">{{login.captcha}}</div>
+                </div>
+            </div>
+            <div class="col-md-4 captcha-code">
+                <div class="form-group captcha-reload">
+                    <!--<i class="fa fa-refresh align-middle" ng-click="generateCaptcha(5, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')"></i>--> 
+                    <i class="fa fa-refresh align-middle" ng-click="generateCaptcha(5, '0123456789')"></i>
+                </div>
+            </div>
+        </div>
+        <div class="captcha-input">
+            <input type="text" class="form-control" id="captcha-input" required autocomplete="off" placeholder="Enter above captcha code ..." ng-model="login.verifyCaptcha">
+            <span id="errCaptcha"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-3" ng-disabled="isdisabled">Login</button>
+        <span class="divider"></span>
+        <div class="form-group">
+            <a href class="text-capitalize" onclick='javascript: location.href="#register"; return false;'>Register Now</a>
+            <a href class="text-capitalize float-right" onclick='javascript: location.href="#forgotpwd"; return false;'>Forgot Password ?</a>
+        </div>
+
+        <div class="form-group text-center">
+            <small><a class="font-normal" href="https://www.apindustries.gov.in/APIndus/Default.aspx">For Industry applications please login through SDP portal</a></small>
+        </div>
+    </section>
+</form>

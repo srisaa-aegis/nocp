@@ -1,0 +1,120 @@
+{
+	"start": "occu",
+	"occu": {
+		"check": "@site_type",
+		"dtype": "s",
+		"decisions": [{
+				"oper": "EQ",
+				"check": "res",
+				"action": "goto",
+				"value": "msb"
+			},
+			{
+				"oper": "EQ",
+				"check": "asm",
+				"action": "goto",
+				"value": "asm"
+			},
+			{
+				"oper": "DEF",
+				"check": "",
+				"action": "goto",
+				"value": "msb"
+			}
+		]
+	},
+	"asm": {
+		"check": "@site_stype",
+		"dtype": "s",
+		"decisions": [{
+				"oper": "EQ",
+				"check": "D6",
+				"action": "goto",
+				"value": "msb_multiplex"
+			},
+			{
+				"oper": "DEF",
+				"check": "",
+				"action": "goto",
+				"value": "msb"
+			}
+		]
+	},
+	"msb_multiplex": {
+		"check": "@is_multiplex",
+		"dtype": "n",
+		"decisions": [{
+				"oper": "EQ",
+				"check": "1",
+				"action": "return",
+				"value": "MSB"
+			},
+			{
+				"oper": "DEF",
+				"check": "",
+				"action": "goto",
+				"value": "msb"
+			}
+		]
+	},
+	"msb": {
+		"check": "@height",
+		"dtype": "n",
+		"decisions": [{
+				"oper": "GT",
+				"check": "15",
+				"action": "return",
+				"value": "MSB"
+			},
+			{
+				"oper": "LE",
+				"check": "10",
+				"action": "return",
+				"value": "DFO"
+			},
+			{
+				"oper": "BR",
+				"check": "10",
+				"check2": "15",
+				"action": "return",
+				"value": "RFO"
+			},
+			{
+				"oper": "DEF",
+				"check": "",
+				"action": "return",
+				"value": ""
+			}
+		]
+	},
+	"msb_res": {
+		"check": "@height",
+		"dtype": "n",
+		"decisions": [{
+				"oper": "GE",
+				"check": "18",
+				"action": "return",
+				"value": "MSB"
+			},
+			{
+				"oper": "LT",
+				"check": "10",
+				"action": "return",
+				"value": "DFO"
+			},
+			{
+				"oper": "BL",
+				"check": "10",
+				"check2": "18",
+				"action": "return",
+				"value": "RFO"
+			},
+			{
+				"oper": "DEF",
+				"check": "",
+				"action": "return",
+				"value": ""
+			}
+		]
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"assigned_to": "Application : <<appl_number>> for <<site_name>> has been submitted.\n Please review, inspect and submit remarks.",
+	"submitted": "Your application : <<appl_number>> is successfully submitted online. You can find the status of your application by logging into the Portal from time to time.",
+	"forwarded_to": "Application: <<appl_number>> for <<site_name>> from <<build_name>> has been forwarded to you for review.\n Please take necessary action.",
+	"final_status": "Application: <<appl_number>> for <<site_name>> from <<build_name>> has been <<status_text>>.",
+	"final_status_mail": "Your File Number: <<appl_number>> for issuance of <<appl_type>> has been <<status_text>> on date: <<final_date>>. The copy of NOC is here with attached for download."
+}

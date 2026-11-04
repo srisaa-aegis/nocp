@@ -1,0 +1,50 @@
+<form name="userRegister" class="form__user" ng-submit="Register()">
+    <section class="form_fields">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="text" name="name" id="name" ng-model="user.name" class="form-control" placeholder="Name" required />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="email" name="email" id="email" ng-model="user.email" class="form-control" placeholder="Email" required />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="mobileNo" id="mobileNo" ng-model="user.mobile_no" class="form-control" placeholder="Mobile No" required />
+                </div>
+            </div>
+            <div class="col-md-6" ng-if="false">
+                <div class="form-group">
+                    <select name="gender" id="gender" ng-model="user.gender" class="form-control">
+                        <option value="">Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="dob" id="dob" ng-model="user.dob" class="form-control" placeholder="DOB (dd/mm/yyyy)" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="text" name="aadharCardNo" id="aadharCardNo" ng-model="user.aadhar" class="form-control" placeholder="Aadhar Card No" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea name="address" id="address" class="form-control" style="height: 100px" ng-model="user.address" placeholder="Address"></textarea>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-10 col-md-offset-1 text-center">
+                <button type="submit" class="btn btn-primary btn-block ml-4 mb-2">Register</button>
+            </div>
+        </div>
+        <p class="text-center form-group"> <small>Already member ?</small> <a href onclick='javascript: location.href="#login"; return false;' class="text-uppercase">Login Now</a> </p>
+    </section>
+</form>

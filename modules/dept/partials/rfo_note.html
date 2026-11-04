@@ -1,0 +1,435 @@
+<style>
+    td {
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+</style>
+<div>
+    <table width='100%' ng-repeat="block in form_to.blocks">
+        <tr>
+            <th><h5>{{block.block_name}}</h5></th>
+        </tr>
+        <tr>
+            <th style="text-align: left" colspan="2">1) Occupancy of the Building as per NBC (as specified in the application)</th>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <select ng-model="block.rfo_occu_type" ng-disabled="disabledform" class="form-control">
+                    <option value="res">Residential</option>
+                    <option value="ins">Institutional (Hospitals)</option>
+                    <option value="edu">Educational</option>
+                    <option value="asm">Assembly</option>
+                    <option value="biz">Business</option>
+                    <option value="mer">Mercantile</option>
+                    <option value="ind">Industrial</option>
+                    <option value="sto">Storage</option>
+                    <option value="haz">Hazardous</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr><th style="text-align: left" colspan='2'>2) NBC guidelines based on the height and the area of the premises::</th></tr>
+        <tr>
+            <td width='20%'>&nbsp;</td>
+            <td>
+                <div class="input-group col-md-6 col-lg-6 col-sm-6 col-xs-6" style="float:left">
+                    <div class="input-group-addon">Area: </div>
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_area" /><br />
+                    <div class="input-group-addon">Sq. Mtrs</div>
+                </div>
+                <div class="input-group col-md-6 col-lg-6 col-sm-6 col-xs-6" style="float:left">
+                    <div class="input-group-addon">Height: </div>
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_height" /><br />
+                    <div class="input-group-addon">Meters</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <th>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">&nbsp;</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">Required</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">Proposed</div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Deficiency</div>
+            </th>
+        </tr>
+        <tr>
+            <td>Open Spaces:</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">North:</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_n_req}}
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_n_pro}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_os_n_def" /><br />
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">South:</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_s_req}}
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_s_pro}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_os_s_def" /><br />
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">East:</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_e_req}}
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_e_pro}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_os_e_def" /><br />
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">West:</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_w_req}}
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    {{block.rfo_os_w_pro}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_os_w_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <th>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">&nbsp;</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">Required</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">Proposed</div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Deficiency</div>
+            </th>
+        </tr>
+        <tr>
+            <td>Means of Escape</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Internal Staircase:</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left; text-align: center">
+                    <b>Min {{TotalStairsRequiredByNBC()}} Nos.</b> of Total Width <b>{{MaxStairsbyLoad()}} Meters</b>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left; text-align: center">
+                    {{block.rfo_pr_escape_cnt_int}} {{block.rfo_pr_escape_cnt_int > 1 ? "Nos." : "No."}} - {{block.rfo_pr_escape_width_int}} Meters {{block.rfo_pr_escape_width_int > 1 ? "Each" : ""}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_me_i_def" /><br />
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">External Staircase:</div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left">
+                    &nbsp;
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="float:left; text-align: center">
+                    {{block.rfo_pr_escape_cnt_ext}} {{block.rfo_pr_escape_cnt_ext > 1 ? "Nos." : "No."}} - {{block.rfo_pr_escape_width_ext}} Meters {{block.rfo_pr_escape_width_ext > 1 ? "Each" : ""}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_me_e_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Occupant Load and Exits</td>
+            <td>
+                <textarea class="form-control" ng-model="block.rfo_ole" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <th>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">&nbsp;</div>
+                <div class="col-md-4 col-lg-4 col-sm-3 col-xs-3">Required</div>
+                <div class="col-md-4 col-lg-4 col-sm-5 col-xs-5">Deficiency</div>
+            </th>
+        </tr>
+        <tr>
+            <td>Fire Fighting Equipments</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Fire Extinguishers:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_fe_req}} Nos.
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_fe_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Hose Reel:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_hr_req}} Nos.
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_hr_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Wet Riser:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_wr_req}} Nos
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_wr_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Down Comer:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_dc_req}} Nos
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_dc_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Yard Hydrant:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_yh_req}}
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_yh_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Automatic Sprinklers:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_as_req}} Nos
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_as_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Manually Operated Electric Fire Alarm Systems:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_mc_req}} Nos
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_mc_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Automatic Detection System:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_ad_req}} Nos
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_ad_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Underground Tank:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_ut_req}} Ltrs
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_ut_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Terrace Tank:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_tt_req}} Ltrs
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_tt_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Fire Pump:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_fp_req}}
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_fp_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">Booster Pump:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    {{block.rfo_ffe_bp_req}}
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ffe_bp_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div>
+                    <ul>
+                        <li ng-repeat="ntrow in block.eqnotes"><span><b>{{ffenotes[ntrow.note]}}</b></span><br /></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Any other action to be taken by the owner/applicant?</td>
+            <td><textarea class="form-control" ng-model="block.rfo_ffe_oth" ng-disabled="disabledform">&nbsp;</textarea></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <th>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">&nbsp;</div>
+                <div class="col-md-4 col-lg-4 col-sm-3 col-xs-3">Required</div>
+                <div class="col-md-4 col-lg-4 col-sm-5 col-xs-5">Deficiency</div>
+            </th>
+        </tr>
+        <tr><th style="text-align: left" colspan='2'>3) The width of the approach road on all sides for the fire tender to reach the location.</th></tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">North:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_n_req" /><br />
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_n_def" /><br />
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">South:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_s_req" /><br />
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_s_def" /><br />
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">East:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_e_req" /><br />
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_e_def" /><br />
+                </div>
+
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">West:</div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_w_req" /><br />
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5" style="float:left">
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_ar_w_def" /><br />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: left" colspan="2">4) Parking Area: </th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <div class="input-group col-md-6 col-lg-6 col-sm-6 col-xs-6" style="float:left">
+                    <div class="input-group-addon">Required: </div>
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_park_req" /><br />
+                </div>
+                <div class="input-group col-md-6 col-lg-6 col-sm-6 col-xs-6" style="float:left">
+                    <div class="input-group-addon">Proposed: </div>
+                    <input type='text' ng-disabled="disabledform" class="form-control" ng-model="block.rfo_park_pro" /><br />
+                </div>
+            </td>
+        </tr>
+
+        <tr><th style="text-align: left" colspan='2'>5) Any other rules applicable to the occupancy other than NBC? (Like for Diesel and Petroleum storages, Oil and Natural gas storages, etc;Chemical industries etc)</th></tr>
+        <tr>
+            <td>Applicable Sections/ACT/Rules </td>
+            <td><input type='text' class="form-control" ng-model="block.rfo_act_rules" ng-disabled="disabledform" /></td>
+        </tr>
+        <tr>
+            <td>Minimum required as per the ACT/Rule</td>
+            <td><textarea class="form-control" ng-model="block.rfo_min_act" ng-disabled="disabledform">&nbsp;</textarea></td>
+        </tr>
+        <tr>
+            <td>Deficits in the proposed plan as per the ACT/rules</td>
+            <td><textarea class="form-control" ng-model="block.rfo_def_act" ng-disabled="disabledform">&nbsp;</textarea></td>
+        </tr>
+        <tr>
+            <td>Provisional NOC Conditions</td>
+            <td><textarea class="form-control" ng-model="application.parent_final_remark" ng-disabled="true">&nbsp;</textarea></td>
+        </tr>
+
+        <tr><th style="text-align: left" colspan='2'>6) Any other points related to this NOC, which the officer wants to bring to the knowledge of DGFS?</th></tr>
+        <tr>
+            <td colspan="2">
+                <textarea class="form-control" ng-model="block.any_other" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+        <tr><th style="text-align: left" colspan='2'>7) Specific conditions have compiled or not which are given at the time of Provisional?</th></tr>
+        <tr>
+            <td colspan="2">
+                <textarea class="form-control" ng-model="block.specific" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+    </table>
+
+    <table width='100%'>
+        <tr>
+            <th style="text-align: left" colspan="2">8) Opinion of the officer regarding approval of NOC?</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <select class="form-control" ng-model="form_to.rfo_recommend" ng-disabled="disabledform">
+                    <option value="1">Recommended</option>
+                    <option value="2">Return for Corrections</option>
+                    <option value="0">Not Recommended</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Specify the reasons (If Not Recommended).
+            </td>
+            <td>
+                <textarea class="form-control" ng-model="form_to.remark" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+    </table>
+</div>

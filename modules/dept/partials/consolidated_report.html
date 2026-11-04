@@ -1,0 +1,96 @@
+﻿<div ng-controller="applicationController">
+    <style type="text/css">
+        @media print {
+            #printbtn {
+                display: none;
+            }
+        }
+    </style>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-container="body" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Consolidated Status Report
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" data-container="body">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#search">Search</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#pendency">Pendency Report</a></li>
+            <li><a href="#statistics">Statistics Report</a></li>
+            <li><a href="#conslidated">Consolidated Status Report</a></li>
+            <li><a href="#applications">Applications Report</a></li>
+            <li><a href="#overdue">OverDue Applications</a></li>
+            <li><a href="#sms">SMS Report</a></li>
+            <li><a href="#feedback">Feedback Rating Report</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#chpwd">Change Password</a></li>
+        </ul>
+    </div>
+    <div class="panel panel-primary" ng-controller="reportController">
+        <div class="panel-heading">
+            <h3 class="panel-title">Consolidated Status Report</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 text-left">
+                <button id="printbtn" type="button" class="btn btn-primary" onclick='window.print()'> <span class="glyphicon glyphicon-print"></span> Print </button>
+                <button id="printbtn" type="button" class="btn btn-primary" onclick='location.href="#dashboard"'>Back </button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class='col-md-12 col-lg-12 col-sm-12' style='padding-bottom: 20px'>
+                <div class='col-md-3 col-lg-3'>
+                    <div class="input-group">
+                        <div class="input-group-addon">Level of Application: </div>
+                        <select ng-model="rpt_parms.rpt_scope" class="form-control">
+                            <option value="MSB">DGFS/DFS</option>
+                            <option value="RFO">RFO</option>
+                            <option value="DFO">DFO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='col-md-3 col-lg-3'>
+                    <div class="input-group">
+                        <div class="input-group-addon">Type of Application: </div>
+                        <select ng-model="rpt_parms.appl_type" class="form-control">
+                            <option value="P">Provisional</option>
+                            <option value="O">Occupancy</option>
+                            <option value="R">Renewal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='col-md-3 col-lg-3'>
+                    <div class="input-group">
+                        <button ng-click="FetchData()" class="btn btn-md btn-success">Get Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <h4 style="text-align:center" class="panel-heading"><b><u>Consolidated Status Report  - {{rpt_parms.rpt_scope}} Level</u></b></h4>
+            <h4 class="panel-heading" style="align-content:flex-start">Generated on :{{CurrentDate|date:'MMM d, y h:mm:ss a'}} </h4>
+            <table class="table table-bordered table-striped" datatable="ng" dt-options="dtOptions">
+                <thead>
+                    <tr>
+                        <th>Sl.</th>
+                        <th>Name of the District</th>
+                        <th>Approved</th>
+                        <th>Returned</th>
+                        <th>Rejected</th>
+                        <th>In Process</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="consolidate in ReportData.consolidate">
+                        <td>{{$index + 1}}</td>
+                        <td>{{consolidate.district}}</td>
+                        <td>{{consolidate.Approved}}</td>
+                        <td>{{consolidate.Returned}}</td>
+                        <td>{{consolidate.Rejected}}</td>
+                        <td>{{consolidate.In_Process}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

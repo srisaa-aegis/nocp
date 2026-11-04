@@ -1,0 +1,55 @@
+<div ng-controller="applicationController">
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-container="body" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Change Password
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" data-container="body">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#search">Search</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#pendency">Pendency Report</a></li>
+            <li><a href="#statistics">Statistics Report</a></li>
+            <li><a href="#conslidated">Consolidated Status Report</a></li>
+            <li><a href="#applications">Applications Report</a></li>
+            <li><a href="#overdue">OverDue Applications</a></li>
+            <li><a href="#sms">SMS Report</a></li>
+            <li><a href="#feedback">Feedback Rating Report</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#chpwd">Change Password</a></li>
+        </ul>
+    </div>
+    <div class="panel panel-primary">
+        <form name="applLogin" class="form__provisional well bg-white" ng-submit="ChangePassword()" novalidate="true">
+            <section class="form_fields row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="site_name">Old Password</label>
+                        <input type="password" id="old_pwd" name="old_pwd" placeholder="Old Password" class="form-control" ng-model="passchange.old_pwd" required>
+                    </div>
+                </div>
+                <div class='clearfix'></div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="site_name">New Password</label>
+                        <input type="password" id="old_pwd" name="old_pwd" placeholder="New Password" class="form-control" ng-model="passchange.new_pwd" required>
+                    </div>
+                </div>
+                <div class='clearfix'></div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="site_name">Confirm New Password</label>
+                        <input type="password" id="old_pwd" name="old_pwd" placeholder="Confirm Password" class="form-control" ng-model="passchange.confirm_pwd" required>
+                    </div>
+                </div>
+                <div class='clearfix'></div>
+                <div class="col-md-12 text-center">
+                    <p ng-repeat="errorr in passchange.errors" style="color: red"> {{ errorr }}</p>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-ok"></span> Change Password </button>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>

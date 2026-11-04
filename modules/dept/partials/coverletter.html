@@ -1,0 +1,50 @@
+<div class="row h100" ng-app='citizen' ng-controller='applicationController'>
+<h3 style='text-align: center'>Application for Provisional No Objection Certificate</h3>
+<p>
+To, <span style='float: right'>Date: {{application.applied_date}}</span><br/>
+The Director General, <br/>
+State Disaster Response & Fire Services,<br/>
+Andhra Pradesh, Vijaywada<br/>
+<br/>
+<br/>
+Sir,
+</p>
+
+<p style='padding-left: 20px'>
+	Sub: Application for Provisional NOC for <b>{{application.site_name}}</b> located at <b>{{application.site_addr}}</b>.
+</p>
+<p style='padding-left: 20px'>
+	I, <b>Applicant Name</b> submit hereith application for Provisional No Objection Certificate from Fire Services Department for the proposed building in the name of <b>{{application.site_name}}</b> located at <b>{{application.site_addr}}</b>.
+</p>
+<p style='padding-left: 20px'>
+	We have paid a Challan for <b>Rs.{{application.challan_amt}}</b> and enclosed the following list of mandatory documents.
+	<ol style='padding-left: 40px'>
+	<li ng-if='checklist.challan_paid'>Challan Paid</li>
+	<li ng-if='checklist.bank_guarantee'>Bank Guarantee</li>
+	<li ng-if='checklist.undertaking'>Undertaking Letter</li>
+	<li ng-if='checklist.form16'>Form 16</li>
+	<li ng-if='checklist.fire_draw_5'>5 Sets of Fire Drawings</li>
+	</ol>
+</p>
+<p style='padding-left: 20px'>
+	It is requested for the issual of Provisional NOC at the earliest.<br/>
+</p>
+<p style='padding-left: 20px; text-align: center; width: 100%'>
+	Thanking you,
+</p>
+
+<div style='float: left'>
+	<img src='http://localhost:8080/fireapp/apis/barcode.php?text=PNOC{{application.appl_number}}&print=true&codetype=Code39&size=60' alt='PNOC{{application.appl_number}}'/>
+	<br/><input type='button' onclick='location.href="#dashboard";' value='Back'/>
+</div>
+<div style='float: right'>
+	<div style='text-align: center'>
+	Your Sincerely,<br/>
+	<br/>
+	<br/>
+	<br/>
+	(signature)<br/>
+	<b>Applicant Name</b>
+	</div>
+</div>
+</div>

@@ -1,0 +1,395 @@
+﻿<style type="text/css">
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    * {
+        font-family: "Times New Roman", Times, serif;
+    }
+</style>
+<div ng-app='citizen' ng-controller='confirmController' style="Font-Family: 'Times New Roman'">
+    <h4 style='text-align: center'><b>Government of Andhra Pradesh</b></h4>
+    <h4 style='text-align: center'><b>A.P. State Disaster Response and Fire Services Department</b></h4>
+    <h5 style='text-align: center;' ng-if="blockSiteType == 'res' && blockSiteSubType != 'A5'"><b><u>Fire Equipment Compliance Certificate</u></b></h5>
+    <h5 style='text-align: center;' ng-if="(blockSiteType == 'res' && blockSiteSubType == 'A5') || (blockSiteType != 'res')"><b><u>Conditional No objection certificate for Occupancy</u></b></h5>
+    <div class="row">
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: left; word-wrap: break-word">
+            To<br />
+            {{application.lic_auth}}, <br />
+            {{application.lic_addr}}<br />
+        </div>
+        <div class='col-md-5 col-sm-5 col-xs-5' style="float: right; text-align: left;">
+            File No: {{application.appl_number}}<br />
+            Date: {{CurrentDate| date : 'dd/MM/yyyy'}}<br />
+        </div>
+    </div>
+    <div>
+        Sir/Madam,
+    </div>
+    <div style='padding-left: 20px'>
+        <table border='0'>
+            <tr>
+                <td style='vertical-align: text-top; text-align:justify'>Sub:&nbsp;&nbsp;</td>
+                <!-- Correction1 Page 1 -->
+                <td>
+                    Andhra Pradesh State Disaster Response and Fire Services Department - <span ng-if="blockSiteType == 'res' && blockSiteSubType != 'A5'">Fire Equipment Compliance Certificate</span> <span ng-if="(blockSiteType == 'res' && blockSiteSubType == 'A5') || (blockSiteType != 'res')">Conditional No objection certificate for Occupancy</span> <b>({{application.site_name}})&nbsp;{{application.build_name}}, {{application.site_addr}}</b> - Regarding.
+                </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: text-top; text-align:justify'>Ref:&nbsp;&nbsp;</td>
+                <td>
+                    <ol>
+                        <li>Online Application Dt. {{application.applied_date}} , {{application.build_name}}, {{application.site_addr}}</li>
+                        <li>Online Inspection Report submitted by Officers of this Department on {{application.forward_date}}. </li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style='padding-left: 20px; text-align:justify'>
+        <p style="text-indent: 50px;">
+            It is to inform that {{application.build_name}} applied for <span ng-if="blockSiteType == 'res' && blockSiteSubType != 'A5'">Fire Equipment Compliance Certificate</span> <span ng-if="(blockSiteType == 'res' && blockSiteSubType == 'A5') || (blockSiteType != 'res')">Conditional No objection certificate for Occupancy</span> on {{application.applied_date}} for Occupancy to the  existing /
+            Multi Storeyed Building for {{application.site_name}} at {{application.site_addr}}.
+            The officers of the department have scrutinized the information, documents and plans submitted by the applicant along with the undertaking provided by the applicant, and have submitted the following report.
+        </p>
+        <br />
+    </div>
+
+    <div ng-repeat="block in blocks">
+        <h5 align="center" style="font-family: bold;">{{block.block_name}}</h5>
+        <div style='padding-left: 20px; text-align:justify'>
+            2. The builder has constructed a <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed  Building with {{FloorDisplay(block)}} with a height of {{block.height}} Mtrs for {{block.is_mixed ? "Mixed (" + type_name(block.site_type) + ")" : type_name(block.site_type)}} Occupancy  (Category - {{block.site_stype}}) in a total plot area of {{application.plot_area}} sq. meters.
+        </div>
+        <div style='padding-left: 20px'>
+            3. The builder has provided Open Spaces all around to the existing building
+            <table width="100%" border="1" style="text-align:center">
+                <thead>
+                    <tr>
+                        <th width='20%'>Side</th>
+                        <th width='25%'>Open Space Required as per 119 APBR 2016</th>
+                        <th width='25%'>Open Space Existing on Site</th>
+                        <th width="10%">Deficit</th>
+                        <!--<th width='30%'>Remarks</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng_repeat="ospace in block.ospaces">
+                        <td>{{direction_name(ospace.direc)}}</td>
+                        <td>{{ reqd_open_space(block, ospace) }} Meters</td>
+                        <td>{{ ospace.proposed.toFixed(2) }} Meters</td>
+                        <td>
+                            <div ng-if="application.appl_mode == 'E'">
+                                {{reqd_open_space(block, ospace)-ospace.proposed > 0  ?  (reqd_open_space(block, ospace)-ospace.proposed).toFixed(2) : "-" }}
+                            </div>
+                        </td>
+                        <!--<td>{{ospace.remarks}}</td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style='padding-left: 20px; padding-top: 20px'>
+            4. The builder has Provided the following Means of Escape:
+            <table width="100%" border="1" style="text-align:center">
+                <thead>
+                    <tr>
+                        <th width='5%'>Sl</th>
+                        <th width='40%'>Details of Staircases</th>
+                        <th width='15%'>Required Min. Width (Mtrs)</th>
+                        <th width='15%'>Provided Nos / Meters</th>
+                        <th width='15%'>Deficit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{$index + 1}}</td>
+                        <td>Internal Staircases</td>
+                        <td>{{proposed_escape_reqdwidth(block, 'I')}}</td>
+                        <td>
+                            {{proposed_escape_count(block, 'I')}} {{proposed_escape_count(block, 'I') > 1 ? "Nos." : "No."}} - {{proposed_escape_width(block, 'I')}} Meters {{proposed_escape_count(block, 'I') > 1 ? "Each" : ""}}
+                        </td>
+                        <td>{{proposed_escape_reqdwidth(block, 'I') - proposed_escape_width(block, 'I')}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{$index + 2}}</td>
+                        <td>External Staircases</td>
+                        <td>{{proposed_escape_reqdwidth(block, 'E')}}</td>
+                        <td>
+                            {{proposed_escape_count(block, 'E')}} {{proposed_escape_count(block, 'E') > 1 ? "Nos." : "No."}} - {{proposed_escape_width(block, 'E')}} Meters {{proposed_escape_count(block, 'E') > 1 ? "Each" : ""}}
+                        </td>
+                        <td>{{proposed_escape_reqdwidth(block, 'E') - proposed_escape_width(block, 'E')}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>Total</td>
+                        <td>{{proposed_escape_reqdwidth(block, 'I') + proposed_escape_reqdwidth(block, 'E')}}</td>
+                        <td>
+                            {{proposed_escape_count(block, 'I') * proposed_escape_width(block, 'I') + proposed_escape_count(block, 'E') * proposed_escape_width(block, 'E')}} Meters
+                        </td>
+                        <td>{{(proposed_escape_reqdwidth(block, 'I') - proposed_escape_width(block, 'I')) + (proposed_escape_reqdwidth(block, 'E') - proposed_escape_width(block, 'E'))}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px; padding-top: 20px'>
+            5. The builder has Provided the means of escape as per Occupant Load :
+            <table width="100%" border="1" style="text-align:center">
+                <thead>
+                    <tr>
+                        <th width='5%'>Sl</th>
+                        <th width='10%'>Floor</th>
+                        <th width='10%'>Built up area (Sq Mtrs)</th>
+                        <th width='10%'>Occupancy Type</th>
+                        <th width='10%'>No of Occupants as declared by the builder</th>
+                        <th width='10%' ng-if="application.appl_mode == 'N'">No of Occupants as per NBC</th>
+                        <th width='12%' ng-if="application.appl_mode == 'N'">Aggregate width of Staircases Required (Meters)</th>
+                        <th width='12%' ng-if="application.appl_mode != 'N'">Aggregate width of Staircases Provided(Meters)</th>
+                        <th width='5%'>Fire Doors</th>
+                        <th width='5%'>Fire Lift</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="floor in block.floors">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{floor.flr_name}}
+                        </td>
+                        <td>
+                            {{floor.built_area}}
+                        </td>
+                        <td>
+                            {{floor_occu_name(floor.occ_type)}}
+                        </td>
+                        <td>
+                            {{floor.occ_c_app}}
+                        </td>
+                        <td ng-if="application.appl_mode == 'N'">
+                            {{t20OccCount(floor) == ''? '--' : t20OccCount(floor)}}
+                        </td>
+                        <td ng-if="application.appl_mode == 'N'">
+                            {{floor.stair_load_reqd == ''? '--': floor.stair_load_reqd}}
+                        </td>
+                        <td ng-if="application.appl_mode != 'N'">
+                            {{floor.esc_width}}
+                        </td>
+                        <td>
+                            {{ floor.built_area > 0 ? reqd_escape_count(block, 'I') + reqd_escape_count(block, 'E') : '--' }}
+                        </td>
+                        <td>
+                            {{ floor.built_area > 0 ? get_fire_lifts(block) : '--' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Total
+                        </td>
+                        <td>
+                            {{block_built_up(block)}}
+                        </td>
+                        <td></td>
+                        <td>
+                            {{block_TotalOccLoad(block)}}
+                        </td>
+                        <td ng-if="application.appl_mode == 'N'">
+                            {{block_TotalNBCOccLoad(block)}}
+                        </td>
+                        <td colspan="5"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px; padding-top: 20px'>
+            6. The minimum Fire Fighting Installations required as per Table 7 of Part 4 of National Building Code of India 2016 are:<br />
+            <table width="100%" border="1" style="text-align:center;">
+                <thead>
+                    <tr>
+                        <th width='10%'>Sl</th>
+                        <th width='40%'>Fire Safety System</th>
+                        <th width='20%' ng-if="application.appl_mode =='E'">Minimum Required</th>
+                        <th width='20%'>Provided</th>
+                        <th width='10%'>Deficit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="equip in block.equipment">
+                        <td>{{$index + 1}}</td>
+                        <td>
+                            {{equipment_desc(equip.qtype)}}
+                        </td>
+                        <td ng-if="application.appl_mode =='E'">
+                            {{equip.count}} {{equipment_suffix(equip.qtype)}}
+                        </td>
+                        <td>
+                            {{equip.ocount}} {{equipment_suffix(equip.qtype)}}
+                        </td>
+                        <td>{{equip.count - equip.ocount}} {{equipment_suffix(equip.qtype)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style='padding-left: 20px'>
+            <br />
+            7. The builder has provided the following floorwise Fire Fighting installations as per Table 7 of Part - 4 of NBC of India 2016.<br />
+            <table width="100%" border="1" style="text-align:center" ng-repeat="ffe in floorwise | filter: {block_id: block.block_id}">
+                <thead>
+                    <tr>
+                        <th width="5%">Sl.</th>
+                        <th width="10%">Floor</th>
+                        <th ng-repeat="col in ffe.cols" style="word-wrap:inherit">{{equipment_short(col["name"])}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="drow in ffe.data">
+                        <td>{{$index + 1}}</td>
+                        <td>{{drow.fname}}</td>
+                        <td ng-repeat="col in ffe.cols">
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                                <span ng-if="$index!=0">/</span>{{drow[col["name"]][valtype.tag] == ''? '--' : drow[col["name"]][valtype.tag]}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>{{ffe.total.fname}}</td>
+                        <td ng-repeat="col in ffe.cols">
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'B'">
+                                <b ng-if="$index > 0">/</b>{{ffe.total[col["name"]][valtype.tag] == ''? '--' : ffe.total[col["name"]][valtype.tag] + ' ' + equipment_suffix(col['name'])}}
+                            </span>
+                            <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                                <b ng-if="$index > 0">/</b>{{GetFFETotal(col["name"], valtype.tag,block.block_id)}}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <ul>
+                    <li ng-repeat="ntrow in block.eqnotes"><span><b>{{ffenotes[ntrow.note]}}</b></span><br /></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        8. Whether the builder/management has compiled the additional fire safety measures required as per part - IV, NBC - 2016.
+    </div>
+    <!-- Table need for Corrections -->
+    <div class="col-md-12 col-sm-12" style="margin-top: 20px; text-align:justify">
+        <div style='width: 100%'>
+            <table width="100%" border="1" style="text-align:center">
+                <thead>
+                    <tr>
+                        <th width="1%">Sl.</th>
+                        <th width="30%">Condition</th>
+                        <th width="5%" style="text-wrap:normal">Complied by the Applicant / Not</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in application.conditions">
+                        <td>{{$index+1}}</td>
+                        <td>{{list.item_desc}}</td>
+                        <td>{{list.selected=='0'?'No':'Yes'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12" style="margin-top: 20px; text-align:justify">
+        9. The
+        <span ng-if="blockSiteType == 'res' && blockSiteSubType != 'A5'">Fire Equipment Compliance Certificate</span> <span ng-if="(blockSiteType == 'res' && blockSiteSubType == 'A5') || (blockSiteType != 'res')">Conditional No objection certificate for Occupancy</span> to the {{blocks[0].is_mixed ? "Mixed Occupancy (" + type_name(blocks[0].site_type) + ")" : type_name(blocks[0].site_type)}} Building ({{blocks[0].site_stype}}) belonging to <b>{{application.build_name}}</b>
+        <b>{{application.site_addr}}</b>, is here with issued  subject to the following conditions.
+
+        <div ng-include="'modules/dept/partials/noc_terms_o_e.html'"></div>
+    </div>
+
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        10. The following deficiencies are identified by the officers of the department and rectify the deficiencies by the management.<br />
+        <pre style="white-space: pre-wrap; word-break: keep-all" class="text-danger font-bold">{{step_info.r}}</pre>
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        11. a) The deficiencies to be compiled on parawise as per new building rules, in existing building.</li><br />
+        b) The WP (26365/05 dated: 05-01-2007) of high court. The outcome of judgement on the fire safety measures to be upgraded/revised in future.</li><br />
+        c) It is the responsibility of the builder to apply for Final No objection certificate for Occupancy, duly remitting the User Charges as per G.O.Ms.No.71, Home (Prison-A) Department, dated 01-04-2010 and G.O.Ms.No.140, Home (Prison & Fire) Department, dated: 04-09-2015.
+    </div>
+    <div style='padding-left: 20px; text-align: justify; width: 100%'>
+        12. In view of the above, the <span ng-if="blockSiteType == 'res' && blockSiteSubType != 'A5'">Fire Equipment Compliance Certificate</span> <span ng-if="(blockSiteType == 'res' && blockSiteSubType == 'A5') || (blockSiteType != 'res')">Conditional No objection certificate for Occupancy</span> is hereby issued to the existing constructed <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building subject to the above conditions.
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12">
+        <div style='float: left'>
+            <img src='http://202.83.28.165/barcode.php?text={{application.appl_number}}&print=true&codetype=Code39&size=60' alt='PNOC{{application.appl_number}}' />
+            <br /><input type='button' onclick='window.print()' value='Print' />&nbsp;&nbsp;&nbsp;<input type='button' onclick='location.href="#dashboard";' value='Back' />
+        </div>
+        <div style='float: right'>
+            <div style='text-align: center' ng-if="application.dlevel=='MSB'">
+                Your Sincerely,<br />
+                <br />
+                <br />
+                <br />
+                Director General<br />
+                Prisons and Correctional Services<br />
+                (HFAC) Director General<br />
+                State Disaster Response & Fire Services<br />
+                Andhra Pradesh, Vijayawada
+            </div>
+            <div style='text-align: center' ng-if="application.dlevel=='DFO'">
+                Your Sincerely,<br />
+                <br />
+                <br />
+                <br />
+                District Fire Officer<br />
+                Andhra Pradesh, {{district_desc(application.district)}}
+            </div>
+            <div style='text-align: center' ng-if="application.dlevel=='RFO'">
+                Your Sincerely,<br />
+                <br />
+                <br />
+                <br />
+                Regional Fire Officer<br />
+                Andhra Pradesh, Vijayawada
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="col-md-12 col-sm-12" ng-if="application.dlevel=='MSB'">
+        <br />
+        Copy to {{application.build_name}}, {{application.corr_addr}} <br />
+        Copy to Chief Office for Record Purpose <br />
+        Copy to Regional Fire Officer concerned <br />
+        Copy to District Fire Officer concerned<br />
+        Copy to Assistant District Fire Officer concerned<br />
+        <span ng-if="addcc.length>0">Copy to {{addcc}}</span>
+    </div>
+    <div class="col-md-12 col-sm-12" ng-if="application.dlevel=='DFO'">
+        <br />
+        Copy to {{application.build_name}}, {{application.corr_addr}} <br />
+        Copy to Assistant District Fire Officer concerned<br />
+        Copy to Station Fire Officer concerned<br />
+        <span ng-if="addcc.length>0">Copy to {{addcc}}</span>
+    </div>
+    <div class="col-md-12 col-sm-12" ng-if="application.dlevel=='RFO'">
+        <br />
+        Copy to {{application.build_name}}, {{application.corr_addr}} <br />
+        Copy to Chief Office for Record Purpose <br />
+        Copy to District Fire Officer concerned<br />
+        Copy to Assistant District Fire Officer concerned<br />
+        Copy to Station Fire Officer concerned<br />
+        <span ng-if="addcc.length>0">Copy to {{addcc}}</span>
+    </div>
+</div>

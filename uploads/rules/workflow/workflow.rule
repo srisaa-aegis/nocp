@@ -1,0 +1,2595 @@
+{
+  "workflows": [
+    {
+      "code": "P_MSB",
+      "start": 1,
+      "final": 6,
+      "approver": "dgfs",
+      "approve_id": "",
+      "chairman": "",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "section",
+                  "form": "section_note",
+                  "print": "section_note_print",
+                  "desc": "Note from ",
+                  "move_to": 6
+                },
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 3
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_others_o",
+                  "print": "",
+                  "desc": "Inspection by",
+                  "move_to": 3
+                },
+                {
+                  "user": "dfo",
+                  "form": "dfo_report",
+                  "print": "dfo_report_print",
+                  "desc": "Inspection by ",
+                  "move_to": 3
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "section",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "dfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                },
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "rfo_note",
+                  "print": "rfo_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 31
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Inspected",
+          "next_steps": [
+            {
+              "step": 31,
+              "assign_to": [
+                {
+                  "user": "adfs",
+                  "form": "adfs_note",
+                  "print": "adfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 4
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "adfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "31",
+          "label": "Inspected",
+          "next_steps": [
+            {
+              "step": 4,
+              "assign_to": [
+                {
+                  "user": "dfscd",
+                  "form": "dfscd_note",
+                  "print": "dfscd_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 5
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfscd",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "4",
+          "label": "Reviewed by RFO",
+          "next_steps": [
+            {
+              "step": 5,
+              "assign_to": [
+                {
+                  "user": "dfs",
+                  "form": "dfs_note",
+                  "print": "dfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 6
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "5",
+          "label": "Reviewed by DFS-CD",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dgfs",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 6
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dgfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Pending Final Approval",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "O_MSB",
+      "start": 1,
+      "final": 6,
+      "approver": "dgfs",
+      "approve_id": "",
+      "chairman": "RFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "section",
+                  "form": "section_note_o",
+                  "print": "section_note_print_o",
+                  "desc": "Note from ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_others_o",
+                  "print": "",
+                  "desc": "Inspection by",
+                  "move_to": 0
+                },
+                {
+                  "user": "dfo",
+                  "form": "dfo_report_o",
+                  "print": "",
+                  "desc": "Inspection by",
+                  "move_to": 0
+                }               
+              ],
+              "alerts": [
+                {
+                  "user": "section",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "dfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "dfo_report_o",
+                  "print": "dfo_report_print_o",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Inspected",
+          "next_steps": [
+            {
+              "step": 31,
+              "assign_to": [
+                {
+                  "user": "adfs",
+                  "form": "adfs_note",
+                  "print": "adfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "adfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "31",
+          "label": "Inspected",
+          "next_steps": [
+            {
+              "step": 4,
+              "assign_to": [
+                {
+                  "user": "dfscd",
+                  "form": "dfscd_note",
+                  "print": "dfscd_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfscd",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "4",
+          "label": "Reviewed by RFO",
+          "next_steps": [
+            {
+              "step": 5,
+              "assign_to": [
+                {
+                  "user": "dfs",
+                  "form": "dfs_note",
+                  "print": "dfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "5",
+          "label": "Reviewed by DFS-CD",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dgfs",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dgfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Pending Final Approval",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "E_MSB",
+      "start": 1,
+      "final": 6,
+      "approver": "dgfs",
+      "approve_id": "",
+      "chairman": "RFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "section",
+                  "form": "section_note_o",
+                  "print": "section_note_print_o",
+                  "desc": "Note from ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_others_o",
+                  "print": "",
+                  "desc": "Inspection by",
+                  "move_to": 0
+                },
+                {
+                  "user": "dfo",
+                  "form": "dfo_report_o_e",
+                  "print": "",
+                  "desc": "Inspection by",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "section",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "dfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "dfo_report_o_e",
+                  "print": "dfo_report_print_o_e",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Inspected",
+          "next_steps": [
+            {
+              "step": 31,
+              "assign_to": [
+                {
+                  "user": "adfs",
+                  "form": "adfs_note",
+                  "print": "adfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "adfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "31",
+          "label": "Inspected",
+          "next_steps": [
+            {
+              "step": 4,
+              "assign_to": [
+                {
+                  "user": "dfscd",
+                  "form": "dfscd_note",
+                  "print": "dfscd_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfscd",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "4",
+          "label": "Reviewed by RFO",
+          "next_steps": [
+            {
+              "step": 5,
+              "assign_to": [
+                {
+                  "user": "dfs",
+                  "form": "dfs_note",
+                  "print": "dfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "5",
+          "label": "Reviewed by DFS-CD",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dgfs",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note_print",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dgfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Pending Final Approval",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "R_MSB",
+      "start": 1,
+      "final": 6,
+      "approver": "dfs",
+      "approve_id": "",
+      "chairman": "DFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "section",
+                  "form": "section_note_r",
+                  "print": "section_note_print_o",
+                  "desc": "Note from ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "section",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "adfo",
+                  "form": "dfo_others_o",
+                  "print": "",
+                  "desc": "Inspection by",
+                  "move_to": 0
+                },
+                {
+                  "user": "dfo",
+                  "form": "dfo_report_r",
+                  "print": "",
+                  "desc": "(Chairman) Inspection by",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 4,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "rfo_note_r",
+                  "print": "rfo_note_print_r",
+                  "desc": "Scrutining by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "4",
+          "label": "Verified by Section",
+          "next_steps": [
+            {
+              "step": 31,
+              "assign_to": [
+                {
+                  "user": "adfs",
+                  "form": "adfs_note_r",
+                  "print": "",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "adfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "31",
+          "label": "Verified by Section",
+          "next_steps": [
+            {
+              "step": 5,
+              "assign_to": [
+                {
+                  "user": "dfscd",
+                  "form": "dfscd_note_r",
+                  "print": "",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfscd",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "5",
+          "label": "Inspected",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfs",
+                  "form": "dfs_note_r",
+                  "print": "",
+                  "desc": "Reviewed by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Reviewed by DFS-CD",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "appl_approved",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "appl_returned",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "appl_rejected",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "D_MSB",
+      "start": 1,
+      "final": 6,
+      "approver": "dfs",
+      "approve_id": "",
+      "chairman": "",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfs",
+                  "form": "dfs_note_r",
+                  "print": "",
+                  "desc": "Approval/Inspection/Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Reviewed by DFS",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            },
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "appl_approved",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "appl_returned",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "appl_rejected",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfs",
+                  "form": "dfs_note_r",
+                  "print": "",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfs",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "P_RFO",
+      "start": 1,
+      "final": 6,
+      "approver": "rfo",
+      "approve_id": "district",
+      "chairman": "DFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "dfo",
+                  "form": "dfo_report",
+                  "print": "dfo_report_print",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "O_RFO",
+      "start": 1,
+      "final": 6,
+      "approver": "rfo",
+      "approve_id": "district",
+      "chairman": "DFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "dfo",
+                  "form": "dfo_report_o",
+                  "print": "dfo_report_print_o",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "R_RFO",
+      "start": 1,
+      "final": 6,
+      "approver": "rfo",
+      "approve_id": "district",
+      "chairman": "DFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "rsection",
+                  "form": "section_note_r",
+                  "print": "section_note_print_o",
+                  "desc": "Note from ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rsection",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "dfo",
+                  "form": "dfo_report_r",
+                  "print": "dfo_report_print_r",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Verified by Section",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "D_RFO",
+      "start": 1,
+      "final": 6,
+      "approver": "rfo",
+      "approve_id": "district",
+      "chairman": "",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Approval/Inspection/Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "rfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "rfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            },
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "P_DFO",
+      "start": 1,
+      "final": 6,
+      "approver": "dfo",
+      "approve_id": "district",
+      "chairman": "ADFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_report",
+                  "print": "dfo_report_print",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "O_DFO",
+      "start": 1,
+      "final": 6,
+      "approver": "dfo",
+      "approve_id": "district",
+      "chairman": "ADFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_report_o",
+                  "print": "dfo_report_print_o",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "R_DFO",
+      "start": 1,
+      "final": 6,
+      "approver": "dfo",
+      "approve_id": "district",
+      "chairman": "ADFO",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 2,
+              "assign_to": [
+                {
+                  "user": "dsection",
+                  "form": "section_note_r",
+                  "print": "section_note_print_o",
+                  "desc": "Note from ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dsection",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "2",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                },
+                {
+                  "user": "adfo",
+                  "form": "dfo_report_r",
+                  "print": "dfo_report_print",
+                  "desc": "(Chairman) Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "adfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Verified by Section",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FORWARD_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    },
+    {
+      "code": "D_DFO",
+      "start": 1,
+      "final": 6,
+      "approver": "dfo",
+      "approve_id": "district",
+      "chairman": "",
+      "workflow": [
+        {
+          "step": "1",
+          "label": "Draft",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfo",
+                  "form": "dgfs_note",
+                  "print": "dgfs_note",
+                  "desc": "Approval/Inspection/Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "3",
+          "label": "Submitted",
+          "next_steps": [
+            {
+              "step": 6,
+              "assign_to": [
+                {
+                  "user": "dfs",
+                  "form": "dfs_note_r",
+                  "print": "",
+                  "desc": "Final Approval or Rejection",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "dfo",
+                  "template": "forwarded_to",
+                  "type": "sms"
+                },
+                {
+                  "user": "citizen",
+                  "template": "submitted",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "1",
+              "gen_code": "1",
+              "set_date": "APPLIED_DATE"
+            }
+          ]
+        },
+        {
+          "step": "6",
+          "label": "Final Approval / Rejection",
+          "next_steps": [
+            {
+              "step": 3,
+              "assign_to": [
+                {
+                  "user": "sfo",
+                  "form": "dfo_others_o",
+                  "print": "dfo_others_o",
+                  "desc": "Inspection by ",
+                  "move_to": 0
+                }
+              ],
+              "alerts": [
+                {
+                  "user": "sfo",
+                  "template": "assigned_to",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": ""
+            },
+            {
+              "step": 7,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 8,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            },
+            {
+              "step": 9,
+              "assign_to": [],
+              "alerts": [
+                {
+                  "user": "citizen",
+                  "template": "final_status",
+                  "type": "sms"
+                }
+              ],
+              "validate_appl": "0",
+              "gen_code": "0",
+              "set_date": "FINAL_DATE"
+            }
+          ]
+        },
+        {
+          "step": "7",
+          "label": "Approved",
+          "next_steps": []
+        },
+        {
+          "step": "8",
+          "label": "Returned with Comments",
+          "next_steps": []
+        },
+        {
+          "step": "9",
+          "label": "Rejected",
+          "next_steps": []
+        },
+        {
+          "step": "10",
+          "label": "Response Timeout",
+          "next_steps": []
+        }
+      ]
+    }
+  ]
+}

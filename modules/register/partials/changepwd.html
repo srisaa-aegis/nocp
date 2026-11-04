@@ -1,0 +1,15 @@
+<form name="userLogin" class="form__user" ng-submit="ForgotPassword()">
+    <legend>Change Password</legend>
+    <section class="form_fields">
+	<div class="form-group">
+		<input type="password" name="oldpass" id="oldpass" ng-model="chpass.oldpass" class="form-control" placeholder="Old Password">
+	</div>
+	<div class="form-group">
+		<input type="password" name="newpass" id="newpass" ng-model="chpass.newpass" class="form-control" placeholder="New Password">
+	</div>
+	<div class="form-group">
+		<input type="password" name="cnfpass" id="cnfpass" ng-model="chpass.cnfpass" class="form-control" placeholder="Confirm Password">
+	</div>
+	<button type="submit" class="btn btn-primary btn-block">Change</button>
+    </section>
+</form>

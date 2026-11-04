@@ -1,0 +1,97 @@
+﻿<div class="col-lg-12">
+    <div class="ibox">
+        <div class="ibox-title text-navy">
+            <h5>1) Applicants name,address and his company verified and cross checked</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Name, Address, and Company in the application</td>
+                            <th>{{form_to.nac_appl}}</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                Designation and Address of the Licensing Authority issuing building permit. (to whom NOC has to be sent)<br />
+                                VUDA / VGTUDA / KUDA / TUDA / etc
+                            </td>
+                            <th>{{form_to.plan_ao}}</th>
+                        </tr>
+                        <tr>
+                            <td>Name, Address, and Company given in the Committee Report</td>
+                            <th>{{form_to.nac_comm}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="ibox-title">
+            <h5 class="text-navy">2) Survey No and other Revenue details of the Plot</h5>
+            <label class="form-control"><dt>{{form_to.rev_det}}</dt></label>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="ibox">
+            <div class="ibox-title text-navy">
+                <h5>3) Details of the Fire Precautionary Fees</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Total Fees Supposed to be paid as per the Act/Rules:</th>
+                                <td>Rs.{{form_to.fees_act}}</td>
+                            </tr>
+                            <tr>
+                                <th>Total Built Up Area:</th>
+                                <td>{{form_to.tot_built_area}} Sq Mtrs</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-navy">Details of the Challan Amount Paid</th>
+                            </tr>
+                            <tr>
+                                <th>Bank/Branch:</th>
+                                <td>{{form_to.challan_bank}}</td>
+                            </tr>
+                            <tr>
+                                <th>Challan No:</th>
+                                <td>{{form_to.challan_num}}</td>
+                            </tr>
+                            <tr>
+                                <th>Amount:</th>
+                                <td>Rs.{{form_to.challan_amt}}</td>
+                            </tr>
+                            <tr>
+                                <th>Date:</th>
+                                <td>{{form_to.challan_date}}</td>
+                            </tr>
+                            <tr>
+                                <th>Challan Slip enclosed?</th>
+                                <td ng-if="form_to.challan_enc == 1">
+                                    Yes
+                                </td>
+                                <td ng-if="form_to.challan_enc == 0">
+                                    No
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="ibox-title">
+        <h5 class="text-navy">4) Any deficiencies found in the 01 to 03 points listed above</h5>
+        <label class="form-control"><dt>{{form_to.remark}}</dt></label>
+    </div>
+    <div class="ibox-title">
+        <h5 class="text-navy">Name of Person Submitting this Note</h5>
+        <label class="form-control"><dt>{{form_to.submitter}}</dt></label>
+    </div>
+</div>

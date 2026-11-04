@@ -1,0 +1,40 @@
+﻿<style type="text/css">
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    td {
+        text-align: left;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+
+    h5 {
+        font-weight: 700;
+        font-size: 18px;
+        background-color: lightgray;
+        margin-bottom: 1px;
+    }
+</style>
+<div style="Font-Family: 'Times New Roman'">
+    <p><i>Please wait for the Chairman of the Committee to submit the report and after reading it please specify if you agree with the Report.</i></p>
+    <p>I confirm that I agree with the Report Submitted by the Chairman of the Inspection Committee</p>
+    <input type="text" ng-disabled="disabledform" ng-model="form_to.remark" class="FormControl" /> <b>Enter 'I Agree' if you agree with the report. Otherwise, enter 'I Do not Agree', and give your reasons in the box below</b>
+    <div><br /></div>
+    <textarea ng-disabled="disabledform" ng-model="form_to.remark_not" class="FormControl" cols="100" rows="5"></textarea>
+</div>

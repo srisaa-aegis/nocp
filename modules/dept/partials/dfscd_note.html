@@ -1,0 +1,48 @@
+<style>
+    td {
+        text-align: left;
+        vertical-align: top;
+    }
+    th {
+        background-color: lightgray;
+    }
+</style>
+<div style="text-align:center">
+	<table width='100%'>
+        <tr><th style="text-align: left" colspan='2'>1)Relavant applicable rules in the NBC guidelines</th></tr>
+        <tr>
+            <td colspan="2">
+                <textarea class="form-control" ng-model="form_to.adfs_nbc_rules" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+
+		<tr><th style="text-align: left" colspan='2'>2) Cross Checking of the finding of the inspection committee, RFO's observations and NBC guidelines or any other Rules</th></tr>
+		<tr>
+			<td>Is there any difference of opinion between the inspection committee report and RFO's Finding?</td>
+			<td width="40%"><select class="form-control" ng-model="form_to.adfs_diff_opi" ng-disabled="disabledform"><option value="1">Yes</option><option value="0">No</option></select></td>
+		</tr>
+		<tr ng-if="form_to.adfs_diff_opi == 1">
+			<td>If there is any difference of opinion, what the ACT/NBC guidelines say? and what is your view?</td>
+			<td><textarea class="form-control" ng-model="form_to.adfs_what_diff" ng-disabled="disabledform">&nbsp;</textarea></td>
+		</tr>
+		<tr>
+			<td>Is the recommdation of the committee as per the norms?</td>
+			<td><select class="form-control" ng-model="form_to.adfs_comm_norm" ng-disabled="disabledform"><option value="1">Yes</option><option value="0">No</option></select></td>
+		</tr>
+
+
+        <tr><th style="text-align: left" colspan='2'>3) Any deficiencies you have noticed in the entire proposal of the applicant, in implementation, and in the Committee's Report? If Yes, Please Explain.</th></tr>
+        <tr>
+            <td colspan="2">
+                <textarea class="form-control" ng-model="form_to.adfs_deficits" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+
+        <tr><th style="text-align: left" colspan='2'>4) Please Specify your clear opinion with reasons?</th></tr>
+        <tr>
+            <td colspan="2">
+                <textarea class="form-control" ng-model="form_to.remark" ng-disabled="disabledform">&nbsp;</textarea>
+            </td>
+        </tr>
+		</table>
+</div>

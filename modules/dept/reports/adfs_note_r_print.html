@@ -1,0 +1,24 @@
+﻿<h4>
+    1) Whether the Inspection committee verified the fire safety installations on par with NOC for Occuapancy?
+</h4>
+<div class="form-group row">
+    <div class="col-sm-12">
+        <label class="form-control"><dt>{{form_to.adfs_nbc_rules}}</dt></label>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-12 col-form-label"><h4>2) Whether the Inspection committee verified specific conditions mentioned in the NOC for Occupancy / Renewal?</h4></label>
+</div>
+<div class="form-group row">
+    <label class="col-sm-6 col-form-label">Is the recommdation of the committee as per the norms?</label>
+    <div class="col-sm-6">
+        <label class="form-control" ng-if="form_to.adfs_comm_norm == 1"><dt>Yes</dt></label>
+        <label class="form-control" ng-if="form_to.adfs_comm_norm == 0"><dt>No</dt></label>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-6 col-form-label"><h4>3) Please Specify your clear opinion with reasons?</h4></label>
+    <div class="col-sm-6">
+        <label class="form-control"><dt>{{form_to.remark}}</dt></label>
+    </div>
+</div>

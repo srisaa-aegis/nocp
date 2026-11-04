@@ -1,0 +1,343 @@
+<div ng-app='citizen' ng-controller='confirmController' style="Font-Family: 'Times New Roman'">
+<h4 style='text-align: center'>Government of Andhra Pradesh</h4>
+<h4 style='text-align: center'>A.P. State Disaster Response and Fire Services Department</h4>
+<h5 style='text-align: center;'><u>Provisional Fire No Objection Certificate</u></h5>
+<div class="row">
+	<p style="float: left">
+	To,<br/>
+	The Commissioner, <br/>
+	Capital Region Development Authority<br/>
+	Amaravathi<br/>
+	<br/>
+	</p>
+	<p style="float: right; align: left;">
+	File No: {{application.appl_number}}<br/>
+	Date: {{final_date}}<br/>
+	</p>
+</div>
+<p>
+Sir/Madam,
+</p>
+<p style='padding-left: 20px'>
+	Sub: Andhra Pradesh State Disaster Response and Fire Services Department - Issue of Provisional No Objection Certificate for the Proposed Construction  of <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building of ({{application.site_name}})<b>M/s Uma Estates and Project, Ltd, Sy No's 230 & 231 A, Chinnakakani Village, Mangalagiri Mandal, Guntur Dist, A.P</b> - Regarding.
+</p>
+<p style='padding-left: 20px'>
+	Ref: 1. Letter Dt. 30-07-2016 , Sri G Sridhar Reddy, S/o Late G Ramachandra Reddy, of M/s Uma Estates &nbsp;&nbsp;&nbsp;&nbsp;and Projects Ltd, Sy Nos. 230, 231A, Chinnakakani Village, Mangalagiri Mandal, Guntur Dist, A.P.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; 2. This office memo Rc No. 410/MSB/SR/GTR/2016, Dated 08-08-2016<br/> 
+&nbsp;&nbsp;&nbsp;&nbsp; 3. The MSB Inspection Committee Report, Rc No. 1039/RFO/SR/2016 dated 09-09-2016.<br/>
+<br/>
+</p>
+<p style='padding-left: 20px'>
+	It is to inform that the <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building inspection committee vide reference 3rd cited has inspected and scrutinized the plans of proposed construction of Multi Storeyed Building for ({{application.site_name}}) M/s Uma Estates and Project, Ltd, Sy No's 230 & 231 A, Chinnakakani Village, Mangalagiri Mandal, Guntur Dist, on 29.08.2016 and submitted the following report.
+<br/>
+	2. The builder has proposed to construct a Multi Storeyed  Building with Sub-Cellar+Cellar+Ground+9 Upper Floors with a height of 29.95 Mtrs for Residential Occupancy  (Category - A4).
+</p>
+<!--
+<p style='padding-left: 20px'>
+<b>Application Details</b>
+		<table width="100%" border=1>
+		<tr>
+			<th width="15%">Application Number</td><td width="35%">{{application.appl_number}}</td><th width="15%">Building Name</th><td>{{ application.site_name }}</td>
+		</tr>
+		<tr>
+			<th>Site Address</th><td>{{application.site_addr}}</td><td>Builder/Owner/Developer</td><td>{{ application.build_name }}</td>
+		</tr>
+		<tr>
+			<td>District</td><td>Guntur{{ district_desc(application.dist_name) }}</td><td>Plot Area</td><td>{{ application.plot_area }} Sq. Mtrs</td>
+		</tr>
+		<tr>
+			<td>Phone</td><td>{{ application.build_landline }}</td> <td>Mobile</td><td>{{ application.build_mobile }}</td>
+		</tr>
+		<tr>
+			<td>Email</td><td>{{ application.build_email }}</td> <td>Applied On:</td><td>{{ application.applied_date }}</td>
+		</tr>
+		<tr><td colspan='4'>&nbsp;</td></tr>
+		<tr>
+			<td>Challan</td><td>{{ application.challan_num }}</td> <td>Amount Paid</td><td>Rs. {{ application.challan_amt }}/-</td>
+		</tr>
+		<tr>
+			<td>Date</td><td>{{ application.challan_date }}</td> <td>Bank / Branch</td><td>{{ application.challan_bnk + " / " + application.challan_brch }}</td>
+		</tr>
+		</table>
+</p>
+-->
+<div ng-repeat="block in blocks">
+	<!-- h3 style="text-align: center">{{block.block_name}}</h3 -->
+<!--
+	<table width="100%" border=1>
+	<tr>
+		<th>Occupancy Type</th>
+		<td>{{type_name(block.site_type)}}</td>
+		<th>Sub Type</th>
+		<td>{{block.site_stype}}</td>
+		<th>Height</th>
+		<td>{{block.height}} Mtrs</td>
+	</tr>
+	<tr>
+		<th>Floors</th>
+		<td>{{block.floors.length}}</td>
+		<th>Total Build Up Area</th>
+		<td>{{block_built_up(block)}} Sq Mtrs</td>
+		<th>Front Direction</th>
+		<td>{{direction_name(block.front_dir)}}</td>
+	</tr>
+	<tr>
+		<td colspan='3'>Whether land has been surrendered for road-widening:
+				&nbsp;&nbsp;<b ng-if="block.road_wide">Yes</b> <b ng-if="!block.road_wide">No</b>
+		</td>
+		<td colspan='3'>Is Transfer of Setback Applicable:
+				&nbsp;&nbsp;<b ng-if="block.xfer_sbck">Yes</b> <b ng-if="!block.xfer_sbck">No</b>
+		</td>
+	</tr>
+	</table>
+-->
+	<!-- p style='padding-left: 20px; padding-top: 20px' -->
+		3. The builder has proposed open spaces all around the building
+		<table width="100%" border="1" style="text-align:center">
+			<thead>
+				<tr>
+					<th width='20%'>Side</th>
+					<th width='25%'>Open Space Required as per NBC, 2005</th>
+					<th width='25%'>Open Space Proposed by the Builder</th>
+					<th width='30%'>Remarks</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng_repeat="ospace in block.ospaces">
+					<td>{{direction_name(ospace.direc)}}</td>
+					<td>{{ reqd_open_space(block, ospace) }} Meters</td>
+					<td>{{ ospace.proposed.toFixed(2) }} Meters</td>
+					<td>-Nil-</td>
+				</tr>
+			</tbody>
+		</table>
+	</p>
+<!--
+	<p style='padding-left: 20px; padding-top: 20px'>
+		The proposed building Floor Area and Occupancy Particulars
+		<table width="100%" border="1"  style="text-align:center">
+			<thead>
+				<tr>
+					<th width='5%'>Sl</th>
+					<th width='20%'>Floor</th>
+					<th width='10%'>Floor Area (Sq Mtrs)</th>
+					<th width='15%'>Occupancy Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="floor in block.floors">
+					<td>{{$index + 1}}</td>
+					<td>
+						{{floor.flr_name}}
+					</td>
+					<td>
+						{{floor.built_area}}
+					</td>
+					<td>
+						{{floor.occ_type}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</p>
+-->
+	<p style='padding-left: 20px; padding-top: 20px'>
+		4. The builder has proposed to provide following means of escape:
+		<table width="100%" border="1"  style="text-align:center">
+			<thead>
+				<tr>
+					<th width='5%'>Sl</th>
+					<th width='20%'>Details of Staircases</th>
+					<th width='10%'>Required Nos / Meters</th>
+					<th width='10%'>Proposed Nos / Meters</th>
+					<th width='15%'>Deficit</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{$index + 1}}</td>
+					<td>Internal Staircases</td>
+					<td>
+						{{reqd_escape_count(block, 'I')}} Nos. - {{reqd_escape_width(block, 'I')}} Meters
+					</td>
+					<td>
+						{{proposed_escape_count(block, 'I')}} Nos - {{proposed_escape_width(block, 'I')}} Meters each
+					</td>
+					<td>
+						-Nil-
+					</td>
+				</tr>
+				<tr>
+					<td>{{$index + 1}}</td>
+					<td>External Staircases</td>
+					<td>
+						{{reqd_escape_count(block, 'E')}} Nos. - {{reqd_escape_width(block, 'E')}} Meters
+					</td>
+					<td>
+						{{proposed_escape_count(block, 'E')}} Nos - {{proposed_escape_width(block, 'E')}} Meters
+					</td>
+					<td>
+						-Nil-
+					</td>
+				</tr>
+				<tr>
+					<td colspan='2'>Total</td>
+					<td>
+						{{reqd_escape_count(block, 'I') * reqd_escape_width(block, 'I') + reqd_escape_count(block, 'E') * reqd_escape_width(block, 'E')}} Meters
+					</td>
+					<td>
+						{{proposed_escape_count(block, 'I') * proposed_escape_width(block, 'I') + proposed_escape_count(block, 'E') * proposed_escape_width(block, 'E')}} Meters
+					</td>
+					<td>
+						-Nil-
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</p>
+
+	<p style='padding-left: 20px; padding-top: 20px'>
+<br/>
+<br/>
+		5. The builder has proposed to provide Occupant Load as per unit Exit width:
+		<table width="100%" border="1"  style="text-align:center">
+			<thead>
+				<tr>
+					<th width='5%'>Sl</th>
+					<th width='15%'>Floor</th>
+					<th width='10%'>Built up area (Sq Mtrs)</th>
+					<th width='10%'>Occupancy Type</th>
+					<th width='15%'>No of Occupants as per NBC</th>
+					<th width='15%'>Aggregate width of Staircases Required (Meters)</th>
+					<th width='15%'>Aggregate width of Staircases Proposed(Meters)</th>
+					<th width='10%'>Fire Doors</th>
+					<th width='10%'>Fire Lift</th>
+					<th width='15%'>Deficit</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="floor in block.floors">
+					<td>{{$index + 1}}</td>
+					<td>
+						{{floor.flr_name}}
+					</td>
+					<td>
+						{{floor.built_area}}
+					</td>
+					<td>
+						{{floor.occ_type}}
+					</td>
+					<td>
+						{{permissible_load(floor)}}
+					</td>
+					<td>
+						{{floor.stair_load_reqd}}
+					</td>
+					<td>
+						{{aggregate_staircase(block)}}
+					</td>
+					<td>
+						{{ reqd_escape_count(block, 'I') + reqd_escape_count(block, 'E')}}
+					</td>
+					<td>
+						{{ get_fire_lifts(block) }}
+					</td>
+					<td>
+						-Nil-
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</p>
+
+	<p style='padding-left: 20px'>
+		6. The minimum Fire Fighting Installations required as per Table 23 of Part 4 of National Building Code of India 2005 are:<br/>
+		<table width="100%" border="1"  style="text-align:center">
+			<thead>
+				<tr>
+					<th width='10%'>Sl</th> <th width='60%'>Fire Safety System</th> <th width='30%'>Minimum Required</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="equip in block.equipment">
+					<td>{{$index + 1}}</td>
+					<td> {{equipment_desc(equip.qtype)}}
+					</td>
+					<td>
+						{{equip.count}} {{equipment_suffix(equip.qtype)}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</p>
+
+	<p style='padding-left: 20px'>
+		7. The builder has proposed to provide the following floorwise Fire Fighting installations as per Table 23 of Part - 4 of NBC of India 2005.<br/>
+		<table width="100%" border="1"  style="text-align:center" ng-repeat="ffe in floorwise">
+			<thead>
+				<tr>
+					<th>Sl.</th>
+<!--					<th>Type</th> -->
+					<th>Floor</th>
+					<th ng-repeat="col in ffe.cols">{{ffe.header[col["name"]]}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="drow in ffe.data">
+					<td>{{$index + 1}}</td>
+<!--					<td>{{drow.FLR_TYPE}}</td> -->
+					<td>{{drow.FLR_NAME}}</td>
+					<td ng-repeat="col in ffe.cols">{{drow[col["name"]]}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</p>
+</div>
+<p style='padding-left: 20px; text-align: justified; width: 100%'>
+	8. The MSB Inspection committee recommended to issue The Provisional
+	No Objection Certificate for the proposed construction of MSB Residential Building (A4) belonging to <b>{{application.build_name}}</b>
+	<b>{{application.site_addr}}</b>, subject to the following conditions.
+</p>
+
+<div class="col-md-12 col-sm-12" style="margin-top: 30px">
+	<div ng-include = "'modules/dept/partials/noc_terms.html'"></div>
+</div>
+
+<p style='padding-left: 20px; text-align: justified; width: 100%'>
+	10. This Provisional No Objection Certificate is issued with the advice that the <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building should not be occupied and the operations shall not be commenced without
+	obtaining No Objection Certificate for Occupancy from this Department about the satisfactory installation of above fire safety measures.
+</p>
+
+<div class="clearfix"></div>
+<div class="col-md-12 col-sm-12">
+	<div style='float: left'>
+		<img src='http://202.83.28.165/barcode.php?text={{application.appl_number}}&print=true&codetype=Code39&size=60' alt='PNOC{{application.appl_number}}'/>
+		<br/><input type='button' onclick='window.print()' value='Print'/>&nbsp;&nbsp;&nbsp;<input type='button' onclick='location.href="#dashboard";' value='Back'/>
+	</div>
+	<div style='float: right'>
+        <div style='text-align: center'>
+            Your Sincerely,<br />
+            <br />
+            <br />
+            <br />   
+            Director General<br />
+            Prisons and Correctional Services<br />
+            Director General<br />
+            State Disaster Response & Fire Services<br />
+            Andhra Pradesh, Vijayawada
+        </div>
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+<div class="col-md-12 col-sm-12">
+<br/>
+	Copy to {{application.build_name}}, {{application.corr_addr}} <br/>
+	Copy to Chief Office for Record Purpose <br/>
+	Copy to Regional Fire Officer Concerned <br/>
+	Copy to District Fire Officer Concerned<br/>
+	Copy to Assistant District Fire Officer Concerned<br/>
+</div>
+</div>
+</div>

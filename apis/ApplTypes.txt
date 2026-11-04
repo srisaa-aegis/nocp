@@ -1,0 +1,173 @@
+﻿[{
+	"code": "P",
+	"name": "Provisional",
+	"mode":
+	[
+		{
+			"code":"N", 
+			"name":"Online",
+			"ffe" :
+			[
+				{
+					"tag":"reqt", 
+					"head":"Minimum Required",
+					"type":"text"
+				}
+			]
+		},
+		{
+			"code":"", 
+			"name":"Online",
+			"ffe" :
+			[
+				{
+					"tag":"reqt", 
+					"head":"Minimum Required",
+					"type":"text"
+				}
+			]
+		}
+	]
+},
+{
+    "code": "O",
+	"name": "Occupancy",
+	"mode" :
+	[
+		{
+			"code":"O", 
+			"name":"Online",
+			"ffe" :
+			[
+				{
+					"tag":"prop", 
+					"head":"Proposed",
+					"type":"text"
+				},
+				{
+					"tag":"prov", 
+					"head":"Provided",
+					"type":"input"
+				}
+			]
+		},
+		{
+			"code":"M", 
+			"name":"Manual",
+			"ffe" :
+			[
+				{
+					"tag":"prop", 
+					"head":"Proposed",
+					"type":"input"
+				},
+				{
+					"tag":"prov", 
+					"head":"Provided",
+					"type":"input"
+				}
+			]
+		},
+
+		{
+			"code":"N", 
+			"name":"Not Applied for Provisional",
+			"ffe" :
+			[
+				{
+					"tag":"reqt", 
+					"head":"Required",
+					"type":"text"
+				},
+				{
+					"tag":"prov", 
+					"head":"Provided",
+					"type":"input"
+				}
+			]
+		},	
+		{
+			"code":"E", 
+			"name":"Not Applied for Provisional",
+			"ffe" :
+			[
+				{
+					"tag":"reqt", 
+					"head":"Required",
+					"type":"text"
+				},
+				{
+					"tag":"prov", 
+					"head":"Provided",
+					"type":"input"
+				}
+			]
+		}
+
+	]
+},
+{
+	"code": "R",
+	"name": "Renewal",
+	"mode" :
+	 [
+		{
+			"code":"O", 
+			"name":"Online",
+			"ffe" :
+			[
+				{
+					"tag":"prop", 
+					"head":"Proposed",
+					"type":"input"
+				},
+				{
+					"tag":"prov", 
+					"head":"Provided",
+					"type":"input"
+				}
+			]},
+		{	
+			"code":"M", 
+			"name":"Manual",
+			"ffe" :
+			[
+				{
+					"tag":"prop", 
+					"head":"Proposed",
+					"type":"input"
+				},
+				{
+					"tag":"prov", 
+					"head":"Provided",
+					"type":"input"
+				}
+			]}
+	 ]
+},
+{
+    "code": "RO",
+	"name": "Occupancy(Renewal)",
+	"mode" :
+	[ 
+		{
+			"code":"M", 
+			"name":"Manual",					 
+			"ffe" :
+			[
+				{
+					"tag":"prop", 
+					"head":"Proposed",
+					"type":"input"
+				},
+				{
+					"tag":"prov", 
+					"head":"Provided",
+					"type":"input"
+				}
+			]
+
+		}
+	]
+}
+]

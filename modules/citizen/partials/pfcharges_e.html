@@ -1,0 +1,38 @@
+﻿<div class="col-md-12 col-sm-12">
+    <h3>Portal Charges</h3>
+    <div class="col-md-12 col-sm-12 panel panel-body panel-info">
+        <pre style="white-space: pre-wrap;">
+        Based on GO No MS. 23 Home (Pri &Aacute; Fire) Department, Government of Andhra Pradesh dates 03-Feb-2020; and Order (Rc No 3776/Planning/2015 dated 06-Mar-2020) issued by Director General Fire Services, Srisaa Technology Labs being the Organization developing &Aacute; maintaining the Online NOC Portal of Fire Department of Andhra Pradesh is authorized to collect an amount of Rs.500/- per application from applicants as "Portal Charges" towards maintainence of the said portal, from the Fire Precautionary Fee payable to the department.
+        </pre>
+        <h4 class="col-lg-12 col-md-12 text-left" ng-if="application.pfcharges.status == 'C'">Complete</h4>
+        <h4 class="col-lg-12 col-md-12 text-left" ng-if="application.pfcharges.status != 'C'">Pending <button type="button" class="btn-success pull-right" ng-click="initPFCharges()">Pay Online</button></h4>
+        <div class="col-md-6 col-sm-6" ng-if="application.pfcharges.status == 'C'">
+            <table width="100%" border="1">
+                <tr><th width="33%">Amount</th><th width="33%">Payment Date</th><th width="33%">Payment Time</th></tr>
+                <tr><td>{{application.pfcharges.amount}}</td><td>{{application.pfcharges.paydate}}</td><td>{{application.pfcharges.paytime}}</td></tr>
+                <tr><th width="33%">Order</th><th width="33%">Mode</th><th width="33%">Confirmation</th></tr>
+                <tr><td>{{application.pfcharges.order_num}}</td><td>{{application.pfcharges.mode}}</td><td>{{application.pfcharges.confirm}}</td></tr>
+            </table>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="application.pfcharges.status != 'C'">
+            <p>
+                In case the amount is debited to your account but not recieved by the Portal and you application is not reflecting the Payment.
+            </p>
+            <ul>
+                <li>Refesh the Page and check if the Payment is reflecting here.</li>
+                <li>Please email details to apfire@srisaa.com and we will revert in 1 working day.</li>
+                <li>If the payment is not recieved by us, your payment money will be refunded to you in 7 business days by the bank.</li>
+            </ul>
+        </div>
+        <div class="col-md-6 col-sm-6" ng-if="application.pfcharges.status != 'C'">
+            <ul>
+                <li>Amount: Rs.500/- (Rupees Eight Hundred Only)</li>
+                <li>The charges payable to the Fire Department thru Challan / CFMS will be reduced by Rs.500/-, thus not affecting the total amount payable by the applicants.</li>
+                <li>Portal Charges are payable before Submission of the Application on all types of application at all delegation levels (MSB/DFO/RFO).</li>
+                <li>Payment once made are not refundable and are not transferable.</li>
+            </ul>
+            <p>In case of payments already done through Bank Transfer on or before 22-Jun-2020, please share the UTR No / IMPS Reference Number, Screenshot of the Transfer and print of this page to <a href="mailto:apfire@srisaa.com">apfire@srisaa.com</a>.</p>
+            <p><strong>Direct Transfers to Bank Account after 22-Jun-2020 will not be accepted.</strong></p>
+        </div>
+    </div>
+</div>

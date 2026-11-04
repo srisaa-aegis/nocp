@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A.P. State Disaster Response and Fire Services Department</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/jquery.rateyo.min.css" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body ng-app="admin">
+
+    <!-- Navigation -->
+    <div ng-include="'modules/dept/partials/navigation.html'"></div>
+
+    <div class="container-fluid main__view dashboard">
+        <div ng-view></div>
+    </div>
+
+    <script type="text/ng-template" id="dashboard.htm">
+        <div class="row h100">
+            <div class="col-md-10 col-md-offset-1 h100">
+                <div ng-include="'modules/admin/partials/dashboard.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="search.htm">
+        <div class="row h100">
+            <div class="col-md-10 col-md-offset-1 h100">
+                <div ng-include="'modules/dept/partials/search.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="chpwd.htm">
+        <div class="row h100">
+            <div class="col-md-10 col-md-offset-1 h100">
+                <div ng-include="'modules/dept/partials/chpwd.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="fulledit.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/dept/partials/fulledit2.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="sms.htm">
+        <div class="row h100">
+            <div class="col-md-10 col-md-offset-1 h100">
+                <div ng-include="'modules/dept/partials/sms_report.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="feedback.htm">
+        <div class="row h100">
+            <div class="col-md-10 col-md-offset-1 h100">
+                <div ng-include="'modules/dept/partials/feedback_rating.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="dgDashboardReport.htm">
+        <div class="row h100">
+            <div class="col-lg-12 text-left panel-default">
+                <div ng-include="'modules/dept/partials/dgDashboardReport.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="section_note.htm">
+        <div class="row h100">
+            <div class="col-md-10 col-md-offset-1 h100">
+                <div ng-include="'modules/dept/partials/section_note.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="invalid.htm">
+        <div class="col-lg-12 text-left panel-default">
+            <div ng-include="'modules/common/partials/invalidaccess.html'"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="statistics_report.htm">
+        <div class="row h100">
+            <div class="col-lg-12 text-left panel-default">
+                <div ng-include="'modules/dept/partials/statistics_report.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="consolidated_report.htm">
+        <div class="row h100">
+            <div class="col-lg-12 text-left panel-default">
+                <div ng-include="'modules/dept/partials/consolidated_report.html'"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="draftfiles.htm">
+        <div class="row h100">
+            <div class="col-md-10 col-md-offset-1 h100">
+                <div ng-include="'modules/admin/partials/oldDraftFiles.html'"></div>
+            </div>
+        </div>
+    </script>
+    <!-- <div ng-include = "'modules/citizen/partials/footer.html'"></div> -->
+    <div ng-include="'modules/common/partials/loader.html'"></div>
+
+    <!-- jQuery -->
+    <script src="script/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="script/bootstrap.min.js"></script>
+
+    <!--
+            <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+            <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+            <script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-cookies.js"></script>
+    -->
+    <script src="script/angular.min.js"></script>
+    <script src="script/angular-route.min.js"></script>
+
+    <script src="js/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="js/angular-datatables/dist/angular-datatables.js"></script>
+    <script src="js/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+    <script src="js/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js"></script>
+    <script src="js/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js"></script>
+    <script src="js/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
+    <script src="js/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js"></script>
+    <script src="js/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
+    <script src="js/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js"></script>
+    <script src="js/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
+    <script src="js/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js"></script>
+    <script src="js/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+    <script src="js/angular-datatables/dist/plugins/select/angular-datatables.select.js"></script>
+
+    <script src="script/date-time-picker.js"></script>
+    <script src="script/constants.js"></script>
+    <script src="script/commonrules.js"></script>
+    <script src="app/fireApp.js"></script>
+    <script src="modules/admin/controllers/adminController.js"></script>
+    <script src="script/loader.js"></script>
+    <!-- Fusioncharts JavaScript -->
+    <script src="script/angular-fusioncharts.min.js"></script>
+    <!-- charts JavaScript -->
+    <script src="script/angular-chart.min.js"></script>
+    <!--PDF-->
+    <script src="script/jspdf.min.js"></script>
+    <script src="script/html2canvas.js"></script>
+    <script src="script/pdf.js"></script>
+    <script src="script/jquery.rateyo.js"></script>
+    <script src="script/jquery.rateyo.min.js"></script>
+    <script>
+                    //location.href = "#search";
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+{
+	"appl_id": 5,
+	"appl_number": "2016080001",
+	"block_id" : 1,
+	"block_name": "Block A",
+	"site_type": "res",
+	"site_stype" : "apt",
+	"height": 18.05,
+	
+	"road_wide": true,
+	"xfer_sbak": true,
+	"front_dir": "E",
+	
+	"agree_reqt": false,
+	"sides":
+	[
+		{ "bside_id": 1, "direc": "E", "ptype": "B", "pname": "5 Floor of Nalanda School", "width": 0 },
+		{ "bside_id": 2, "direc": "W", "ptype": "R", "pname": "Internal Road", "width": 12 },
+		{ "bside_id": 3, "direc": "N", "ptype": "R", "pname": "100ft Road", "width": 30 },
+		{ "bside_id": 4, "direc": "S", "ptype": "B", "pname": "Block C", "width": 0 }
+	],
+
+	"floors":
+	[
+		{ "floor_id": 1, "flr_type": "B", "flr_name": "P1", "built_area": 5200, "occ_type": "P", "occ_c_app": 0 },
+		{ "floor_id": 2, "flr_type": "G", "flr_name": "Ground", "built_area": 6700, "occ_type": "C", "occ_c_app": 0 },
+		{ "floor_id": 3, "flr_type": "F", "flr_name": "1st Floor", "built_area": 6700, "occ_type": "R", "occ_c_app": 200 },
+		{ "floor_id": 4, "flr_type": "F", "flr_name": "2nd Floor", "built_area": 5000, "occ_type": "R", "occ_c_app": 180 }
+	],
+
+	"ospaces":
+	[
+		{ "ospace_id": 1, "direc": "E", "proposed": 0 },
+		{ "ospace_id": 2, "direc": "S", "proposed": 0 },
+		{ "ospace_id": 3, "direc": "W", "proposed": 0 },
+		{ "ospace_id": 4, "direc": "N", "proposed": 0 }
+	],
+
+	"escapes":
+	[
+		{ "escape_id": 1, "etype": "I", "desc": "Staircase", "width":2, "location":"E" },
+		{ "escape_id": 2, "etype": "E", "desc": "Metallic", "width":1.5, "location":"W" },
+		{ "escape_id": 3, "etype": "R", "desc": "Ramp", "width":2, "location":"E" },
+		{ "escape_id": 4, "etype": "C", "desc": "Two Way Ramp", "width":6, "location":"W" }
+	],
+	
+	"equipment":
+	[
+		{ "sl_no": 1, "qtype": 1, "count": "20"},
+		{ "sl_no": 2, "qtype": 2, "count": "15" },
+		{ "sl_no": 3, "qtype": 3, "count": "2" },
+		{ "sl_no": 4, "qtype": 6, "count": "2" },
+		{ "sl_no": 5, "qtype": 9, "count": "20,000 L"}
+	]
+	
+}

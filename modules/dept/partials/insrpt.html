@@ -1,0 +1,42 @@
+<div class="row h100">
+	<div class="col-md-10 col-md-offset-1 h100" ng-controller="applicationController">
+		<h2><small class="glyphicon glyphicon-list"></small>Inspection Report</h2>
+		<form name="userLogin" class="form__provisional well bg-white" ng-submit="SaveReport()">
+			<section class="form_fields row">
+				<div ng-include = "'modules/dept/partials/appl_header.html'"></div>
+
+				<div class="clearfix"></div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="reco">Report Status</label>
+						<select name="reco" id="reco" class="form-control" required ng-modal="inspection.reco">
+							<option value="REC">Recommended</option>
+							<option value="NREC">Not Recommended</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="memo">Memo</label>
+						<div class="input-group">
+							<input type="file" id="memo" name="memo" class="form-control" required>
+							<div class="input-group-addon"> <i class="glyphicon glyphicon-file"></i> </div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="remark">Remarks</label>
+						<textarea name="remark" id="remark"  rows="2" class="form-control" required ng-modal="inspection.remark"></textarea>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<button type="button" class="btn btn-sm btn-default" onclick="location.href = '#dashboard';">Close</button>
+						<button type="submit" class="btn btn-sm btn-primary">Save Report</button>
+					</div>
+				</div>
+			</section>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+<form name="userLogin" class="form__user" ng-submit="ForgotPassword()">
+    <section class="form_fields">
+        <div class="form-group">
+            <p class="text-center">
+                Please Enter your username
+                <br> to get password on your mobile number
+            </p>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"> <span class="glyphicon glyphicon-user text-success" aria-hidden="true"></span> </div>
+                <input type="email" name="email" id="email" ng-model="login.email" class="form-control" placeholder="Email" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mb-3">Reset Password</button>
+        <span class="divider"></span>
+        <div class="form-group">
+            <a href class="text-capitalize" onclick='javascript: location.href="#register"; return false;'>Register Now</a>
+            <a href class="text-capitalize float-right" onclick='javascript: location.href="#login"; return false;'>Remember Password ?</a>
+        </div>
+    </section>
+</form>

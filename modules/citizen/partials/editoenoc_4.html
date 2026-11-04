@@ -1,0 +1,56 @@
+<div class="row h100">
+	<div class="col-md-10 col-md-offset-1 h100">
+        <h2>
+            <small class="glyphicon glyphicon-equalizer"></small> Existing Building NOC
+        </h2>
+		<form name="userLogin" class="form__provisional well bg-white" ng-submit="UploadFiles()">
+			<div ng-include = "'modules/citizen/partials/innerheader.html'"></div>
+			<h3>Building Plans</h3>
+
+            <div class="col-md-12 col-sm-12">
+                <p>
+                    Please ensure that the plans are signed by the Builder, the Architect and the Structural Engineer.<br/>
+                    Note: In case, all the files are not uploaded while attaching all in a single go, It is advised to attached 3-4 Files at a go.
+                </p>
+            </div>
+				<div class="col-md-6 col-sm-6">
+					<label for="fileSitePlan" id='lfileSitePlan'>Site Plan</label>
+					<div class="input-group">
+						<input ng-disabled="application.status_id != 1" type="file" id="fileSitePlan" name="fileSitePlan" class="form-control" file-model = "fileSitePlan" accept="application/pdf">
+						<div class="input-group-addon"> <a ng-if="FileExists('SitePlan')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('SitePlan')"></a> </div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6">
+					<label for="fileSectionPlan" id='lfileSectionPlan'>Section Plan</label>
+					<div class="input-group">
+						<input ng-disabled="application.status_id != 1" type="file" id="fileSectionPlan" name="fileSectionPlan" class="form-control" file-model="fileSectionPlan" accept="application/pdf">
+						<div class="input-group-addon"> <a ng-if="FileExists('SectionPlan')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('SectionPlan')"></a> </div>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-sm-6">
+					<label for="fileElevationPlan" id='lfileElevationPlan'>Elevation Plan</label>
+					<div class="input-group">
+						<input ng-disabled="application.status_id != 1" type="file" id="fileElevationPlan" name="fileElevationPlan" class="form-control" file-model="fileElevationPlan" accept="application/pdf">
+						<div class="input-group-addon"> <a ng-if="FileExists('ElevationPlan')" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('ElevationPlan')"></a> </div>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-sm-6" ng-repeat="floor in block.floors">
+					<label for="{{ 'lfileFloorPlan_' + $index }}" id="{{ 'lfileFloorPlan_' + $index }}">Floor Plan for {{ floor.flr_name }}</label>
+					<div class="input-group">
+						<input ng-disabled="application.status_id != 1" type="file" id="{{ 'fileFloorPlan_' + $index }}" name="{{ 'fileFloorPlan_' + $index }}" class="form-control" file-model="{{ 'fileFloorPlan_' + $index }}" accept="application/pdf"/>
+						<div class="input-group-addon"> <a ng-if="FileExists('FloorPlanfor' + floor.flr_name.split(' ').join(''))" class="glyphicon glyphicon-file" href="" ng-click="DownloadFile('FloorPlanfor' + floor.flr_name.split(' ').join(''))"></a> </div>
+					</div>
+				</div>
+
+			<div class="form_fields row">
+				<div class="col-md-12 col-sm-12 text-right">
+					<button type="button" class="btn btn-primary" style='float: left;' ng-click="GotoFFE()"> <span class="glyphicon glyphicon-arrow-left"></span> Previous </button>
+					<button ng-if="application.status_id == 1" type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-save"></span> Save </button>
+					<button type="reset" class="btn btn-danger" ng-click="ViewApplication()"> <span class="glyphicon glyphicon-remove"></span> Close </button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

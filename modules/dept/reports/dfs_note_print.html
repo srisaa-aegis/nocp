@@ -1,0 +1,79 @@
+<div class="col-lg-12">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th colspan="2" class="text-navy">
+                                1) Have you crosschecked the proposed plans and relavant rules of the NBC and ACT and all other guidelines applicable?
+                            </th>
+                        </tr>
+                        <tr>
+                            <td width="60%">Are the plans fulfilling the requirements of the safety norms as prescribed in NBC?</td>
+                            <th>
+                                <span ng-if="form_to.dfs_plans_ok == 1">Yes</span>
+                                <span ng-if="form_to.dfs_plans_ok == 0">No</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                Do you find any deficiences in the Proposal, Implemantation, Committee's report or any where in the entire file?
+                            </td>
+                            <th>
+                                <span ng-if="form_to.dfs_any_found == 1">Yes</span>
+                                <span ng-if="form_to.dfs_any_found == 0">No</span>
+                            </th>
+                        </tr>
+                        <tr ng-if="form_to.dfs_any_found == 1">
+                            <td>Please elaborate the deficiencies found</td>
+                            <th>{{form_to.dfs_deficits}}</th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">
+                                2) Do you agree with the recommandation of the Committee, RFO and DFS-CD? If no, please specify your reasons?
+                            </th>
+                            <th>
+                                <span ng-if="form_to.dfs_agree_or == 1">Yes, I agree</span>
+                                <span ng-if="form_to.dfs_agree_or == 0">No, I do not agree</span>
+                            </th>
+                        </tr>
+                        <tr ng-if="form_to.dfs_agree_or == 0">
+                            <td>
+                                Please elaborate why you do not agree
+                            </td>
+                            <th>
+                                {{form_to.dfs_no_agree }}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">
+                                3) Have you crosschecked the section remarks? Whether all the requirements of the section fulfilled?
+                            </th>
+                            <th>
+                                <span ng-if="form_to.dfs_section_ok == 1">Yes</span>
+                                <span ng-if="form_to.dfs_section_ok == 0">No</span>
+                            </th>
+                        </tr>
+                        <tr ng-if="form_to.dfs_section_ok == 0">
+                            <td>
+                                Please elaborate the shortcomings
+                            </td>
+                            <th>
+                                {{form_to.dfs_section_nok }}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-navy">
+                                4) Please Specify your clear opinion with reasons?
+                            </th>
+                            <th>
+                                {{form_to.remark}}
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

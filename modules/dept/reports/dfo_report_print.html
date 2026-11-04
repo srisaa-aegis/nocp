@@ -1,0 +1,250 @@
+<div class="col-lg-12" ng-repeat="block in form_to.blocks">
+    <div class="ibox-content text-navy text-center">
+        <h3><strong>{{block.block_name}}</strong></h3>
+    </div>
+    <h5>
+        The builder has proposed to construct a <span ng-if="application.dlevel!='MSB'">Non </span>Multi Storeyed Building Storeyed Building ({{block.block_name}}) with {{FloorDisplay(block)}} with a height of {{block.height}} Mtrs for {{type_name(block.site_type)}} Occupancy  (Category - {{block.site_stype}}) in a total plot area of {{application.plot_area}} sq. meters.<br />
+        <h5>Please specify if any descripencies found in this information?</h5>
+        {{form_to.initial}}
+    </h5>
+    <h3>Open Spaces</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width='10%'>Side</th>
+                    <th width='25%'>Open Space Required as per NBC, 2005</th>
+                    <th width='25%'>Open Space Proposed by the Builder</th>
+                    <th width='5%'>Observation</th>
+                    <th width='35%'>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng_repeat="ospace in block.ospaces">
+                    <td>{{direction_name(ospace.direc)}}</td>
+                    <td>{{ reqd_open_space(block, ospace) }} Meters</td>
+                    <td>{{ ospace.proposed.toFixed(2) }} Meters</td>
+                    <td>
+                        {{ ospace.ok == 'Y' ? 'Yes' : 'No' }}
+                    </td>
+                    <td>
+                        {{ospace.remark}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3>Means of Escape</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width='5%'>Sl</th>
+                    <th width='15%'>Details of Staircases</th>
+                    <th width='20%'>Required Nos / Meters</th>
+                    <th width='20%'>Proposed Nos / Meters</th>
+                    <th width='5%'>Observation</th>
+                    <th width='35%'>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{$index + 1}}</td>
+                    <td>Internal Staircases</td>
+                    <td>
+                        {{reqd_escape_count(block, 'I')}} {{reqd_escape_count(block, 'I') > 1 ? "Nos." : "No."}} - {{reqd_escape_width(block, 'I').toFixed(2)}} Meters {{reqd_escape_count(block, 'I') > 1 ? "Each" : ""}}
+                    </td>
+                    <td>
+                        {{proposed_escape_count(block, 'I')}} {{proposed_escape_count(block, 'I') > 1 ? "Nos." : "No."}} - {{proposed_escape_width(block, 'I').toFixed(2)}} Meters {{proposed_escape_count(block, 'I') > 1 ? "Each" : ""}}
+                    </td>
+                    <td>
+                        {{ form_to.I_Escape == 'Y' ? 'Yes' : 'No' }}
+                    </td>
+                    <td>
+                        {{form_to.I_Escape_R[$index + 1]}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{$index + 2}}</td>
+                    <td>External Staircases</td>
+                    <td>
+                        {{reqd_escape_count(block, 'E')}} {{reqd_escape_count(block, 'E') > 1 ? "Nos." : "No."}} - {{reqd_escape_width(block, 'E')}} Meters {{reqd_escape_count(block, 'E') > 1 ? "Each" : ""}}
+                    </td>
+                    <td>
+                        {{proposed_escape_count(block, 'E')}} {{proposed_escape_count(block, 'E') > 1 ? "Nos." : "No."}} - {{proposed_escape_width(block, 'E')}} Meters {{proposed_escape_count(block, 'E') > 1 ? "Each" : ""}}
+                    </td>
+                    <td>
+                        {{ form_to.E_Escape == 'Y' ? 'Yes' : 'No' }}
+                    </td>
+                    <td>
+                        {{form_to.E_Escape_R}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan='2'>Total</td>
+                    <td>
+                        {{reqd_escape_count(block, 'I') * reqd_escape_width(block, 'I') + reqd_escape_count(block, 'E') * reqd_escape_width(block, 'E')}} Meters
+                    </td>
+                    <td>
+                        {{proposed_escape_count(block, 'I') * proposed_escape_width(block, 'I') + proposed_escape_count(block, 'E') * proposed_escape_width(block, 'E')}} Meters
+                    </td>
+                    <td>
+                        {{form_to.T_Escape == 'Y' ? 'Yes' : 'No' }}
+                    </td>
+                    <td>
+                        {{form_to.T_Escape_R}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3>Floors</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width='5%'>Sl</th>
+                <th width='10%'>Floor</th>
+                <th width='10%'>Built up area (Sq Mtrs)</th>
+                <th width='10%'>Occupancy Type</th>
+                <th width='9%'>No of Occupants as declared by the builder</th>
+                <th width='8%'>No of Occupants as per NBC</th>
+                <th width='8%'>Aggregate width of Staircases Required (Meters)</th>
+                <th width='5%'>Observation</th>
+                <th width='35%'>Remark</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="floor in block.floors">
+                <td>{{$index + 1}}</td>
+                <td>
+                    {{floor.flr_name}}
+                </td>
+                <td>
+                    {{floor.built_area}}
+                </td>
+                <td>
+                    {{floor_occu_name(floor.occ_type)}}
+                </td>
+                <td>
+                    {{floor.occ_c_app}}
+                </td>
+                <td>
+                    {{t20OccCount(floor) == ''? '--' : t20OccCount(floor)}}
+                </td>
+                <td>
+                    {{floor.stair_load_reqd == ''? '--': floor.stair_load_reqd}}
+                </td>
+                <td>
+                    {{floor.ok == 'Y' ? 'Yes' : 'No' }}
+                </td>
+                <td>
+                    {{floor.remark}}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    Total
+                </td>
+                <td>
+                    {{block_built_up(block)}}
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    {{block_TotalOccLoad(block)}}
+                </td>
+                <td>
+                    {{block_TotalNBCOccLoad(block)}}
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    {{floor.ok == 'Y' ? 'Yes' : 'No' }}
+                </td>
+                <td>
+                    {{floor.remark}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Fire Fighting Equipment</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width='10%'>Sl</th>
+                <th width='30%'>Fire Safety System</th>
+                <th width='20%'>Minimum Required</th>
+                <th width='5%'>Observation</th>
+                <th width='35%'>Remark</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="equip in block.equipment">
+                <td>{{$index + 1}}</td>
+                <td>
+                    {{equipment_desc(equip.qtype)}}
+                </td>
+                <td>
+                    {{equip.count}} {{equipment_suffix(equip.qtype)}}
+                </td>
+                <td>
+                    {{equip.ok == 'Y' ? 'Yes' : 'No' }}
+                </td>
+                <td>
+                    {{equip.remark}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Floorwise Fire Fighting Installations</h3>
+    <table class="table table-bordered" ng-repeat="ffe in form_to.floorwise | filter: {block_id: block.block_id}">
+        <thead>
+            <tr>
+                <th>Sl.</th>
+                <th>Floor</th>
+                <th ng-repeat="col in ffe.cols" style="word-wrap: break-word;">{{equipment_short(col["name"])}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="drow in ffe.data">
+                <td>{{$index + 1}}</td>
+                <td>{{drow.fname}}</td>
+                <td ng-repeat="col in ffe.cols">
+                    <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                        {{drow[col["name"]][valtype.tag] == ''? '--' : drow[col["name"]][valtype.tag]}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>{{ffe.total.fname}}</td>
+                <td ng-repeat="col in ffe.cols">
+                    <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'B'">
+                        {{ffe.total[col["name"]][valtype.tag] == ''? '--' : ffe.total[col["name"]][valtype.tag] + ' ' + equipment_suffix(col['name'])}}
+                    </span>
+                    <span ng-repeat="valtype in appl_type_ffe(application.appl_type, application.appl_mode)" ng-if="equipment_level(col['name']) == 'F'">
+                        {{GetFFETotal(col["name"], valtype.tag)}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <ul ng-repeat="ffe in form_to.floorwise">
+            <li ng-repeat="ntrow in ffe.note"><span>{{ntrow.NOTE_DESC}}</span><br /></li>
+        </ul>
+    </div>
+    Any comments about the Floor Wise Distribution of Fire Fighting Equipment
+    <label class="form-control"><dt>{{form_to.floorwisereco}}</dt></label>
+
+    Any other action to be taken by the owner/applicant?
+    <label class="form-control"><dt>{{form_to.any_other}}</dt></label>
+
+    Do you recommend issue of Provisional NoC?
+    <label class="form-control" ng-if="form_to.rfo_recommend == 'Y'"><dt>Recommended</dt></label>
+    <label class="form-control" ng-if="form_to.rfo_recommend == 'N'"><dt>Not Recommend</dt></label>
+    <label class="form-control"><dt>{{form_to.remark}}</dt></label>
+
+
+    Inspection Date
+    <label class="form-control"><dt>{{form_to.inspection_date}}</dt></label>
+</div>

@@ -1,0 +1,270 @@
+﻿<div class="col-lg-12" ng-repeat="block in form_to.blocks">
+    <div class="ibox">
+        <div class="ibox-content text-navy text-center">
+            <h3><strong>{{block.block_name}}</strong></h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><h5>1) Occupancy of the Building as per NBC (as specified in the application)</h5></td>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'res'">
+                            Residential
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'ins'">
+                            Institutional (Hospitals)
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'edu'">
+                            Educational
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'asm'">
+                            Assembly
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'biz'">
+                            Business
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'mer'">
+                            Mercantile
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'ind'">
+                            Industrial
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'sto'">
+                            Storage
+                        </th>
+                        <th colspan="2" ng-if="block.rfo_occu_type === 'haz'">
+                            Hazardous
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>2) NBC guidelines based on the height and the area of the premises</h5>
+                        </td>
+                        <th>Area: {{block.rfo_area}} Sq. Mtrs</th>
+                        <th>Height: {{block.rfo_height}} Meters</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>Open Spaces</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Direction</th>
+                        <th>Required</th>
+                        <th>Proposed</th>
+                        <th>Deficiency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>North</td>
+                        <td>{{block.rfo_os_n_req}}</td>
+                        <td>{{block.rfo_os_n_pro}}</td>
+                        <td>{{block.rfo_os_n_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>South</td>
+                        <td>{{block.rfo_os_s_req}}</td>
+                        <td>{{block.rfo_os_s_pro}}</td>
+                        <td>{{block.rfo_os_s_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>East</td>
+                        <td>{{block.rfo_os_e_req}}</td>
+                        <td>{{block.rfo_os_e_pro}}</td>
+                        <td>{{block.rfo_os_e_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>West</td>
+                        <td>{{block.rfo_os_w_req}}</td>
+                        <td>{{block.rfo_os_w_pro}}</td>
+                        <td>{{block.rfo_os_w_def}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>Means of Escape</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Staircase</th>
+                        <th>Required</th>
+                        <th>Proposed</th>
+                        <th>Deficiency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Internal Staircase</td>
+                        <td><b>Min {{TotalStairsRequiredByNBC()}} Nos.</b> of Total Width <b>{{MaxStairsbyLoad()}} Meters</b></td>
+                        <td>{{block.rfo_pr_escape_cnt_int}} {{block.rfo_pr_escape_cnt_int > 1 ? "Nos." : "No."}} - {{block.rfo_pr_escape_width_int}} Meters {{block.rfo_pr_escape_width_int > 1 ? "Each" : ""}}</td>
+                        <td>{{block.rfo_me_i_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>External Staircase</td>
+                        <td></td>
+                        <td> {{block.rfo_pr_escape_cnt_ext}} {{block.rfo_pr_escape_cnt_ext > 1 ? "Nos." : "No."}} - {{block.rfo_pr_escape_width_ext}} Meters {{block.rfo_pr_escape_width_ext > 1 ? "Each" : ""}}</td>
+                        <td>{{block.rfo_me_e_def}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        Occupant Load and Exits
+        <label class="form-control"><dt>{{block.rfo_ole}}</dt></label>
+        <h3>Fire Fighting Equipments</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Equipments</th>
+                        <th>Required</th>
+                        <th>Deficiency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fire Extinguishers</td>
+                        <td>{{block.rfo_ffe_fe_req}} Nos.</td>
+                        <td>{{block.rfo_ffe_fe_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Hose Reel</td>
+                        <td>  {{block.rfo_ffe_hr_req}} Nos.</td>
+                        <td>{{block.rfo_ffe_hr_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Wet Riser</td>
+                        <td>{{block.rfo_ffe_wr_req}} Nos</td>
+                        <td>{{block.rfo_ffe_wr_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Down Comer</td>
+                        <td>{{block.rfo_ffe_dc_req}} Nos.</td>
+                        <td>{{block.rfo_ffe_dc_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Yard Hydrant</td>
+                        <td> {{block.rfo_ffe_yh_req}}</td>
+                        <td>{{block.rfo_ffe_yh_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Automatic Sprinklers</td>
+                        <td>{{block.rfo_ffe_as_req}} Nos.</td>
+                        <td>{{block.rfo_ffe_as_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Manually Operated Electric Fire Alarm Systems</td>
+                        <td>{{block.rfo_ffe_mc_req}} Nos.</td>
+                        <td>{{block.rfo_ffe_mc_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Automatic Detection System</td>
+                        <td>{{block.rfo_ffe_ad_req}} Nos.</td>
+                        <td>{{block.rfo_ffe_ad_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Underground Tank</td>
+                        <td>  {{block.rfo_ffe_ut_req}} Ltrs</td>
+                        <td>{{block.rfo_ffe_ut_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Terrace Tank</td>
+                        <td>{{block.rfo_ffe_tt_req}} Ltrs</td>
+                        <td>{{block.rfo_ffe_tt_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Fire Pump</td>
+                        <td>{{block.rfo_ffe_fp_req}}</td>
+                        <td>{{block.rfo_ffe_fp_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>Booster Pump</td>
+                        <td>{{block.rfo_ffe_bp_req}} Ltrs</td>
+                        <td>{{block.rfo_ffe_bp_def}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ul>
+            <li ng-repeat="ntrow in block.eqnotes"><span><b>{{ffenotes[ntrow.note]}}</b></span><br /></li>
+        </ul>
+        Any other action to be taken by the owner/applicant?
+        <label class="form-control"><dt>{{block.rfo_ffe_oth}}</dt></label>
+        <h5>3) The width of the approach road on all sides for the fire tender to reach the location</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Direction</th>
+                        <th>Required</th>
+                        <th>Deficiency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>North</td>
+                        <td>{{block.rfo_ar_n_req}} Nos.</td>
+                        <td>{{block.rfo_ar_n_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>South</td>
+                        <td>  {{block.rfo_ar_s_req}} Nos.</td>
+                        <td>{{block.rfo_ar_s_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>East</td>
+                        <td>{{block.rfo_ar_e_req}} Nos</td>
+                        <td>{{block.rfo_ar_e_def}}</td>
+                    </tr>
+                    <tr>
+                        <td>West</td>
+                        <td>{{block.rfo_ar_w_req}} Nos.</td>
+                        <td>{{block.rfo_ar_w_def}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h5>4) Parking Area</h5>
+        <label class="form-control"><dt>Required: {{block.rfo_park_req}} Sq. Mtrs</dt> <dt>Proposed: {{block.rfo_park_pro}} Meters</dt></label>
+        <h5>5) Any other rules applicable to the occupancy other than NBC? (Like for Diesel and Petroleum storages, Oil and Natural gas storages, etc;Chemical industries etc)</h5>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Applicable Sections/ACT/Rules</td>
+                        <th>{{block.rfo_act_rules}}</th>
+                    </tr>
+                    <tr>
+                        <td>Minimum required as per the ACT/Rule</td>
+                        <th>{{block.rfo_min_act}} Nos.</th>
+                    </tr>
+                    <tr>
+                        <td>Deficits in the proposed plan as per the ACT/rules</td>
+                        <th>  {{block.rfo_def_act}}</th>
+                    </tr>
+                    <tr>
+                        <td>Provisional NOC Conditions</td>
+                        <th>{{application.parent_final_remark}}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h5>6) Any other points related to this NOC, which the officer wants to bring to the knowledge of DGFS?</h5>
+        <label class="form-control"><dt>{{block.any_other}}</dt></label>
+
+        <h5>7) Specific conditions have compiled or not which are given at the time of Provisional?</h5>
+        <label class="form-control"><dt>{{block.specific}}</dt></label>
+    </div>
+</div>
+<h5>8) Opinion of the officer regarding approval of NOC?</h5>
+<label class="form-control" ng-if="form_to.rfo_recommend == '1'"><dt>Recommended</dt></label>
+<label class="form-control" ng-if="form_to.rfo_recommend == '2'"><dt>Return for Corrections</dt></label>
+<label class="form-control" ng-if="form_to.rfo_recommend == '0'"><dt>Not Recommended</dt></label>
+
+        Specify the reasons (If Not Recommended)
+<label class="form-control"><dt>{{form_to.remark}}</dt></label>
+

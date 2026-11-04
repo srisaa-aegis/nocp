@@ -1,0 +1,183 @@
+﻿{
+  "start": "declaration",
+  "declaration": {
+    "check": "@site_type",
+    "dtype": "s",
+    "decisions": [
+      {
+        "oper": "EQ",
+        "check": "res",
+        "action": "goto",
+        "value": "res"
+      },
+      {
+        "oper": "EQ",
+        "check": "edu",
+        "action": "goto",
+        "value": "years_edu"
+      },
+      {
+        "oper": "EQ",
+        "check": "ins",
+        "action": "goto",
+        "value": "years_nres"
+      },
+      {
+        "oper": "EQ",
+        "check": "asm",
+        "action": "goto",
+        "value": "years_nres"
+      },
+      {
+        "oper": "EQ",
+        "check": "biz",
+        "action": "goto",
+        "value": "years_nres"
+      },
+      {
+        "oper": "EQ",
+        "check": "mer",
+        "action": "goto",
+        "value": "years_nres"
+      },
+      {
+        "oper": "EQ",
+        "check": "ind",
+        "action": "goto",
+        "value": "years_nres"
+      },
+      {
+        "oper": "EQ",
+        "check": "sto",
+        "action": "goto",
+        "value": "years_nres"
+      },
+      {
+        "oper": "EQ",
+        "check": "haz",
+        "action": "goto",
+        "value": "years_nres"
+      },
+      {
+        "oper": "DEF",
+        "check": "",
+        "action": "goto",
+        "value": "years_otherbuld"
+      }
+    ]
+  },
+  "res": {
+    "check": "@site_stype",
+    "dtype": "s",
+    "decisions": [
+      {
+        "oper": "EQ",
+        "check": "A1",
+        "action": "goto",
+        "value": "years_res"
+      },
+      {
+        "oper": "EQ",
+        "check": "A2",
+        "action": "goto",
+        "value": "years_res"
+      },
+      {
+        "oper": "EQ",
+        "check": "A3",
+        "action": "goto",
+        "value": "years_res"
+      },
+      {
+        "oper": "EQ",
+        "check": "A4",
+        "action": "return",
+        "value": "years_res"
+      },
+      {
+        "oper": "EQ",
+        "check": "A5",
+        "action": "return",
+        "value": "years_otherbuld"
+      },
+      {
+        "oper": "EQ",
+        "check": "A6",
+        "action": "return",
+        "value": "years_otherbuld"
+      }
+    ]
+  },
+  "years_res": {
+    "check": "@height",
+    "dtype": "n",
+    "decisions": [
+      {
+        "oper": "LT",
+        "check": "60",
+        "action": "return",
+        "value": "5"
+      },
+      {
+        "oper": "DEF",
+        "check": "",
+        "action": "return",
+        "value": ""
+      }
+    ]
+  },
+  "years_edu": {
+    "check": "@height",
+    "dtype": "n",
+    "decisions": [
+      {
+        "oper": "LT",
+        "check": "30",
+        "action": "return",
+        "value": "5"
+      },
+      {
+        "oper": "DEF",
+        "check": "",
+        "action": "return",
+        "value": ""
+      }
+    ]
+  },
+  "years_nres": {
+    "check": "@height",
+    "dtype": "n",
+    "decisions": [
+      {
+        "oper": "LT",
+        "check": "18",
+        "action": "return",
+        "value": "3"
+      },
+      {
+        "oper": "DEF",
+        "check": "",
+        "action": "return",
+        "value": ""
+      }
+    ]
+  },
+  "years_otherbuld": {
+    "check": "@height",
+    "dtype": "n",
+    "decisions": [
+      {
+        "oper": "GE",
+        "check": "18",
+        "action": "return",
+        "value": "1"
+      },
+      {
+        "oper": "DEF",
+        "check": "",
+        "action": "return",
+        "value": ""
+      }
+    ]
+  }
+}

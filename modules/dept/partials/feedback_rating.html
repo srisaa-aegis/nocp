@@ -1,0 +1,98 @@
+﻿<div ng-controller="applicationController">
+    <style type="text/css">
+        @media print {
+            #printbtn {
+                display: none;
+            }
+        }
+    </style>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-container="body" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Feedback Rating Report
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" data-container="body">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#search">Search</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#pendency">Pendency Report</a></li>
+            <li><a href="#statistics">Statistics Report</a></li>
+            <li><a href="#conslidated">Consolidated Status Report</a></li>
+            <li><a href="#applications">Applications Report</a></li>
+            <li><a href="#overdue">OverDue Applications</a></li>
+            <li><a href="#sms">SMS Report</a></li>
+            <li><a href="#feedback">Feedback Rating Report</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#chpwd">Change Password</a></li>
+        </ul>
+    </div>
+    <div class="panel panel-primary" ng-controller="reportController">
+        <div class="panel-heading">
+            <h3 class="panel-title">Feedback Rating Report</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 text-right">
+                <button id="printbtn" type="button" class="btn-success" onclick='window.print()'> <span class="glyphicon glyphicon-print"></span> Print </button>
+                <button id="backbtn" type="button" class="btn-success" onclick='location.href="#dashboard"'><span class="glyphicon glyphicon-arrow-left"></span> Back </button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class='col-md-12 col-lg-12 col-sm-12' style='padding-bottom: 20px'>
+                <div class='col-md-4 col-lg-4'>
+                    <div class="input-group">
+                        <div class="input-group-addon">Level of Application: </div>
+                        <select ng-model="rpt_parms.rpt_scope" class="form-control">
+                            <option value="MSB">DGFS/DFS</option>
+                            <option value="RFO">RFO</option>
+                            <option value="DFO">DFO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='col-md-4 col-lg-4'>
+                    <div class="input-group">
+                        <div class="input-group-addon">From Date </div>
+                        <input ss-format="date" type="text" id="dtFrom" name="dtFrom" placeholder="dd/mm/yyyy" class="form-control" ng-model="rpt_parms.from_date" required>
+                    </div>
+                </div>
+                <div class='col-md-4 col-lg-4'>
+                    <div class="input-group">
+                        <div class="input-group-addon">To Date </div>
+                        <input ss-format="date" type="text" id="dtTo" name="dtTo" placeholder="dd/mm/yyyy" class="form-control" ng-model="rpt_parms.to_date" required>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-4 col-lg-4 text-right'>
+                <div class="input-group">
+                    <button ng-click="FetchData()" class="btn btn-md btn-success">Get Details</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <h4 style="text-align:center" class="panel-heading"><b><u> Feedback Rating Report - {{rpt_parms.rpt_scope}} Level</u></b></h4>
+            <h4 class="panel-heading" style="align-content:flex-start">Generated on :{{CurrentDate|date:'MMM d, y h:mm:ss a'}} </h4>
+            <table class="table table-bordered table-striped" datatable="ng" dt-options="dtOptions">
+                <thead>
+                    <tr>
+                        <th>Sl.</th>
+                        <th>Application</th>
+                        <th>Name of the Applicant</th>
+                        <th>Description</th>
+                        <th>Rating</th>
+                        <th>Sumitted On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="feedback in ReportData.feedback">
+                        <td>{{$index + 1}}</td>
+                        <td>{{feedback.appl_number}}</td>
+                        <td>{{feedback.full_name}}</td>
+                        <td style="word-wrap: break-word">{{feedback.description}}</td>
+                        <td>{{feedback.rating}}</td>
+                        <td>{{feedback.submit_date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

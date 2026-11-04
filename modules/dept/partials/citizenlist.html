@@ -1,0 +1,343 @@
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>-->
+
+<div class="panel panel-primary panel__application h100" ng-controller="applicationController">
+    <div class="panel-heading">
+        <h3 class="panel-title">My Applications</h3>
+    </div>
+    <div class="panel-body h100">
+        <a id="openinstr" data-toggle="modal" data-target="#instructions" style="width:0px" />
+        <a id="openinstr_oc" data-toggle="modal" data-target="#occupancy" style="width:0px" />
+        <a id="openinstr_rw" data-toggle="modal" data-target="#renewal" style="width:0px" />
+        <div class="list-group list__applications">
+            <div class="list-group-item application" ng-repeat="application in applications">
+                <h4 class="list-group-item-heading">
+                    <span class="glyphicon glyphicon-list icon" ng-if="application.appl_type == 'P'"></span>
+                    <span class="glyphicon glyphicon-log-in icon" ng-if="application.appl_type == 'O'"></span>
+                    <span class="glyphicon glyphicon-repeat icon" ng-if="application.appl_type == 'R'"></span>
+                    {{application.appl_number}}
+                    <label ng-if="application.revision > 1"> [{{application.revision}}]</label>
+                    : {{application.site_name}}
+                    <span style="float: right">{{(application.delegation_level == "MSB")? "DGFS" : application.delegation_level}}</span>
+                    <button class="btn btn-warning btn-xs pull-right" ng-click="Revise(application.appl_id)" ng-if="application.status_id == 8 || application.status_id == 9"><span class="glyphicon glyphicon-file"></span> Revise</button>
+                    <button style="float: right;" class="btn btn-warning btn-xs" ng-click="CopyPNOCApplication(application.appl_id)" ng-if="application.appl_type == 'P' && application.status_id == 7 && application.child_id == 0"><span class="glyphicon glyphicon-log-in"></span> Apply for Occupancy</button>
+                    <button style="float: right;" class="btn btn-warning btn-xs" ng-click="DownloadFinal(application)" ng-if="application.appl_type == 'O' && application.status_id == 7 && application.renewal > 0 "><span class="glyphicon glyphicon-repeat"></span> Renewal due in: <strong>{{application.renewal}} days(s)</strong></button>
+                    <button style="float: right;" class="btn btn-warning btn-xs" ng-click="CopyONOCApplication(application.appl_id)" ng-if="application.appl_type == 'O' && application.status_id == 7 && application.child_id == 0"><span class="glyphicon glyphicon-repeat"></span> Apply for Renewal</button>
+                    <small style="float: right;" ng-if="application.appl_type == 'R' && application.status_id == 7 && application.renewal > 0 ">Renewal due in: <strong>{{application.renewal}} day(s)</strong></small>
+                </h4>
+                <div>
+                    <button class="btn btn-{{ (application.status_id == 8 || application.status_id == 9) ? 'danger' : (application.status_id == 7) ? 'success' : 'warning' }} btn-xs"><span class="glyphicon glyphicon-{{ (application.status_id == 8 || application.status_id == 9) ? 'remove' : (application.status_id == 7) ? 'ok' : 'repeat'}}"></span> {{ status_description(application.status_id) }}</button>
+                    <button class="btn btn-info btn-xs" ng-click="ViewApplication(application.appl_id, application.appl_type)"><span class="glyphicon glyphicon-list"></span> View</button>
+                    <button class="btn btn-info btn-xs" ng-click="Acknowledge(application.appl_id)" ng-if="application.status_id > 1"><span class="glyphicon glyphicon-print"></span> Acknowledgement</button>
+                    <button class="btn btn-warning btn-xs" ng-click="DownloadFinal(application)" ng-if="application.status_id == 7"><span class="glyphicon glyphicon-file"></span> Download NOC</button>
+                    <button class="btn btn-warning btn-xs" ng-click="DownloadFinal(application)" ng-if="application.status_id == 8 || application.status_id == 9 || (application.revision>0 && application.status_id==1 && application.appl_number!='')"><span class="glyphicon glyphicon-file"></span> Reject Letter</button>
+                    <button id="openchuser" class="modalLink" data-toggle="modal" data-id="application.appl_id" data-target="#myModal" ng-if="application.submit_date.includes('1900')&&application.status_id == 7" ng-click="NavigateToFeedback(application.appl_id)"><span class="glyphicon glyphicon-file"></span>Feedback</button>
+
+                    <small style="float: right;" ng-if="application.applied_date != '01/01/1900' && application.status_id < 7 ">Applied: <strong>{{application.applied_date}}</strong></small>
+                    <small style="float: right;" ng-if="application.status_id == 7">Approved On : <strong>{{application.final_date}}</strong></small>
+                    <small style="float: right;" ng-if="application.status_id == 8">Rejected On : <strong>{{application.final_date}}</strong></small>
+                    <small style="float: right;" ng-if="application.status_id == 9">Returned On : <strong>{{application.final_date}}</strong></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="instructions" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">MUST READ - Instructions for Filling the Online Application:</h4>
+                    <div ng-include="'modules/citizen/partials/pnocinstr.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="NavigateToAdd()">Ready to Start</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="occupancy" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Applying for Occupancy NOC:</h4>
+                    <p>Please select the means by which you received the Provisional No Objection Certificate (NOC).</p>
+                </div>
+                <div class="modal-body">
+                    <section class="form_fields row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <input type="radio" value="O" name="radio_online" ng-model="newonoc.onocmode" checked />
+                                <label for="radio_online">Online Provisional NOC</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
+                            <div class="form-group">
+                                <select id="online_pnoc" class="form-control" ng-model="newonoc.pnocapid" ng-if="newonoc.onocmode == 'O'">
+                                    <option ng-repeat="application in applications  | filter: { status_id: '7', appl_type: 'P', child_id: '0' }" value="{{application.appl_id}}">
+                                        {{application.appl_number}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="form_fields row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <input type="radio" value="M" name="radio_online" ng-model="newonoc.onocmode" />
+                                <label for="radio_online_1">Manual Provisional NOC</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group" ng-if="newonoc.onocmode == 'M'">
+                                    <div class="input-group-addon">Rc. No. </div>
+                                    <input type="text" id="refrcno" name="refrcno" placeholder="" class="form-control" ng-model="newonoc.refrcno">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="form_fields row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <input type="radio" value="N" name="radio_online" ng-model="newonoc.onocmode" />
+                                <label for="radio_online_2">Provisional NOC Not Applied For</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group" ng-if="newonoc.onocmode == 'N'">
+                                    <label for="station">Date Approval from Municipal authority:</label>
+                                    <input ss-format="date" type="text" id="dtMCApprove" name="dtMCApprove" placeholder="dd/mm/yyyy" class="form-control" ng-model="newonoc.mcapprove_date" required>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="form_fields row" ng-if="newonoc.onocmode == 'M' || newonoc.onocmode == 'N'">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">Site Name: &nbsp;&nbsp;&nbsp;</div>
+                                <input type="text" id="site_name" name="site_name" placeholder="" class="form-control" ng-model="newonoc.site_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">Site Address: </div>
+                                <input type="text" id="site_addr" name="site_addr" placeholder="" class="form-control" ng-model="newonoc.site_addr">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">District: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                <select id="districto" name="districto" class="form-control" placeholder="" ng-model="newonoc.district">
+                                    <option ng:repeat="dist in districts" value="{{dist.id}}">
+                                        {{dist.desc}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <h4 class="modal-title">MUST READ - Instructions for Filling the Online Application:</h4>
+                    <div ng-include="'modules/citizen/partials/onocinstr.html'"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CopyPNOCApplication(0)">Ready to Start</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="renewal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Applying for Renewal of Occupancy NOC:</h4>
+                    <p>Please select the means by which you received the Occupancy No Objection Certificate (NOC).</p>
+                </div>
+                <div class="modal-body">
+                    <section class="form_fields row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <input type="radio" value="O" name="radio_R_online" ng-model="newonoc.onocmode" checked />
+                                <label for="radio_R_online">Online Occupancy NOC</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
+                            <div class="form-group">
+                                <select id="online_pnoc" class="form-control" ng-model="newonoc.pnocapid" ng-if="newonoc.onocmode == 'O'">
+                                    <option ng-repeat="application in applications  | filter: { status_id: '7', appl_type: 'O', child_id: '0'}" value="{{application.appl_id}}">
+                                        {{application.appl_number}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="form_fields row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="form-group">
+                                <input type="radio" value="M" name="radio_R_online" ng-model="newonoc.onocmode" />
+                                <label for="radio_R_online">Manual Occupancy NOC</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group" ng-if="newonoc.onocmode == 'M'">
+                                    <div class="input-group-addon">Rc. No. </div>
+                                    <input type="text" id="refrcno" name="refrcno" placeholder="" class="form-control" ng-model="newonoc.refrcno">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group" ng-if="newonoc.onocmode == 'M'">
+                                    <label for="station">Occupancy NOC Issued Date:</label>
+                                    <input ss-format="date" type="text" id="dtOcFinal" name="dtOcFinal" placeholder="dd/mm/yyyy" class="form-control" ng-model="newonoc.oc_date" required>
+                                </div>
+                                <div class="input-group" ng-if="newonoc.onocmode == 'M'">
+                                    <label for="station">Occupancy NOC Valid upto:</label>
+                                    <input ss-format="date" type="text" id="dtOcFinalValid" name="dtOcFinalValid" placeholder="dd/mm/yyyy" class="form-control" ng-model="newonoc.final_valid_date" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group" ng-if="newonoc.onocmode == 'M'">
+                                    <label for="station">Last Renewal Date:</label>
+                                    <input ss-format="date" type="text" id="dtLastRenew" name="dtLastRenew" placeholder="dd/mm/yyyy" class="form-control" ng-model="newonoc.last_renewal_date" required>
+                                </div>
+                                <div class="input-group" ng-if="newonoc.onocmode == 'M'">
+                                    <label for="station">Last Renewal Validity Date:</label>
+                                    <input ss-format="date" type="text" id="dtLastRenewValid" name="dtLastRenewValid" placeholder="dd/mm/yyyy" class="form-control" ng-model="newonoc.last_renew_vdate" required>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="form_fields row" ng-if="newonoc.onocmode == 'M'">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">Site Name: &nbsp;&nbsp;&nbsp;</div>
+                                <input type="text" id="site_name" name="site_name" placeholder="" class="form-control" ng-model="newonoc.site_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">Site Address: </div>
+                                <input type="text" id="site_addr" name="site_addr" placeholder="" class="form-control" ng-model="newonoc.site_addr">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">District: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                <select id="districto" name="districto" class="form-control" placeholder="" ng-model="newonoc.district">
+                                    <option ng:repeat="dist in districts" value="{{dist.id}}">
+                                        {{dist.desc}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="CopyONOCApplication(0)">Ready to Start</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="feedback" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Feedback Form</h4>
+                    <p>Please specify the rating</p>
+                </div>
+                <div class="modal-body">
+                    <section class="form_fields row">
+                        <div class="col-md-4 col-sm-6">
+                            <div>
+                                <!--<div class="rating-wrapper">-->
+                                <input type="radio" value="1" id="rating-input-1-1" name="radio_feedback" class="rating" ng-model="application.rating" />
+                                <label for="rating-input-1-1" class="rating-star"></label>
+                                <input type="radio" value="2" id="rating-input-1-2" name="radio_feedback" class="rating-input" ng-model="application.rating" />
+                                <label for="rating-input-1-2" class="rating-star"></label>
+                                <input type="radio" value="3" id="rating-input-1-3" name="radio_feedback" class="rating-input" ng-model="application.rating" />
+                                <label for="rating-input-1-3" class="rating-star"></label>
+                                <input type="radio" value="4" id="rating-input-1-4" name="radio_feedback" class="rating-input" ng-model="application.rating" />
+                                <label for="rating-input-1-4" class="rating-star"></label>
+                                <input type="radio" value="5" id="rating-input-1-5" name="radio_feedback" class="rating-input" ng-model="application.rating" />
+                                <label for="rating-input-1-5" class="rating-star"></label>
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="col-md-12 col-sm-12">
+                            <p>Description</p>
+                            <div class="form-group">
+                                <textarea id="fd_desc" ng-model="application.description"></textarea>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Feedbackform()">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width:500px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Feedback</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="message" style="text-align: center; color: green;"></div>
+                    <div class="form-group">
+                        <span id="updatecapacitymodalerrortext" style="color:red"></span>
+                    </div>
+                    <div class="form-group">
+                        <label style="display:inline-block" class="col-md-4">Remarks : </label>
+                        <div style="display:inline-block;" class="col-md-6">
+                            <textarea id="fd_desc" ng-model="application.description" class="form-control"></textarea>
+                        </div>
+                        <input type="hidden" name="appl_id" id="appl_id" value="" />
+                    </div>
+                    <div class="form-group">
+                        <div style="display:inline-block;" id="rateYo"></div>
+                        <input type="hidden" name="rating" id="rating_input" />
+                    </div>   <br />
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="Feedbackform()">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+
+        </div>
+    </div>
+</div>
