@@ -1,27 +1,47 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Bare](http://startbootstrap.com/template-overviews/bare/)
+# NOC Portal — AngularJS → Angular Migration
 
-[Bare](http://startbootstrap.com/template-overviews/bare/) is a bare HTML starter template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This template features predefined file paths for Bootstrap and jQuery, so you can quickly create Bootstrap websites.
+This repository contains:
 
-## Getting Started
+| Path | What it is |
+|---|---|
+| [`NOC-base/`](./NOC-base) | The **original** AngularJS (1.x) application — Fire Department NOC portal for citizens/builders, department staff and admins. Kept as-is for reference. |
+| [`docs/`](./docs) | The **migration plan**: functional scope, domain model, API catalog, 3-phase delivery plan, architecture, and per-phase manual QA scripts. **Start here.** |
+| [`frontend/`](./frontend) | The **new Angular application** (Phases 1, 2 and 3 fully implemented), running entirely against local JSON fixtures — no backend, no real auth, no persistence beyond the browser. |
 
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](http://startbootstrap.com/template-overviews/bare/)
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-bare.git`
-* Fork the repo
+## Quick start (new frontend)
 
-## Bugs and Issues
+```bash
+cd frontend
+npm install
+npm start
+# open http://localhost:4200, pick a demo account chip on the login screen
+```
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-bare/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/bare/).
+See [`frontend/README.md`](./frontend/README.md) for details, and
+[`docs/phase-1-manual-test-script.md`](./docs/phase-1-manual-test-script.md)
+for a guided walkthrough of what's implemented so far.
 
-## Creator
+## Why this structure
 
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
+The brief asked for three things, mapped 1:1 onto this repo:
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
-
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
-
-## Copyright and License
-
-Copyright 2013-2016 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-bare/blob/gh-pages/LICENSE) license.
+1. **"Define a scope / functionality and a UI migration plan, in 2-3
+   phases, each with a verifiable deliverable."** → [`docs/01-functional-scope.md`](docs/01-functional-scope.md)
+   through [`docs/04-migration-plan.md`](docs/04-migration-plan.md).
+2. **"Create a shell for the project with an Angular frontend accessing
+   JSON files directly but using a list of API points as a separate file
+   thru which all the JSONs are accessed."** →
+   [`frontend/src/app/core/api/api-endpoints.ts`](frontend/src/app/core/api/api-endpoints.ts)
+   is that file; [`docs/03-api-catalog.md`](docs/03-api-catalog.md)
+   documents every entry in it and how it maps back to the legacy
+   `*.aspx` endpoints.
+3. **A working, polished UI**, not just a diagram — Phase 1 (auth,
+   dashboards, department queues, admin incl. account management and
+   application search & delete), Phase 2 (the complete citizen
+   application lifecycle) and Phase 3 (admin-configurable department
+   workflows and SLAs, officer fire-station association, the full department
+   processing page — note/report forms, final decision with a live NOC/letter
+   preview, send back / bypass / reassign, document requests, SMS, fire
+   station and licensing authority — department dashboards, reports and
+   escalations) are all implemented, tested (389 automated tests) and
+   visually verified end to end, citizen through department back to citizen.
